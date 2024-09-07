@@ -13,3 +13,7 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+
+.text1 {
+  font-family: var(--font-yesteryear) !important;
+}
