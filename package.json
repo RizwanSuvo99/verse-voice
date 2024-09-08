@@ -9,9 +9,12 @@
     "lint": "next lint --fix && eslint . && prettier --write \"**/*.{js,jsx,json,ts,tsx,scss,css,md}\""
   },
   "dependencies": {
+    "@mantine/carousel": "^7.12.2",
     "@mantine/core": "^7.12.2",
     "@mantine/hooks": "^7.12.2",
     "@tabler/icons-react": "^3.14.0",
+    "embla-carousel-autoplay": "^7.1.0",
+    "embla-carousel-react": "^7.1.0",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18"

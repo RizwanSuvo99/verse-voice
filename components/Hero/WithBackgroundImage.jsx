@@ -10,7 +10,7 @@ const WithBackgroundImage = ({ children }) => {
     setIsDark(colorScheme);
   }, [colorScheme]);
 
-  const bgUrl = isDark === 'dark' ? 'patterns.png' : 'patternsWhite.png';
+  const bgUrl = isDark === 'dark' ? 'patterns.png' : null;
 
   return <BackgroundImage src={`/assets/${bgUrl}`}>{children}</BackgroundImage>;
 };
