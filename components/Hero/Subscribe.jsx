@@ -5,11 +5,12 @@ const Subscribe = () => {
   const theme = useMantineTheme();
   return (
     <TextInput
+      className="!mt-6"
       radius="xl"
-      size="md"
+      size="lg"
       placeholder="Type your email address"
       w={500}
-      rightSectionWidth={110}
+      rightSectionWidth={120}
       rightSection={
         <Button color={theme.primaryColor} variant="filled" radius="xl">
           Subscribe

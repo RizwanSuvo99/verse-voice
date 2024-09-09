@@ -49,7 +49,6 @@ const SingleBlog = ({ blog }) => {
         </Group>
         <Button variant="transparent">Read More</Button>
       </Group>
-      
     </Card>
   );
 };

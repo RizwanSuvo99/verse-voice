@@ -19,7 +19,7 @@ const theme = createTheme({
   defaultGradient: {
     from: '#0ea5ea',
     to: '#0bd1d1',
-    deg: 150,
+    deg: 45,
   },
 });
 

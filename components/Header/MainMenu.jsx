@@ -13,7 +13,7 @@ const MainMenu = () => {
       <Button variant="subtle" component={Link} href={'/'}>
         About
       </Button>
-      <Button variant="subtle" component={Link} href={'/'}>
+      <Button variant="subtle" component={Link} href={'/contact'}>
         Contact
       </Button>
     </Group>
