@@ -26,7 +26,7 @@ const RecentSingleBlog = ({ blog }) => {
     <Flex className="!gap-4">
       <div className="!flex-1">
         <AspectRatio ratio={1}>
-          <Image src={imgUrl} height={250} alt="Norway" radius="md" />
+          <Image src={imgUrl} height={270} alt="Norway" radius="md" />
         </AspectRatio>
       </div>
       <div className="!flex-1">
@@ -40,10 +40,10 @@ const RecentSingleBlog = ({ blog }) => {
           </Group>
         </Group>
         <Space h={'lg'} />
-        <Text fw={500} className="!text-xl" lineClamp={2}>
+        <Text fw={500} className="!text-[24px]" lineClamp={2}>
           {title}
         </Text>
-        <Text fw={400} className="!text-sm" lineClamp={4}>
+        <Text fw={400} className="!mt-3 !text-sm" lineClamp={4}>
           {description}
         </Text>
         <Group justify="space-between" mt="md" mb="xs">
