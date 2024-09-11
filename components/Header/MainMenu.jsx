@@ -10,7 +10,7 @@ const MainMenu = () => {
       <Button variant="subtle" component={Link} href={'/'}>
         Blogs
       </Button>
-      <Button variant="subtle" component={Link} href={'/'}>
+      <Button variant="subtle" component={Link} href={'/about'}>
         About
       </Button>
       <Button variant="subtle" component={Link} href={'/contact'}>
