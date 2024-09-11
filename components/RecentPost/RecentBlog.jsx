@@ -1,4 +1,8 @@
-import { Container, Grid, Text, Title } from '@mantine/core';
+'use client';
+
+import { Container, Grid, Pagination, Text, Title } from '@mantine/core';
+import { chunk } from 'lodash';
+import { useState } from 'react';
 import RecentSingleBlog from './RecentSingleBlog';
 
 const RecentBlog = () => {
@@ -70,6 +74,15 @@ const RecentBlog = () => {
     },
   ];
 
+  const data = chunk(recentBlogs, 5);
+
+  const [activePage, setPage] = useState(1);
+  const items = data[activePage - 1].map((blog, i) => (
+    <Grid.Col span={12} key={i}>
+      <RecentSingleBlog blog={blog} />
+    </Grid.Col>
+  ));
+
   return (
     <Container size={1350} className="">
       <Text component={Title} variant="gradient" className="!p-0 !text-5xl">
@@ -79,12 +92,9 @@ const RecentBlog = () => {
         Don&apos;t miss the latest trends
       </Text>
       <Grid grow gutter="xl">
-        {recentBlogs.map((blog, i) => (
-          <Grid.Col span={12} key={i}>
-            <RecentSingleBlog blog={blog} />
-          </Grid.Col>
-        ))}
+        {items}
       </Grid>
+      <Pagination total={data.length} value={activePage} onChange={setPage} />
     </Container>
   );
 };
