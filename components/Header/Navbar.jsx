@@ -38,8 +38,12 @@ const Navbar = () => {
             </Button>
           ))}
           <Group justify="center" grow px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Register</Button>
+            <Button variant="default" component={Link} href={'/login'}>
+              Log in
+            </Button>
+            <Button component={Link} href={'/register'}>
+              Register
+            </Button>
           </Group>
           <ThemeToggle />
         </Group>
