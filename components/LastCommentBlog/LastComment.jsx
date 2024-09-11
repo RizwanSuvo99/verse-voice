@@ -5,9 +5,9 @@ const LastComment = ({ blog, divider }) => {
 
   return (
     <>
-      <Flex align={"center"} className="!gap-4">
+      <Flex align={'center'} className="!gap-4">
         <div>
-          <Avatar src={authorAvatar} alt="author-img" size={"lg"}/>
+          <Avatar src={authorAvatar} alt="author-img" size={'lg'} />
         </div>
         <div>
           <Text fw={500} className="!text-md" lineClamp={3}>

@@ -2,6 +2,7 @@ import '@mantine/core/styles.css';
 import { Yesteryear } from 'next/font/google';
 import './globals.css';
 
+import Footer from '@/components/Footer/Footer';
 import Navbar from '@/components/Header/Navbar';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
           <>
             <Navbar />
             {children}
+            <Footer />
           </>
         </MantineProvider>
       </body>

@@ -4,7 +4,7 @@ import { IconBookUpload, IconBriefcase2 } from '@tabler/icons-react';
 const LatestRole = ({ text_1, text_2 }) => {
   const icon1 = text_1.includes('Lecturer');
   return (
-    <Flex align={'center'} gap={'sm'} mb={"10px"}>
+    <Flex align={'center'} gap={'sm'} mb={'10px'}>
       <div className="!flex !h-[40px] !w-[40px] !items-center !justify-center rounded-md !bg-[#0c4643] !p-1 !text-white">
         {icon1 ? <IconBookUpload /> : <IconBriefcase2 />}
       </div>

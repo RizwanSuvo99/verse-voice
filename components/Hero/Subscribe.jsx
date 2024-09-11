@@ -1,8 +1,6 @@
-'use client';
-import { Button, TextInput, useMantineTheme } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
 
 const Subscribe = () => {
-  const theme = useMantineTheme();
   return (
     <TextInput
       className="!mt-6"
@@ -12,7 +10,7 @@ const Subscribe = () => {
       w={500}
       rightSectionWidth={120}
       rightSection={
-        <Button color={theme.primaryColor} variant="filled" radius="xl">
+        <Button variant="filled" radius="xl">
           Subscribe
         </Button>
       }
