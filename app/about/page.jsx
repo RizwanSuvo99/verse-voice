@@ -21,7 +21,7 @@ import {
 } from '@tabler/icons-react';
 import LatestRole from './LatestRole';
 
-const about = () => {
+const About = () => {
   return (
     <Container size={1350} className="!px-0 pt-[100px]">
       <SimpleGrid
@@ -143,4 +143,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default About;
