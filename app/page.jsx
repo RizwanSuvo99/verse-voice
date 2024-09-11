@@ -1,7 +1,7 @@
 import Categories from '@/components/Catergories/Categories';
 import FeaturedBlog from '@/components/FeaturedBlog/FeaturedBlog';
 import Hero from '@/components/Hero/Hero';
-import OtherBlogs from '@/components/Other/OtherBlogs';
+import OtherBlogs from '@/components/OtherBlog/OtherBlogs';
 
 export default function Home() {
   return (
