@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
 
-const RecentSingleBlog = ({ blog }) => {
+const SingleBlog = ({ blog }) => {
   const {
     imgUrl,
     title,
@@ -23,7 +23,7 @@ const RecentSingleBlog = ({ blog }) => {
     timeRead,
   } = blog;
   return (
-    <Flex className="!min-h-[280px] !gap-4">
+    <Flex direction="column" className="!min-h-[570px] !gap-4">
       <div className="!flex-1">
         <AspectRatio ratio={1}>
           <Image src={imgUrl} height={270} alt="Norway" radius="md" />
@@ -63,4 +63,4 @@ const RecentSingleBlog = ({ blog }) => {
   );
 };
 
-export default RecentSingleBlog;
+export default SingleBlog;
