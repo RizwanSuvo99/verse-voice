@@ -21,16 +21,17 @@ const Register = () => {
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput label="Name" placeholder="your name" required />
-        <TextInput
-          label="Email"
-          placeholder="you@mantine.dev"
+        <TextInput label="Name" placeholder="Your name" required />
+        <TextInput label="Email" placeholder="you@gmail.com" required mt="md" />
+        <PasswordInput
+          label="Password"
+          placeholder="Your password"
           required
           mt="md"
         />
         <PasswordInput
-          label="Password"
-          placeholder="Your password"
+          label="Confirm Password"
+          placeholder="Confirm Your password"
           required
           mt="md"
         />

@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <header className={classes.header}>
-      <Container size={1350} className={classes.inner}>
+      <Container size={1350} className={`${classes.inner} !p-0`}>
         <MantineLogo size={28} />
         <Group gap={5} visibleFrom="md">
           {links.map((link) => (

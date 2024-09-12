@@ -70,7 +70,7 @@ const PopularBlog = () => {
     },
   ];
   return (
-    <Container size={1350} className="!mt-[100px]">
+    <Container size={1350} className="!mt-[10px]">
       <Card shadow="sm" padding="md" radius="md" withBorder className="!h-full">
         <Text component={Title} variant="gradient" className="!text-2xl">
           Popular Blogs

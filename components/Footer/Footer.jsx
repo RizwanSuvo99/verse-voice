@@ -27,7 +27,7 @@ const Footer = () => {
   return (
     <footer className="mt-14">
       <Container size={1350} className="!mt-[100px] !px-0 !py-4">
-        <Paper className="px-32 py-12" radius="lg" withBorder>
+        <Paper className="px-32 py-20" radius="lg" withBorder>
           <Grid gutter={'xl'} grow>
             <Grid.Col span={4}>
               <MantineLogo size={28} />

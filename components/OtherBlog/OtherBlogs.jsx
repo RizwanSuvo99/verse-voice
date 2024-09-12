@@ -13,7 +13,7 @@ const OtherBlogs = () => {
         <Grid.Col span={8} className="!p-0">
           <RecentBlog />
         </Grid.Col>
-        <Grid.Col span={4} className="!p-0">
+        <Grid.Col span={4} className="!p-0 !pt-[100px]">
           <PopularBlog />
           <Space h={'xl'} />
           <LastCommentBlog />

@@ -18,8 +18,7 @@ const Blogs = () => {
     {
       imgUrl:
         'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img.png',
-      title:
-        'Facts About Business That Will Help You Success Facts About Business That Will Help You Success',
+      title: 'Facts About Business That Will Help You Success',
       category: 'Design',
       authorName: 'Roney',
       authorAvatar:
@@ -45,7 +44,7 @@ const Blogs = () => {
     {
       imgUrl:
         'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img3.png',
-      title: '10 Easy Ways',
+      title: '10 Easy Ways to Be Environmentally Conscious At Home',
       category: 'Design',
       authorName: 'Steven',
       authorAvatar:
