@@ -25,7 +25,7 @@ const theme = createTheme({
 });
 
 export const metadata = {
-  title: 'Verse Voice Blog',
+  title: 'Class Room Writers',
   description: 'A blog website created by Tech & Skills',
 };
 

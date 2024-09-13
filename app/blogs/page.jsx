@@ -225,7 +225,11 @@ const Blogs = () => {
 
   return (
     <Container size={1350} className="!pt-[50px]">
-      <Text component={Title} variant="gradient" className="!p-0 !text-5xl">
+      <Text
+        component={Title}
+        variant="gradient"
+        className="!text-5xl !leading-[60px]"
+      >
         All Blogs
       </Text>
       <Text className="!mb-6 !mt-2 !text-[18px]">All the latest blogs</Text>

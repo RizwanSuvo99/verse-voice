@@ -13,7 +13,6 @@ import {
   TextInput,
   Title,
 } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import {
   IconArrowRight,
   IconBrandInstagram,
@@ -22,6 +21,7 @@ import {
   IconMail,
   IconUser,
 } from '@tabler/icons-react';
+import Logo from '../Header/Logo';
 
 const Footer = () => {
   return (
@@ -30,7 +30,7 @@ const Footer = () => {
         <Paper className="px-32 py-20" radius="lg" withBorder>
           <Grid gutter={'xl'} grow>
             <Grid.Col span={4}>
-              <MantineLogo size={28} />
+              <Logo />
               <Space h={'lg'} />
               <Text>
                 When an unknown prnoto sans took a galley and scrambled it to

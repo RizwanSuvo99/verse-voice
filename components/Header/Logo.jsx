@@ -3,11 +3,11 @@ import NextImage from 'next/image';
 
 const Logo = () => {
   return (
-    <Group className="!gap-0">
+    <Group className="!gap-2">
       <AspectRatio ratio={1}>
         <Image
           alt="logo-img"
-          src="/assets/logo.png"
+          src="/assets/logo.svg"
           fit="contain"
           fallbackSrc="https://placehold.co/70x70?text=Logo"
           component={NextImage}
@@ -17,7 +17,7 @@ const Logo = () => {
       </AspectRatio>
 
       <Text variant="gradient" component={Title}>
-        VVoice
+        Class Room Writers
       </Text>
     </Group>
   );

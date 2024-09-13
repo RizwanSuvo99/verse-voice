@@ -215,7 +215,11 @@ const RecentBlog = () => {
 
   return (
     <Container size={1350} className="">
-      <Text component={Title} variant="gradient" className="!p-0 !text-5xl">
+      <Text
+        component={Title}
+        variant="gradient"
+        className="!leading-[60px] !text-5xl"
+      >
         Recent Blogs
       </Text>
       <Text className="!mb-12 !mt-4 !text-[18px]">

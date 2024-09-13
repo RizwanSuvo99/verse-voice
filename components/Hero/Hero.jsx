@@ -9,7 +9,7 @@ const Hero = () => {
           <Text
             variant="gradient"
             component={Title}
-            className="text1 !text-[150px] !leading-none"
+            className="text1 !text-[150px]"
           >
             Thoughts Meet Words
           </Text>

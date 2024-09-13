@@ -2,9 +2,9 @@
 
 import { Burger, Button, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import Link from 'next/link';
 import classes from './HeaderSimple.module.css';
+import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
 const links = [
@@ -20,7 +20,8 @@ const Navbar = () => {
   return (
     <header className={classes.header}>
       <Container size={1350} className={`${classes.inner} !p-0`}>
-        <MantineLogo size={28} />
+        {/* <MantineLogo size={28} /> */}
+        <Logo />
         <Group gap={5} visibleFrom="md">
           {links.map((link) => (
             <Button
