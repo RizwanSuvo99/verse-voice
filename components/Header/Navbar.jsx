@@ -3,6 +3,8 @@
 import { Burger, Button, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
@@ -14,26 +16,22 @@ const links = [
   { link: '/contact', label: 'Contact' },
 ];
 const Navbar = () => {
+  const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure(false);
-  // const [active, setActive] = useState(links[0].link);
+  const [active, setActive] = useState(pathname);
 
   return (
     <header className={classes.header}>
       <Container size={1350} className={`${classes.inner} !p-0`}>
-        {/* <MantineLogo size={28} /> */}
         <Logo />
         <Group gap={5} visibleFrom="md">
           {links.map((link) => (
             <Button
+              variant={active === link.link ? 'filled' : 'outline'}
               component={Link}
               key={link.label}
               href={link.link}
-              // className={classes.link}
-              // data-active={active === link.link || undefined}
-              // onClick={(event) => {
-              //   event.preventDefault();
-              //   setActive(link.link);
-              // }}
+              onClick={() => setActive(link.link)}
             >
               {link.label}
             </Button>
