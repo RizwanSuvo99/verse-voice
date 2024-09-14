@@ -32,7 +32,7 @@ const About = () => {
         <Card
           shadow="sm"
           radius="md"
-          className="!bg-[#b9f2f1] !p-[100px] !text-[#0c4643]"
+          className="!bg-[#0ea5ea] !p-[100px] !text-[#fff]"
         >
           <AspectRatio ratio={1}>
             <Image
@@ -51,7 +51,7 @@ const About = () => {
             <Text>fakharuddinpintu@gmail.com</Text>
           </Center>
           <Center>
-            <Button>Download CV</Button>
+            <Button variant="white">Download CV</Button>
           </Center>
         </Card>
 
@@ -61,11 +61,9 @@ const About = () => {
               radius="md"
               shadow="sm"
               padding="xl"
-              className="!bg-[#b9f2f1] !text-[#0c4643]"
+              className="!bg-[#0ea5ea] !text-[#fff]"
             >
-              <Text component={Title} variant="gradient">
-                About Me
-              </Text>
+              <Text component={Title}>About Me</Text>
               <Space h={'sm'}></Space>
 
               <Text>
@@ -86,7 +84,7 @@ const About = () => {
               radius="md"
               shadow="sm"
               padding="xl"
-              className="!bg-[#b9f2f1] !text-[#0c4643]"
+              className="!bg-[#0ea5ea] !text-[#fff]"
             >
               <Text fw={600} className="!text-2xl">
                 Latest Roles
@@ -112,25 +110,29 @@ const About = () => {
               <Group>
                 <Button
                   fw={500}
-                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full !bg-[#0c4643] !text-white"
+                  variant="white"
+                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
                 >
                   <IconBrandLinkedin />
                 </Button>
                 <Button
                   fw={500}
-                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full !bg-[#0c4643] !text-white"
+                  variant="white"
+                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
                 >
                   <IconBrandX />
                 </Button>
                 <Button
                   fw={500}
-                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full !bg-[#0c4643] !text-white"
+                  variant="white"
+                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
                 >
                   <IconBrandFacebook />
                 </Button>
                 <Button
                   fw={500}
-                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full !bg-[#0c4643] !text-white"
+                  variant="white"
+                  className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
                 >
                   <IconMail />
                 </Button>

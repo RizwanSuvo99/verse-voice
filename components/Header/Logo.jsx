@@ -16,8 +16,8 @@ const Logo = () => {
         />
       </AspectRatio>
 
-      <Text variant="gradient" component={Title}>
-        Class Room Writers
+      <Text variant="gradient" component={Title} className='!text-2xl'>
+        ClassWriters
       </Text>
     </Group>
   );
