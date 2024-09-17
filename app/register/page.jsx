@@ -1,7 +1,9 @@
 'use client';
+import register from '@/api/register.mjs';
 import {
   Button,
   Container,
+  Notification,
   Paper,
   PasswordInput,
   Text,
@@ -9,6 +11,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 
 const Register = () => {
@@ -36,10 +39,29 @@ const Register = () => {
     },
   });
 
+  const { mutate, isError, isSuccess, error } = useMutation({
+    mutationFn: register,
+  });
+
   // Form submit handler
   const handleSubmit = (values) => {
+    const { name, email, password } = values;
     console.log('Form values:', values);
+    mutate({ name, email, password });
+    // form.reset();
   };
+
+  {
+    isSuccess && <Notification title="success">Login Successful</Notification>;
+  }
+
+  {
+    isError && (
+      <Notification color="red" title="Error">
+        {error?.message}
+      </Notification>
+    );
+  }
 
   return (
     <Container size={420} my={40}>

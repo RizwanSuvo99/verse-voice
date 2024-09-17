@@ -1,10 +1,17 @@
+'use client';
+
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import { Yesteryear } from 'next/font/google';
 import './globals.css';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Footer from '@/components/Footer/Footer';
 import Navbar from '@/components/Header/Navbar';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 const yesteryear = Yesteryear({
   subsets: ['latin'],
@@ -24,10 +31,8 @@ const theme = createTheme({
   },
 });
 
-export const metadata = {
-  title: 'Class Room Writers',
-  description: 'A blog website created by Tech & Skills',
-};
+// Create a client
+const queryClient = new QueryClient();
 
 export default function RootLayout({ children }) {
   return (
@@ -39,11 +44,13 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
-          <>
+          <QueryClientProvider client={queryClient}>
+            <Notifications />
             <Navbar />
             {children}
             <Footer />
-          </>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
         </MantineProvider>
       </body>
     </html>
