@@ -6,7 +6,7 @@ const Logo = () => {
     <Group className="!gap-2">
       <AspectRatio ratio={1}>
         <Image
-          alt="logo-img"
+          alt="classRoomWriters-logo"
           src="/assets/logo.svg"
           fit="contain"
           fallbackSrc="https://placehold.co/70x70?text=Logo"
@@ -16,8 +16,8 @@ const Logo = () => {
         />
       </AspectRatio>
 
-      <Text variant="gradient" component={Title} className='!text-2xl'>
-        ClassWriters
+      <Text variant="gradient" component={Title} className="!text-2xl">
+        CR Writers
       </Text>
     </Group>
   );
