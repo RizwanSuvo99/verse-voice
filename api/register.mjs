@@ -1,18 +1,12 @@
-import axios from 'axios';
+import axios from '@/utilities/axios';
 
-const registerUser = async (data) => {
-  const url = `${process.env.NEXT_PUBLIC_TEST_API_URL}/register`;
-
+export const registerUser = async (data) => {
   try {
-    const response = await axios.post(url, data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.post('/register', data);
     return response.data;
   } catch (error) {
-    return error.response ? error.response.data : error.message;
+    return {
+      status: 'fail',
+    };
   }
 };
-
-export default registerUser;

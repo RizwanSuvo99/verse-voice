@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 'use client';
-import register from '@/api/register.mjs';
+import { registerUser } from '@/api/register.mjs';
 import {
   Button,
   Container,
-  Notification,
   Paper,
   PasswordInput,
   Text,
@@ -11,12 +12,16 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useLocalStorage } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 const Register = () => {
   // Initialize the form with validation rules
   const form = useForm({
+    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -26,42 +31,58 @@ const Register = () => {
 
     validate: {
       name: (value) =>
-        value.length < 4
+        value.trim().length < 4
           ? 'Password should be at least 4 characters long'
           : null,
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      email: (value) =>
+        /^\S+@\S+$/.test(value.trim()) ? null : 'Invalid email',
       password: (value) =>
-        value.length < 6
-          ? 'Password should be at least 6 characters long'
+        value.length < 8
+          ? 'Password should be at least 8 characters long'
           : null,
       confirmPassword: (value, values) =>
         value !== values.password ? 'Passwords did not match' : null,
     },
   });
 
-  const { mutate, isError, isSuccess, error } = useMutation({
-    mutationFn: register,
+  const { mutate, data } = useMutation({
+    mutationFn: registerUser,
   });
 
   // Form submit handler
   const handleSubmit = (values) => {
-    const { name, email, password } = values;
-    console.log('Form values:', values);
-    mutate({ name, email, password });
-    // form.reset();
+    const { name, email, password, confirmPassword } = values;
+    if (password === confirmPassword) {
+      mutate({ name, email, password });
+    }
+    form.reset();
   };
 
-  {
-    isSuccess && <Notification title="success">Login Successful</Notification>;
-  }
+  const [token, setToken] = useLocalStorage({
+    key: 'token',
+    defaultValue: null,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
 
-  {
-    isError && (
-      <Notification color="red" title="Error">
-        {error?.message}
-      </Notification>
-    );
-  }
+  useEffect(() => {
+    if (data?.status === 'success') {
+      setToken(data.accessToken);
+      setIsLoggedIn(true);
+      notifications.show({
+        title: 'Success notification',
+        message: 'Do not forget to star Mantine on GitHub! 🌟',
+      });
+    }
+    if (data?.status === 'fail') {
+      notifications.show({
+        title: 'Error notification',
+        message: 'Do not forget to star Mantine on GitHub! 🌟',
+      });
+    }
+  }, [data?.status]);
 
   return (
     <Container size={420} my={40}>

@@ -218,7 +218,7 @@ const RecentBlog = () => {
       <Text
         component={Title}
         variant="gradient"
-        className="!leading-[60px] !text-5xl"
+        className="!text-5xl !leading-[60px]"
       >
         Recent Blogs
       </Text>

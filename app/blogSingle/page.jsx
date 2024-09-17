@@ -43,7 +43,7 @@ const BlogSingle = () => {
       <Text
         component={Title}
         variant="gradient"
-        className="!leading-[60px] !my-4 !max-w-[75%] !text-5xl"
+        className="!my-4 !max-w-[75%] !text-5xl !leading-[60px]"
       >
         {singleBlogData.title}
       </Text>
