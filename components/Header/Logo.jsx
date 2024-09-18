@@ -16,8 +16,12 @@ const Logo = () => {
         />
       </AspectRatio>
 
-      <Text variant="gradient" component={Title} className="!text-2xl">
-        CR Writers
+      <Text
+        variant="gradient"
+        component={Title}
+        className="!max-w-[170px] !text-[20px] !uppercase"
+      >
+        Class Room Writers
       </Text>
     </Group>
   );

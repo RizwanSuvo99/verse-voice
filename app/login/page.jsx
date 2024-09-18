@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import { loginUser } from '@/api/login.mjs';
 import {
   Anchor,
   Button,
@@ -13,6 +16,11 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useLocalStorage } from '@mantine/hooks';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
 const Login = () => {
   // Initialize the form with validation
@@ -26,7 +34,8 @@ const Login = () => {
 
     // Add validation rules
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      email: (value) =>
+        /^\S+@\S+$/.test(value.trim()) ? null : 'Invalid email',
       password: (value) =>
         value.length < 6
           ? 'Password should be at least 6 characters long'
@@ -34,10 +43,40 @@ const Login = () => {
     },
   });
 
+  const { mutate, data } = useMutation({
+    mutationFn: loginUser,
+  });
+
   // Form submit handler
   const handleSubmit = (values) => {
     console.log('Form values:', values);
+    mutate({ ...values });
+    form.reset();
   };
+
+  const [token, setToken] = useLocalStorage({
+    key: 'token',
+    defaultValue: null,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
+
+  useEffect(() => {
+    if (data?.status === 'success') {
+      setToken(data.accessToken);
+      setIsLoggedIn(true);
+      notifications.show({
+        title: 'Login Successful',
+      });
+    }
+    if (data?.status === 'fail') {
+      notifications.show({
+        title: 'Login Failed!',
+      });
+    }
+  }, [data?.status]);
 
   return (
     <Container size={420} my={40}>
@@ -70,9 +109,15 @@ const Login = () => {
               key={form.key('rememberMe')}
               {...form.getInputProps('rememberMe', { type: 'checkbox' })}
             />
-            <Anchor component="button" size="sm">
+            <Button
+              component={Link}
+              size="sm"
+              href={'/forgetPassword'}
+              variant="transparent"
+              className="!underline"
+            >
               Forgot password?
-            </Anchor>
+            </Button>
           </Group>
           <Button fullWidth mt="xl" type="submit">
             Sign in

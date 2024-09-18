@@ -14,7 +14,7 @@ import Link from 'next/link';
 
 const BlogDetails = ({ splitDescription, imgUrl, title }) => {
   const data = chunk(splitDescription, 5);
-  console.log(data);
+
   let lastText = data.map((textArr, i) => {
     if (!(i !== 0 || i !== 1 || i !== 2 || i !== 3 || i !== 4)) {
       return textArr?.join('.') + '.';

@@ -71,7 +71,11 @@ const BlogSingle = () => {
             style={{ border: '2px solid #1971c2', borderRadius: '10px' }}
             onClick={() => setLike(!like)}
           >
-            {like ? <IconHeart /> : <IconHeartFilled className="!text-3xl" />}
+            {like ? (
+              <IconHeartFilled className="!text-3xl !text-[#1971c2]" />
+            ) : (
+              <IconHeart />
+            )}
           </div>
           <Space h={'sm'} />
           <Text fw={400} className="!text-sm">
