@@ -1,7 +1,7 @@
 'use client';
 
 import { Burger, Button, Container, Group } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { readLocalStorageValue, useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -9,16 +9,18 @@ import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
-const links = [
-  { link: '/', label: 'Home' },
-  { link: '/blogs', label: 'Blogs' },
-  { link: '/about', label: 'About' },
-  { link: '/contact', label: 'Contact' },
-];
 const Navbar = () => {
   const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(pathname);
+  const isLoggedIn = readLocalStorageValue({ key: 'isLoggedIn' });
+
+  const links = [
+    { link: '/', label: 'Home' },
+    { link: '/blogs', label: 'Blogs' },
+    { link: '/about', label: 'About' },
+    { link: '/contact', label: 'Contact' },
+  ];
 
   return (
     <header className={classes.header}>

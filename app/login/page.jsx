@@ -49,7 +49,6 @@ const Login = () => {
 
   // Form submit handler
   const handleSubmit = (values) => {
-    console.log('Form values:', values);
     mutate({ ...values });
     form.reset();
   };
@@ -73,7 +72,7 @@ const Login = () => {
     }
     if (data?.status === 'fail') {
       notifications.show({
-        title: 'Login Failed!',
+        title: 'Invalid password or user doesnot exist',
       });
     }
   }, [data?.status]);
