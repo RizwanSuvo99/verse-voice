@@ -1,12 +1,13 @@
 import { updatePassword } from '@/api/updatePassword.mjs';
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useLocalStorage } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { useMutation } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
-const UpdatePassword = ({ handleChangeMode, otpVerificationObj }) => {
+const UpdatePassword = ({ otpVerificationObj }) => {
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -34,23 +35,32 @@ const UpdatePassword = ({ handleChangeMode, otpVerificationObj }) => {
       ...otpVerificationObj,
       password: values?.password,
     });
-    console.log('Form values:', values);
-    // handleChangeMode('updatePassword');
   };
 
-  console.log(data);
+  const [token, setToken] = useLocalStorage({
+    key: 'token',
+    defaultValue: null,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
 
   useEffect(() => {
     if (data?.status === 'success') {
+      setToken(data.accessToken);
+      setIsLoggedIn(true);
       notifications.show({
         title: 'Password changed successfully',
       });
-      redirect('/login');
+      redirect('/');
     }
     if (data?.status === 'fail') {
       notifications.show({
         title: 'Password updating failed',
       });
+      setIsLoggedIn(false);
+      setToken(null);
     }
   }, [data?.status]);
 

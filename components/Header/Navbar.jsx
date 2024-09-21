@@ -1,10 +1,16 @@
 'use client';
 
+import { logOut } from '@/api/logOut.mjs';
 import { Burger, Button, Container, Group } from '@mantine/core';
-import { readLocalStorageValue, useDisclosure } from '@mantine/hooks';
+import {
+  readLocalStorageValue,
+  useDisclosure,
+  useLocalStorage,
+} from '@mantine/hooks';
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
@@ -13,14 +19,51 @@ const Navbar = () => {
   const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(pathname);
-  const isLoggedIn = readLocalStorageValue({ key: 'isLoggedIn' });
+  const value = readLocalStorageValue({ key: 'isLoggedIn' });
 
-  const links = [
+  const defaultLinks = [
     { link: '/', label: 'Home' },
     { link: '/blogs', label: 'Blogs' },
     { link: '/about', label: 'About' },
     { link: '/contact', label: 'Contact' },
   ];
+
+  const [links, setLinks] = useState(defaultLinks);
+
+  const [token, setToken] = useLocalStorage({
+    key: 'token',
+    defaultValue: null,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: logOut,
+  });
+
+  const handleLogOut = () => {
+    mutate();
+    setToken(null);
+    setIsLoggedIn(false);
+  };
+
+  useEffect(() => {
+    if (value) {
+      setLinks((prev) => {
+        return [
+          ...prev,
+          {
+            link: '/favourites',
+            label: 'Favourites',
+          },
+        ];
+      });
+    } else {
+      setLinks(defaultLinks);
+    }
+  }, [value]);
 
   return (
     <header className={classes.header}>
@@ -38,14 +81,32 @@ const Navbar = () => {
               {link.label}
             </Button>
           ))}
+
           <Group justify="center" grow px="md">
-            <Button variant="default" component={Link} href={'/login'}>
+            <Button
+              variant="default"
+              component={Link}
+              href={'/login'}
+              className={`${value ? 'hidden' : 'block'}`}
+            >
               Log in
             </Button>
-            <Button component={Link} href={'/register'}>
+            <Button
+              component={Link}
+              href={'/register'}
+              className={`${value ? 'hidden' : 'block'}`}
+            >
               Register
             </Button>
           </Group>
+          <Button
+            variant="filled"
+            color="red"
+            className={`${!value ? 'hidden' : 'block'}`}
+            onClick={handleLogOut}
+          >
+            Log out
+          </Button>
           <ThemeToggle />
         </Group>
         <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />

@@ -1,14 +1,10 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 'use client';
-
-import { loginUser } from '@/api/login.mjs';
+import { registerUser } from '@/api/register.mjs';
 import {
-  Anchor,
   Button,
-  Checkbox,
   Container,
-  Group,
   Paper,
   PasswordInput,
   Text,
@@ -20,36 +16,46 @@ import { useLocalStorage } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
-const Login = () => {
-  // Initialize the form with validation
+const Register = () => {
+  // Initialize the form with validation rules
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
+      name: '',
       email: '',
       password: '',
-      rememberMe: false,
+      confirmPassword: '',
     },
 
-    // Add validation rules
     validate: {
+      name: (value) =>
+        value.trim().length < 4
+          ? 'Password should be at least 4 characters long'
+          : null,
       email: (value) =>
         /^\S+@\S+$/.test(value.trim()) ? null : 'Invalid email',
       password: (value) =>
-        value.length < 6
-          ? 'Password should be at least 6 characters long'
+        value.length < 8
+          ? 'Password should be at least 8 characters long'
           : null,
+      confirmPassword: (value, values) =>
+        value !== values.password ? 'Passwords did not match' : null,
     },
   });
 
   const { mutate, data } = useMutation({
-    mutationFn: loginUser,
+    mutationFn: registerUser,
   });
 
   // Form submit handler
   const handleSubmit = (values) => {
-    mutate({ ...values });
+    const { name, email, password, confirmPassword } = values;
+    if (password === confirmPassword) {
+      mutate({ name, email, password });
+    }
     form.reset();
   };
 
@@ -67,59 +73,67 @@ const Login = () => {
       setToken(data.accessToken);
       setIsLoggedIn(true);
       notifications.show({
-        title: 'Login Successful',
+        title: 'Account created successfully',
       });
+      redirect('/');
     }
     if (data?.status === 'fail') {
       notifications.show({
-        title: 'Invalid password or user doesnot exist',
+        title: 'Already have an account or failed',
       });
+      setIsLoggedIn(false);
+      setToken(null);
     }
   }, [data?.status]);
 
   return (
     <Container size={420} my={40}>
-      <Title ta="center">Welcome back!</Title>
+      <Title ta="center">Create new account!</Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Do not have an account yet?{' '}
-        <Anchor size="sm" component="button">
-          Create account
-        </Anchor>
+        Do have an account?{' '}
+        <Button
+          size="sm"
+          component={Link}
+          href={'/login'}
+          variant="transparent"
+          className="!p-0"
+        >
+          Login
+        </Button>
       </Text>
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
+            label="Name"
+            placeholder="Your name"
+            key={form.key('name')}
+            {...form.getInputProps('name')}
+          />
+          <TextInput
             label="Email"
-            placeholder="you@mantine.dev"
+            placeholder="you@gmail.com"
             key={form.key('email')}
-            {...form.getInputProps('email')} // Apply form validation
+            mt="md"
+            {...form.getInputProps('email')}
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
-            mt="md"
             key={form.key('password')}
-            {...form.getInputProps('password')} // Apply form validation
+            mt="md"
+            {...form.getInputProps('password')}
           />
-          <Group justify="space-between" mt="lg">
-            <Checkbox
-              label="Remember me"
-              key={form.key('rememberMe')}
-              {...form.getInputProps('rememberMe', { type: 'checkbox' })}
-            />
-            <Button
-              component={Link}
-              size="sm"
-              href={'/forgetPassword'}
-              variant="transparent"
-              className="!underline"
-            >
-              Forgot password?
-            </Button>
-          </Group>
+          <PasswordInput
+            label="Confirm Password"
+            placeholder="Confirm Your password"
+            key={form.key('confirmPassword')}
+            mt="md"
+            {...form.getInputProps('confirmPassword')}
+          />
+
           <Button fullWidth mt="xl" type="submit">
-            Sign in
+            Register Now
           </Button>
         </form>
       </Paper>
@@ -127,4 +141,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

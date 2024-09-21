@@ -1,10 +1,9 @@
 'use client';
 
 import {
-  Card,
   Container,
-  Grid,
   Pagination,
+  SimpleGrid,
   Space,
   Text,
   Title,
@@ -212,19 +211,15 @@ const Blogs = () => {
     },
   ];
 
-  const data = chunk(allBlogs, 5);
+  const data = chunk(allBlogs, 6);
 
   const [activePage, setPage] = useState(1);
   const items = data[activePage - 1].map((blog, i) => (
-    <Grid.Col span={i === 0 || i === 1 ? 6 : 4} key={i}>
-      <Card shadow="sm" padding="md" radius="md" withBorder>
-        <SingleBlog blog={blog} />
-      </Card>
-    </Grid.Col>
+    <SingleBlog blog={blog} />
   ));
 
   return (
-    <Container size={1350} className="!pt-[50px]">
+    <Container size={1300} className="!pt-[50px]">
       <Text
         component={Title}
         variant="gradient"
@@ -233,9 +228,7 @@ const Blogs = () => {
         All Blogs
       </Text>
       <Text className="!mb-6 !mt-2 !text-[18px]">All the latest blogs</Text>
-      <Grid grow gutter="xl">
-        {items}
-      </Grid>
+      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>{items}</SimpleGrid>
       <Space h={'xl'} />
       <Pagination total={data.length} value={activePage} onChange={setPage} />
     </Container>
