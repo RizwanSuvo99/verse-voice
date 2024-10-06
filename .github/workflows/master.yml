@@ -15,7 +15,7 @@ jobs:
           username: crwfront@classroomwriters.com
           password: ;DuM?0Z6uHAQ
           server-dir: /
-          local-dir: /
+          local-dir: ./
           exclude: |
             /lost+found/
             .git/
