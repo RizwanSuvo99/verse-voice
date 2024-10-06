@@ -25,7 +25,6 @@ const Navbar = () => {
     { link: '/', label: 'Home' },
     { link: '/blogs', label: 'Blogs' },
     { link: '/about', label: 'About' },
-    { link: '/contact', label: 'Contact' },
   ];
 
   const [links, setLinks] = useState(defaultLinks);
