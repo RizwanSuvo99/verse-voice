@@ -14,7 +14,7 @@ jobs:
           server: ftp.classroomwriters.com
           username: crwfront@classroomwriters.com
           password: ;DuM?0Z6uHAQ
-          server-dir: /
+          server-dir: ./
           local-dir: ./
           exclude: |
             /lost+found/
