@@ -68,7 +68,7 @@ const CreateBlog = () => {
       </SimpleGrid>
 
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
-      <DateInput
+        <DateInput
           radius={'lg'}
           value={value}
           onChange={setValue}
@@ -95,7 +95,6 @@ const CreateBlog = () => {
           }}
           clearable
         />
-        
       </SimpleGrid>
 
       <Textarea

@@ -2,13 +2,11 @@
 
 import { Flex, Group, Image, Text } from '@mantine/core';
 import {
-  Icon2fa,
   IconArticle,
   IconCategoryPlus,
   IconEdit,
   IconLogout,
   IconPencilPlus,
-  IconSettings,
 } from '@tabler/icons-react';
 import { useState } from 'react';
 import classes from './NavbarSimpleColored.module.css';

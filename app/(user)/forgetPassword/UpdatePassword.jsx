@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import { updatePassword } from '@/api/updatePassword.mjs';
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';

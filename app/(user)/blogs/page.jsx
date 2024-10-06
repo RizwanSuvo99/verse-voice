@@ -215,7 +215,7 @@ const Blogs = () => {
 
   const [activePage, setPage] = useState(1);
   const items = data[activePage - 1].map((blog, i) => (
-    <SingleBlog blog={blog} />
+    <SingleBlog blog={blog} key={i} />
   ));
 
   return (

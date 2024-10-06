@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 
 const NEXT_PUBLIC_API_URL = 'https://verse-voice-backend.vercel.app/api/v1';
@@ -12,14 +13,13 @@ export default axios.create({
   },
 });
 
-const token = localStorage.getItem('accessToken');
-console.log(token);
+// const token = localStorage.getItem('accessToken');
 
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    // Authorization: `Bearer ${token}`,
   },
   withCredentials: true,
 });
