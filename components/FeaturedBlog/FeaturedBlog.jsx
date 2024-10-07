@@ -11,6 +11,7 @@ import {
   Title,
 } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
+import Link from 'next/link';
 import SingleBlog from './SingleBlog';
 
 const FeaturedBlog = () => {
@@ -41,6 +42,8 @@ const FeaturedBlog = () => {
           variant="gradient"
           rightSection={<IconArrowRight size={25} />}
           size={'xl'}
+          component={Link}
+          href={'/blogs'}
         >
           Show more posts
         </Button>
