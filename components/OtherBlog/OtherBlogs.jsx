@@ -1,7 +1,7 @@
 'use client';
 
 import { Container, Grid, Space } from '@mantine/core';
-import LastCommentBlog from '../LastCommentBlog/LastCommentBlog';
+// import LastCommentBlog from '../LastCommentBlog/LastCommentBlog';
 import PopularCategories from '../PopularCategories/PopularCategories';
 import PopularBlog from '../PopularPost/PopularBlog';
 import RecentBlog from '../RecentPost/RecentBlog';
@@ -16,7 +16,7 @@ const OtherBlogs = () => {
         <Grid.Col span={4} className="!p-0 !pt-[100px]">
           <PopularBlog />
           <Space h={'xl'} />
-          <LastCommentBlog />
+          {/* <LastCommentBlog /> */}
           <Space h={'xl'} />
           <PopularCategories />
         </Grid.Col>

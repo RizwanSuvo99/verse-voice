@@ -1,4 +1,5 @@
 'use client';
+import allBlogs from '@/data/allBlogs';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { Container } from '@mantine/core';
@@ -7,44 +8,28 @@ import { useRef } from 'react';
 import CarouselItem from './CarouselItem';
 
 const Categories = () => {
-  const allCategories = [
-    {
-      backUrl:
-        'https://genz-nextjs-v3.vercel.app/assets/imgs/page/categories/cat1.png',
-      catergoyName: 'Travels',
-      categorySize: 4,
-    },
-    {
-      backUrl:
-        'https://genz-nextjs-v3.vercel.app/assets/imgs/page/categories/cat2.png',
-      catergoyName: 'Business',
-      categorySize: 8,
-    },
-    {
-      backUrl:
-        'https://genz-nextjs-v3.vercel.app/assets/imgs/page/categories/cat3.png',
-      catergoyName: 'Lifestyle',
-      categorySize: 7,
-    },
-    {
-      backUrl:
-        'https://genz-nextjs-v3.vercel.app/assets/imgs/page/categories/cat4.png',
-      catergoyName: 'Culture',
-      categorySize: 2,
-    },
-    {
-      backUrl:
-        'https://genz-nextjs-v3.vercel.app/assets/imgs/page/categories/cat5.png',
-      catergoyName: 'Minimal',
-      categorySize: 6,
-    },
-  ];
   const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const allCategories = allBlogs.reduce((acc, blog) => {
+    const existingCategory = acc.find(
+      (item) => item.categoryName === blog.category,
+    );
+    if (existingCategory) {
+      existingCategory.categorySize += 1;
+    } else {
+      acc.push({
+        categoryName: blog.category,
+        categoryImg: blog.categoryImg,
+        categorySize: 1,
+      });
+    }
+
+    return acc;
+  }, []);
 
   return (
     <Container size={1350} className="!px-0 py-4">
       <Carousel
-        withIndicators
+        dragFree
         slideSize={{ base: '100%', sm: '50%', md: '25%' }}
         slideGap={{ base: 0, sm: 'md' }}
         loop
@@ -55,10 +40,10 @@ const Categories = () => {
         controlSize={40}
       >
         {allCategories.map((category) => (
-          <Carousel.Slide key={category.catergoyName}>
+          <Carousel.Slide key={category.categoryName}>
             <CarouselItem
-              backUrl={category.backUrl}
-              catergoyName={category.catergoyName}
+              backUrl={category.categoryImg}
+              categoryName={category.categoryName}
               categorySize={category.categorySize}
             />
           </Carousel.Slide>

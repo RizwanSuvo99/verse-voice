@@ -1,5 +1,5 @@
 import { Center, Container, Stack, Text, Title } from '@mantine/core';
-import Subscribe from './Subscribe';
+// import Subscribe from './Subscribe';
 
 const Hero = () => {
   return (
@@ -26,7 +26,7 @@ const Hero = () => {
             ❞
           </Text>
         </Center>
-        <Subscribe />
+        {/* <Subscribe /> */}
       </Stack>
     </Container>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import LastCommentBlog from '@/components/LastCommentBlog/LastCommentBlog';
+// import LastCommentBlog from '@/components/LastCommentBlog/LastCommentBlog';
 import PopularCategories from '@/components/PopularCategories/PopularCategories';
 import PopularBlog from '@/components/PopularPost/PopularBlog';
 import {
@@ -95,7 +95,7 @@ const BlogSingle = () => {
         <Grid.Col span={4}>
           <PopularBlog />
           <Space h={'xl'} />
-          <LastCommentBlog />
+          {/* <LastCommentBlog /> */}
           <Space h={'xl'} />
           <PopularCategories />
         </Grid.Col>

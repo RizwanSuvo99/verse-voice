@@ -1,16 +1,10 @@
 'use client';
 
-import { logOut } from '@/api/logOut.mjs';
 import { Burger, Button, Container, Group } from '@mantine/core';
-import {
-  readLocalStorageValue,
-  useDisclosure,
-  useLocalStorage,
-} from '@mantine/hooks';
-import { useMutation } from '@tanstack/react-query';
+import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
@@ -19,7 +13,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(pathname);
-  const value = readLocalStorageValue({ key: 'isLoggedIn' });
+  // const value = readLocalStorageValue({ key: 'isLoggedIn' });
 
   const defaultLinks = [
     { link: '/', label: 'Home' },
@@ -28,9 +22,9 @@ const Navbar = () => {
     { link: '/contact', label: 'Contact' },
   ];
 
-  const [links, setLinks] = useState(defaultLinks);
+  // const [links, setLinks] = useState(defaultLinks);
 
-  const [token, setToken] = useLocalStorage({
+  /*   const [token, setToken] = useLocalStorage({
     key: 'token',
     defaultValue: null,
   });
@@ -63,14 +57,14 @@ const Navbar = () => {
     } else {
       setLinks(defaultLinks);
     }
-  }, [value]);
+  }, [value]); */
 
   return (
     <header className={classes.header}>
       <Container size={1350} className={`${classes.inner} !p-0`}>
-        <Logo />
+        <Logo setActive={setActive} />
         <Group gap={5} visibleFrom="md">
-          {links.map((link) => (
+          {defaultLinks.map((link) => (
             <Button
               variant={active === link.link ? 'filled' : 'outline'}
               component={Link}
@@ -82,7 +76,7 @@ const Navbar = () => {
             </Button>
           ))}
 
-          <Group justify="center" grow px="md">
+          {/*           <Group justify="center" grow px="md">
             <Button
               variant="default"
               component={Link}
@@ -106,7 +100,7 @@ const Navbar = () => {
             onClick={handleLogOut}
           >
             Log out
-          </Button>
+          </Button> */}
           <ThemeToggle />
         </Group>
         <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />

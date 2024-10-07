@@ -1,6 +1,5 @@
 'use client';
 import {
-  ActionIcon,
   AspectRatio,
   Avatar,
   Badge,
@@ -9,12 +8,10 @@ import {
   Flex,
   Group,
   Image,
-  rem,
   Space,
   Text,
-  useMantineTheme,
 } from '@mantine/core';
-import { IconClock, IconHeart } from '@tabler/icons-react';
+import { IconClock } from '@tabler/icons-react';
 
 const SingleBlog = ({ blog }) => {
   const {
@@ -27,7 +24,8 @@ const SingleBlog = ({ blog }) => {
     publishDate,
     timeRead,
   } = blog;
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
+
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
       <Flex direction="column" className="!min-h-[570px] !gap-4">
@@ -67,7 +65,7 @@ const SingleBlog = ({ blog }) => {
           </Group>
         </div>
 
-        <Group justify="space-between">
+        {/*         <Group justify="space-between">
           <Text fz="xs" c="dimmed">
             733 people liked this
           </Text>
@@ -80,7 +78,7 @@ const SingleBlog = ({ blog }) => {
               />
             </ActionIcon>
           </Group>
-        </Group>
+        </Group> */}
       </Flex>
     </Card>
   );

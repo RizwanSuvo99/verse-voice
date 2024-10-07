@@ -1,3 +1,4 @@
+import allBlogs from '@/data/allBlogs';
 import {
   ActionIcon,
   Anchor,
@@ -10,177 +11,6 @@ import {
   Text,
 } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
-
-const allBlogs = [
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img.png',
-    title: 'Facts About Business That Will Help You Success',
-    category: 'Design',
-    authorName: 'Roney',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author.png',
-    publishDate: '28 June 2023',
-    timeRead: '35 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img2.png',
-    title: 'Helpful Tips for Working from Home as a Freelancer',
-    category: 'Design',
-    authorName: 'Harry',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author2.png',
-    publishDate: '27 June 2023',
-    timeRead: '7 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img3.png',
-    title: '10 Easy Ways to Be Environmentally Conscious At Home',
-    category: 'Design',
-    authorName: 'Steven',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author3.png',
-    publishDate: '15 May 2023',
-    timeRead: '8 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img4.png',
-    title: 'How to Give Your Space a Parisian-Inspired Makeover',
-    category: 'Travel',
-    authorName: 'Rose',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author4.png',
-    publishDate: '12 May 2023',
-    timeRead: '12 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img5.png',
-    title:
-      'The 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan',
-    category: 'Travel',
-    authorName: 'Joseph',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author5.png',
-    publishDate: '25 April 2023',
-    timeRead: '5 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img.png',
-    title: 'Facts About Business That Will Help You Success',
-    category: 'Design',
-    authorName: 'Roney',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author.png',
-    publishDate: '28 June 2023',
-    timeRead: '35 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img2.png',
-    title: 'Helpful Tips for Working from Home as a Freelancer',
-    category: 'Design',
-    authorName: 'Harry',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author2.png',
-    publishDate: '27 June 2023',
-    timeRead: '7 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img3.png',
-    title: '10 Easy Ways to Be Environmentally Conscious At Home',
-    category: 'Design',
-    authorName: 'Steven',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author3.png',
-    publishDate: '15 May 2023',
-    timeRead: '8 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img4.png',
-    title: 'How to Give Your Space a Parisian-Inspired Makeover',
-    category: 'Travel',
-    authorName: 'Rose',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author4.png',
-    publishDate: '12 May 2023',
-    timeRead: '12 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img5.png',
-    title:
-      'The 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan',
-    category: 'Travel',
-    authorName: 'Joseph',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author5.png',
-    publishDate: '25 April 2023',
-    timeRead: '5 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img.png',
-    title: 'Facts About Business That Will Help You Success',
-    category: 'Design',
-    authorName: 'Roney',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author.png',
-    publishDate: '28 June 2023',
-    timeRead: '35 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img2.png',
-    title: 'Helpful Tips for Working from Home as a Freelancer',
-    category: 'Design',
-    authorName: 'Harry',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author2.png',
-    publishDate: '27 June 2023',
-    timeRead: '7 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img3.png',
-    title: '10 Easy Ways to Be Environmentally Conscious At Home',
-    category: 'Design',
-    authorName: 'Steven',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author3.png',
-    publishDate: '15 May 2023',
-    timeRead: '8 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img4.png',
-    title: 'How to Give Your Space a Parisian-Inspired Makeover',
-    category: 'Travel',
-    authorName: 'Rose',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author4.png',
-    publishDate: '12 May 2023',
-    timeRead: '12 mins read',
-  },
-  {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img5.png',
-    title:
-      'The 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan 60 Things To Do About Building A Plan',
-    category: 'Travel',
-    authorName: 'Joseph',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author5.png',
-    publishDate: '25 April 2023',
-    timeRead: '5 mins read',
-  },
-];
 
 const categoryColors = [
   '#FF5733', // Persimmon
@@ -205,10 +35,10 @@ const categoryColors = [
 
 const AllBlogs = () => {
   const rows = allBlogs?.map((item, index) => (
-    <Table.Tr key={item.name} className="!text-center">
+    <Table.Tr key={item.title} className="!text-center">
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={80} src={item.imgUrl} radius={'lg'} />
+          <Avatar size={80} src={item.authorAvatar} radius={'lg'} />
           <Text fz="md" fw={500} lineClamp={1} className="!max-w-[600px]">
             {item.title}
           </Text>
