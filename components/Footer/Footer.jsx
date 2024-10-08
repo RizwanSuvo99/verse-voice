@@ -78,7 +78,7 @@ const Footer = () => {
                     >
                       <Link
                         href={`/category/${cat.toLowerCase()}`}
-                        className="!text-white !no-underline"
+                        className="!text-[#1971c2] !no-underline"
                       >
                         {cat}
                       </Link>

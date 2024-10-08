@@ -35,7 +35,7 @@ const ContactForm = () => {
           variant="filled"
           {...form.getInputProps('name')}
           classNames={{
-            input: '!h-[70px] !p-6',
+            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
           }}
         />
         <TextInput
@@ -45,7 +45,7 @@ const ContactForm = () => {
           variant="filled"
           {...form.getInputProps('email')}
           classNames={{
-            input: '!h-[70px] !p-6',
+            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
           }}
         />
       </SimpleGrid>
@@ -58,7 +58,7 @@ const ContactForm = () => {
           variant="filled"
           {...form.getInputProps('phoneNumber')}
           classNames={{
-            input: '!h-[70px] !p-6',
+            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
           }}
         />
         <TextInput
@@ -68,7 +68,7 @@ const ContactForm = () => {
           variant="filled"
           {...form.getInputProps('subject')}
           classNames={{
-            input: '!h-[70px] !p-6',
+            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
           }}
         />
       </SimpleGrid>
@@ -82,7 +82,7 @@ const ContactForm = () => {
         variant="filled"
         {...form.getInputProps('message')}
         classNames={{
-          input: '!h-[350px] !p-6',
+          input: '!h-[300px] md:!h-[350px] !p-4 md:!p-6',
         }}
       />
 
