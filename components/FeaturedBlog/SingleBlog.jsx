@@ -10,11 +10,9 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
-import Link from 'next/link';
 
 const SingleBlog = ({ blog }) => {
   const {
-    id,
     imgUrl,
     title,
     category,
@@ -45,15 +43,11 @@ const SingleBlog = ({ blog }) => {
         <Group className="!items-center">
           <Avatar src={authorAvatar} alt="author-img" />
           <div>
-            <Text className="!text-xl !font-bold">{authorName}</Text>
+            <Text className="!text-md !font-bold">{authorName}</Text>
             <Text className="!text-sm">{publishDate}</Text>
           </div>
         </Group>
-        <Button variant="transparent">
-          <Link href={`/blogs/${id}`} className="!no-underline">
-            Read More
-          </Link>
-        </Button>
+        <Button variant="transparent">Read More</Button>
       </Group>
     </Card>
   );

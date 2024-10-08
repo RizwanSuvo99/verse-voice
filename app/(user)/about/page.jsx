@@ -25,14 +25,14 @@ const About = () => {
   return (
     <Container size={1350} className="!px-0 pt-[100px]">
       <SimpleGrid
-        cols={{ base: 1, sm: 2 }}
+        cols={{ base: 1, md: 2 }}
         spacing="md"
         className="!mx-auto !w-[80%]"
       >
         <Card
           shadow="sm"
           radius="md"
-          className="!bg-[#0ea5ea] !p-[100px] !text-[#fff]"
+          className="!bg-[#0ea5ea] !p-[30px]  md:!p-[40px]  !text-[#fff]"
         >
           <AspectRatio ratio={1}>
             <Image
@@ -40,12 +40,12 @@ const About = () => {
               src="/assets/admin.png"
               fit="contain"
               fallbackSrc="https://placehold.co/70x70?text=admin-img"
-              className="!h-[300px]"
               shadow="xl"
+              className='!h-[260px] sm:!h-[300px]'
             />
           </AspectRatio>
           <Center>
-            <Text component={Title}>Fakharuddin Pintu</Text>
+            <Text className="!text-center !text-[28px] md:!text-[40px]" fw={600}>Fakharuddin Pentu</Text>
           </Center>
           <Center my={'0 1.5rem'}>
             <Text>fakharuddinpintu@gmail.com</Text>
@@ -60,7 +60,7 @@ const About = () => {
             <Card
               radius="md"
               shadow="sm"
-              padding="xl"
+              padding="lg"
               className="!bg-[#0ea5ea] !text-[#fff]"
             >
               <Text component={Title}>About Me</Text>
@@ -83,7 +83,7 @@ const About = () => {
             <Card
               radius="md"
               shadow="sm"
-              padding="xl"
+              padding="lg"
               className="!bg-[#0ea5ea] !text-[#fff]"
             >
               <Text fw={600} className="!text-2xl">

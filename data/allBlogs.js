@@ -23,8 +23,7 @@ Stories like this make me think how crazy and unfair life can be sometimes. Mugd
 Mugdho didn’t deserve this. But, even in his last moments, his kindness is something we should all remember.
 `,
     category: 'Inspirational',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2024/01/27/23/06/ai-generated-8536909_1280.jpg',
+    categoryImg: '/assets/Inspirational.jpg',
     authorName: 'Hamidul Haque Fahim',
     authorAvatar: null,
     authorDetails: 'Roll: 1339 (Humanities, 24-25)',
@@ -83,8 +82,7 @@ The unreal imagination that runs through my neurons,
 `,
     publishDate: '12 May 2023',
     authorName: 'Himel Saha Bisal',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2018/03/19/18/20/tea-time-3240766_1280.jpg',
+    categoryImg: '/assets/Poetry.jpg',
     authorAvatar: '/assets/blog_2_author.png',
     authorDetails: 'Roll: 1310 (Humanities, 24-25)',
     timeRead: '2 mins read',
@@ -114,8 +112,7 @@ Only wondered if we’d ever meet—again?
 `,
     publishDate: '12 May 2023',
     authorName: 'Himel Saha Bisal',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2018/03/19/18/20/tea-time-3240766_1280.jpg',
+    categoryImg: '/assets/Poetry.jpg',
     authorAvatar: '/assets/blog_3_author.png',
     authorDetails: 'Roll: 1310 (Humanities, 24-25)',
     timeRead: '2 mins read',
@@ -165,8 +162,7 @@ We cannot let circumstances or other people control our lives! The only one!
     Once upon a time, there were two friends who were barely close, and they did not know much about each other. Their names were Ana and Deni. Ana thought they would be a good match and she felt relief because of finding a humble person. So, their days were becoming colorful by the company of each other. One day, when Ana was going to her aunt's house, she saw Deni on the street and asked her what happened. Deni told Ana that some people were talking behind her and added that she had fought with them for her. Though Ana felt bad hearing that news, she was also happy to have such a good friend. She told Deni goodbye and went to her destination. At night, when she was thinking about the day, Deni's words rushed to her mind, and out of curiosity, she asked another friend about the incident. One of her closest friends told her that she had not heard anything about the incident and also commented that what Ana had done was right. The thing is, a few days ago they had joined college, and she had created a group to stay connected with all the classmates. One day, a boy named Joe sent a request to join the group, and she approved it. One day, while scrolling through her social media, she saw a group where she had been added by Joe. He had added her without asking. At that time, she saw that a reckless boy had sent a reel that didn't suit the environment of the group. As the admin of the group, she told him not to send this type of thing in a group where he didn’t know most of the people. After some conversation, he said that he wouldn’t send those things anymore. But after some time, another boy sent a meme, and that was the start button. Then all the immature people started to send unsuitable messages. Seeing that, she left the group. After leaving the group, the admin of the group, Joe, messaged her and said sorry. After some days, they started to talk recklessly bad about Ana, which was informed to her by Deni. So, that was the short incident. After some days, another friend of hers sent her some screenshots of the group where they talked about Ana. After seeing the conversation, Ana felt fooled. Her friend, Deni, who informed her about this incident, was also involved in the reckless conversations, and Deni's words were negative for Ana's image. She asked her nothing about the happenings. Not because she couldn’t get hold of her, but because she felt a vast amount of hatred for this two-faced person, whom she had loved and believed, had deceived her. Though Deni continued to send her messages and tried to talk to her in person, Ana declined the proposal. Ana just ignored her. The End. ( Based on a true story).
     `,
     category: 'Fiction',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2023/03/15/20/46/background-7855413_1280.jpg',
+    categoryImg: '/assets/Fiction.jpg',
     authorName: 'Bushra Jahan Shifa',
     authorAvatar: null,
     authorDetails: 'Science, HSC 2026, Roll-331',
@@ -203,8 +199,7 @@ After hearing that, some of our team members suggested leaving immediately, but 
 
     `,
     category: 'Non-fiction',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2019/09/03/07/57/man-4448884_1280.jpg',
+    categoryImg: '/assets/Non-fiction.jpg',
     authorName: 'Fariha Akter',
     authorAvatar: null,
     authorDetails: 'HSC 2025, Roll-1004',
@@ -224,8 +219,7 @@ The happiness I feel during such moments is beyond measure. When I spend time wi
 In conclusion, I want to say one thing: follow your heart and what it says. Don’t let others snatch your happiness. Wherever you are, remember to enjoy every moment of your life. Life is beautiful. As soon as possible find your happiness and live joyfully.
     `,
     category: 'Opinion',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2017/09/10/18/25/question-2736480_1280.jpg',
+    categoryImg: '/assets/Opinion.jpg',
     authorName: 'Fariha Akter',
     authorAvatar: null,
     authorDetails: 'Roll:30 Group:Science Exam year:2025 ',
@@ -250,8 +244,7 @@ Everything hurt. It was the sort of pain that made it hard to breathe. The baby 
 
     `,
     category: 'Reviews',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2020/06/07/12/03/poppy-5270098_1280.jpg',
+    categoryImg: '/assets/Reviews.jpg',
     authorName: 'Amina Noor Punno',
     authorAvatar: '/assets/blog_7_author.jpg',
     authorDetails: 'Class-11 group-Science. Roll-237',
@@ -337,8 +330,7 @@ Immortal be the title you gave me.
 
     `,
     category: 'Poetry',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2018/03/19/18/20/tea-time-3240766_1280.jpg',
+    categoryImg: '/assets/Poetry.jpg',
     authorName: 'Ria',
     authorAvatar: null,
     authorDetails: '',
@@ -362,8 +354,7 @@ Therefore, it’s important for the government to encourage talented students to
 
     `,
     category: 'Opinion',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2017/09/10/18/25/question-2736480_1280.jpg',
+    categoryImg: '/assets/Opinion.jpg',
     authorName: 'Jarif Tahsin',
     authorAvatar: null,
     authorDetails: 'Class XI, Humanities; Roll 1077',
@@ -380,8 +371,7 @@ Therefore, it’s important for the government to encourage talented students to
   I wanted to be sick all the time because I thought that way I wouldn’t have to do the house chores. That sick hobby of mine soon faded away. The reason was my dearest person’s passing. He was diagnosed with cancer. He was the strongest person I ever saw in my life. On 13.05.2016, he first told us about his chest pain. I don’t remember him walking me to school after that day. It was quite upsetting for me, but I grew out of it. Then suddenly, many of my relatives started coming to our house at random. My exam was approaching, but my mom was not there because she had taken him to India for better treatment. I was annoyed at how my scores started to fall, and for the first time, I failed in one subject. The reason was probably my mom not being with me, or my relatives and other guests I had never seen before making me lose my concentration. I don’t know why, but I started to feel really annoyed, and maybe my siblings did too. After 5 months, they came back with no improvement. I got frustrated. I started ignoring him. Was I too young, or was it my mentality? I don’t remember, and I don’t want to. The guilt still clenches me. My throat tightens whenever that memory flashes before my eyes. I remember my mom crying alone because she knew something that we didn’t. Another 4 months passed. Tomorrow is my final exam. I can’t sleep on the floor. My back hurts. Some people I don’t know are lying on my bed wide awake. They’re crying silently. I didn’t want to fail that exam, but I couldn’t sleep either. When my eyes finally closed, some faint voices started calling for me. It was my sibling. The voices started to become clear. I woke up lazily. They started crying loudly. I got annoyed and thought, why would they cry so much when I knew he wouldn’t die. I knew he was strong enough to fight back. I knew he wouldn’t leave us. He was lying on one side of the bed, and I was at the corner sitting. I looked at him closely after so long that my words got stuck in my mouth. His body was so skinny that it felt like his skin was disturbingly attached to his bones. I still had faith in him. Everyone was sobbing. But the voices became faint. A tear escaped my eye unknowingly. The guilt started gushing through me. I felt empty. I wanted to make sure that he didn’t leave us, but I couldn’t move and started observing everyone. I had hope in my eyes that maybe there would be someone who would assure me that everything was fine. It was a dream, but my dad’s reaction showed it all. Then it all just stopped. My hope, the clock, and his heartbeat. On 13.03.2017, at 3:20 am, my Dadabhai left us behind.
     `,
     category: 'Inspirational',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2024/01/27/23/06/ai-generated-8536909_1280.jpg',
+    categoryImg: '/assets/Inspirational.jpg',
     authorName: 'Mir Lamia Hossain',
     authorAvatar: '/assets/blog_10_author.jpg',
     authorDetails: 'Science Hsc-26 Roll:274',
@@ -398,8 +388,7 @@ Therefore, it’s important for the government to encourage talented students to
 Creativeness can come naturally or forcefully. But there’s also one thing that not many people told you about. It’s stealing. Feels wrong but it’s the gospel. Every artist gets asked “where do you get your ideas from?” If the artist is honest he’ll reply with “I steal them” Now if you ask me how to steal then I’m going to say look around yourself and find what’s worth stealing, then you move on the next thing. If you don’t find something worth stealing today you might find it tomorrow or a month or even a year later. As the French writer André Gide put it “Everything that needs to be said has already been said. But, since no one was listening, everything must be said again” Now if you may ask what’s originality then the English writer William Ralph Inge’s going to say “Undetected plagiarism” If you feel like that you’re doing something wrong then mark the words of Mark Twain who said “It is better to take what does not belong to you than to let it lie around neglected “ All you have to do is copy copy and copy until you find your true self. We’re talking about practice here, not plagiarism—plagiarism is trying to pass someone else’s work off as your own. Copying is about reverse engineering. It’s like a machine taking apart a car to see how it works. Remember even The Beatles started as a cover band. First you have to figure out who to copy. Second, you must figure out what to copy. Who to copy is easy. You copy your heroes. What to copy is a little bit trickier. Don’t just steal the style but steal the thinking behind the style. All you have to do is unlock your creativity. 
     `,
     category: 'Opinion',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2017/09/10/18/25/question-2736480_1280.jpg',
+    categoryImg: '/assets/Opinion.jpg',
     authorName: 'Mir Lamia Hossain',
     authorAvatar: '/assets/blog_11_author.jpg',
     authorDetails: 'Science Hsc-26 Roll:274',
@@ -416,8 +405,7 @@ Creativeness can come naturally or forcefully. But there’s also one thing that
 One of the biggest challenges I ever faced in my life was moving to the city for my education, and it taught me to stay strong to confront my obstacles. I am basically from a village, not from the city. I always wanted to pursue higher education. That's why I enrolled in a college located in the city. As a girl from the village, it wasn't an easy task for me. I was commuting from my village to college, and it was a long journey. After traveling, I couldn't focus on my studies. Besides that, my parents, who are not highly educated, didn’t understand the situation, but they were trying their best to figure something out. However, I had a few relatives in the city, although we were not well acquainted. If I went there as a guest, they might have received me cordially, but if I went there to stay, it wouldn't be convenient for them. So, we didn’t think it was okay to bother them. At that time, I felt like I was the only one struggling, while all my classmates were already settled. Their tuition and accommodations were figured out. At this stage of life, I realized the importance of having some good connections in the city. Two months after I got admitted to college, I made a friend, and I talked to her about my situation. She told me that she had found a place to live and suggested that I join her. I gave it some thought and went to check the place out. Luckily, I liked it. Though the place was simple, at that time, I was too desperate for a place to stay. I remembered the proverb, "Something is better than nothing." I consulted with my father, and he agreed to send me here. Fortunately, this is the place where I am staying now. I am really grateful to her. That was a very challenging moment for me because I had to find a place all by myself. It was difficult, especially when everyone else around me seemed settled, while I was struggling. That was pathetic! In the end, I can say that challenges are an integral part of life. One more thing—there is no way to escape from them. The real heroes are the ones who overcome their challenges on their own. Honestly, now I feel like I am much tougher than before. I was once a girl who depended on her parents for every little thing, but now I face challenges daily. For instance, I am adjusting to a new place and new people. Consequently, those challenges have made me stronger and more capable. In conclusion, I want to say we all need to learn how to overcome challenges in our lives. 
     `,
     category: 'Inspirational',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2024/01/27/23/06/ai-generated-8536909_1280.jpg',
+    categoryImg: '/assets/Inspirational.jpg',
     authorName: 'Fatematuj Juhora ',
     authorAvatar: null,
     authorDetails: 'Class: 12 Roll: 30 Group: Science',
@@ -434,8 +422,7 @@ One of the biggest challenges I ever faced in my life was moving to the city for
 We are familiar with various types of pollution and are working tirelessly day and night to combat them. We may mention types of pollution like air pollution, soil pollution, and water pollution, which can cause cancer, damage the skin, and much more. These hinder our longevity, right? But what if I say there is another form of pollution in our country—Bangladesh—that is far more dangerous? Yeah, you heard right. I am talking about lead pollution. The most dangerous part of the problem is that it affects our nervous system. It damages our brain and completely destroys our creativity. The effects of lead poisoning are gradual but certain. Historically, the Roman Empire is believed to have declined due to the extensive use of lead. Sadly, many people in our country are being affected by this problem. But they are not getting proper treatment because this issue is not widely known or properly introduced to most people. Isn't it something to think about? I am writing this to make people aware of the problem, as it is one of the most talked-about topics in other countries.
     `,
     category: 'Environment',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2020/07/03/10/28/waterfall-5365926_1280.jpg',
+    categoryImg: '/assets/Environment.jpg',
     authorName: 'Muntasir Hasan',
     authorAvatar: '/assets/blog_13_author.jpg',
     authorDetails: 'Batch:26 Roll: 69',
@@ -473,8 +460,7 @@ In today’s world, there are many competitors in the job market. Among them, on
 I believe there are no binding rules in this sector. You can work according to your own thoughts, with no fear of job loss. It is very necessary to learn about self-employment from our student life so that we don’t have to face any hassle regarding this in the future. But unfortunately, our institutions are not giving us the knowledge of self-employment. As a result, most students may not be aware of this topic. Students should know these mandatory things and develop their skills. In the age of the internet, you can easily develop your skills in any subject with the help of various websites and YouTube channels. By doing this, we can take the country to an extraordinary level. If we have the will, we can do many things and overcome all obstacles. But if we don’t have the desire to do it, then we can’t succeed, even if we have everything in our hands...
     `,
     category: 'Opinion',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2017/09/10/18/25/question-2736480_1280.jpg',
+    categoryImg: '/assets/Opinion.jpg',
     authorName: 'Shahmin Sabira Nokshe',
     authorAvatar: null,
     authorDetails: 'Class: 11(B) Roll: 270 Group: Science Year:2026',
@@ -506,8 +492,7 @@ To be continued...
 
     `,
     category: 'Non-fiction',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2019/09/03/07/57/man-4448884_1280.jpg',
+    categoryImg: '/assets/Non-fiction.jpg',
     authorName: 'Fariha',
     authorAvatar: null,
     authorDetails: 'HSC 2025, Humanities, Roll-1004',
@@ -563,8 +548,7 @@ Happiness is subjective. It's the simple joys like spending time with kids or ca
 
     `,
     category: 'Fiction',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2023/03/15/20/46/background-7855413_1280.jpg',
+    categoryImg: '/assets/Fiction.jpg',
     authorName: 'Meher Nigar ',
     authorAvatar: null,
     authorDetails: '',
@@ -640,8 +624,7 @@ In the end of my writing,I want to say that I also want to be a therapist in eve
 
     `,
     category: 'Opinion',
-    categoryImg:
-      'https://cdn.pixabay.com/photo/2017/09/10/18/25/question-2736480_1280.jpg',
+    categoryImg: '/assets/Opinion.jpg',
     authorName: 'Syeda Anika Tabassum',
     authorAvatar: null,
     authorDetails: 'HSC 2025, Business Studies, Roll-546',
