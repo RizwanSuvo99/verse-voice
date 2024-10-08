@@ -1,5 +1,6 @@
 'use client';
 
+import allBlogs from '@/data/allBlogs';
 import {
   Button,
   Container,
@@ -21,9 +22,12 @@ import {
   IconMail,
   IconUser,
 } from '@tabler/icons-react';
+import Link from 'next/link';
 import Logo from '../Header/Logo';
 
 const Footer = () => {
+  const categories = [...new Set(allBlogs.map((item) => item.category))];
+
   return (
     <footer className="mt-14">
       <Container size={1350} className="!mt-[100px] !px-0 !py-4">
@@ -51,20 +55,15 @@ const Footer = () => {
               </Title>
               <Group grow>
                 <Stack>
-                  <Text span>Action</Text>
-                  <Text span>Business</Text>
-                  <Text span>Adventure</Text>
-                  <Text span>Canada</Text>
-                  <Text span>America</Text>
-                  <Text span>Curiosity</Text>
-                </Stack>
-                <Stack>
-                  <Text span>Animal</Text>
-                  <Text span>Dental</Text>
-                  <Text span>Biology</Text>
-                  <Text span>Design</Text>
-                  <Text span>Breakfast</Text>
-                  <Text span>Dessert</Text>
+                  {categories.map((cat) => (
+                    <Link
+                      href={`/category/${cat.toLowerCase()}`}
+                      key={cat}
+                      className="!no-underline"
+                    >
+                      {cat}
+                    </Link>
+                  ))}
                 </Stack>
               </Group>
             </Grid.Col>
