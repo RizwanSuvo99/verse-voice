@@ -4,8 +4,8 @@ import CategoryPageInner from './CategoryPageInner';
 
 const Category = ({ params }) => {
   const { catname } = params;
-  const categoryName =
-    catname.charAt(0).toUpperCase() + catname.substring(1).toLowerCase();
+  const categoryName = catname.charAt(0).toUpperCase() + catname.substring(1);
+
   const foundBlogs = allBlogs.filter((blog) => blog.category === categoryName);
 
   return (
