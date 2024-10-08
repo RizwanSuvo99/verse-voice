@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Divider,
+  Flex,
   Grid,
   Group,
   Paper,
@@ -29,32 +30,62 @@ const Footer = () => {
   const categories = [...new Set(allBlogs.map((item) => item.category))];
 
   return (
-    <footer className="mt-14">
-      <Container size={1350} className="!mt-[100px] !px-0 !py-4">
-        <Paper className="px-32 py-20" radius="lg" withBorder>
+    <footer>
+      <Container size={1150} className="!mt-[100px] !px-6 !py-4">
+        <Paper
+          className="px-6 py-10 md:px-12 lg:px-36 lg:py-20"
+          radius="lg"
+          withBorder
+        >
           <Grid gutter={'xl'} grow>
-            <Grid.Col span={4}>
+            {/* First column with logo and address */}
+            <Grid.Col span={12} md={4}>
               <Logo />
               <Space h={'lg'} />
-              <Text>
-                When an unknown prnoto sans took a galley and scrambled it to
-                make specimen book not only five When an unknown prnoto sans
-                took a galley and scrambled it to five centurie.
+              <Text className="!text-md sm:!text-xl">
+                In Bangladesh, students often memorize answers for exams without
+                really engaging with writing as a craft. Sadly, they lack the
+                motivation or platforms to express themselves freely in writing.
+                That’s where this site comes in! We’re offering a space where
+                you can write about anything—no topic is off-limits. Whether
+                you’re interested in fiction, social issues, or personal
+                experiences, you can explore your voice and ideas with full
+                freedom.
               </Text>
-              <Title order={5} className="!mt-3">
-                Address
-              </Title>
-              <Stack className="!gap-0">
-                <Text span>123 Main Street</Text>
-                <Text span>New York, NY 10001</Text>
-              </Stack>
+              <Space h={'lg'} />
+              <Text className="!text-md sm:!text-xl">
+                Writing is more than just a subject for exams; it’s a life
+                skill. It helps you think critically, express your thoughts
+                clearly, and solve problems creatively. Plus, the more you
+                practice, the better your results will be—without memorizing
+                answers! Writing here will help you improve not just for your
+                exams, but for life.
+              </Text>
             </Grid.Col>
-            <Grid.Col span={4}>
+
+            {/* Second column with categories */}
+            <Grid.Col span={12} md={4}>
               <Title order={4} className="!mb-8">
                 Categories
               </Title>
-              <Group grow>
-                <Stack>
+              <Flex>
+                <div className="!flex !flex-wrap !gap-2">
+                  {categories.map((cat) => (
+                    <Button
+                      className="!border-[2px] !border-[#1971c2]"
+                      variant="transparent"
+                    >
+                      <Link
+                        href={`/category/${cat.toLowerCase()}`}
+                        key={cat}
+                        className="!text-white !no-underline"
+                      >
+                        {cat}
+                      </Link>
+                    </Button>
+                  ))}
+                </div>
+                {/* <Stack>
                   {categories.map(
                     (cat, i) =>
                       i <= Math.floor(categories.length / 2) && (
@@ -81,12 +112,14 @@ const Footer = () => {
                         </Link>
                       ),
                   )}
-                </Stack>
-              </Group>
+                </Stack> */}
+              </Flex>
             </Grid.Col>
-            <Grid.Col span={4}>
+
+            {/* Third column with newsletter subscription */}
+            <Grid.Col span={12} md={4}>
               <Stack>
-                <Title order={4} className="!mb-8">
+                <Title order={4} className="!mb-2">
                   Newsletter
                 </Title>
                 <Text>
@@ -122,15 +155,18 @@ const Footer = () => {
               </Stack>
             </Grid.Col>
           </Grid>
+
           <Divider className="!my-10" />
-          <Group justify="space-between">
-            <Text>
+
+          {/* Footer Bottom Section */}
+          <Group className="flex-col md:flex-row" justify="space-between">
+            <Text className="text-center md:text-left">
               © 2024 Created by{' '}
               <Text variant="gradient" span>
                 Rizwan & Ekram
               </Text>
             </Text>
-            <Group gap="xl">
+            <Group gap="xl" className="flex-col md:flex-row">
               <Group gap={'xs'}>
                 <IconBrandTwitter stroke={2} />
                 <Text>Twitter</Text>

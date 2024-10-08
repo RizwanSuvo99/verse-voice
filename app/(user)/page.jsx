@@ -8,8 +8,8 @@ export default function Home() {
     <main>
       <Hero />
       <Categories />
-      <FeaturedBlog />
-      <OtherBlogs />
+      {/* <FeaturedBlog />
+      <OtherBlogs /> */}
     </main>
   );
 }
