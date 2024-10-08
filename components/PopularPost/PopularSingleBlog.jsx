@@ -1,4 +1,5 @@
 import { AspectRatio, Divider, Flex, Image, Text } from '@mantine/core';
+import NextImage from 'next/image';
 import Link from 'next/link';
 
 const PopularSingleBlog = ({ blog, divider }) => {
@@ -9,7 +10,13 @@ const PopularSingleBlog = ({ blog, divider }) => {
       <Flex className="!cursor-pointer !gap-4">
         <div className="!flex-1">
           <AspectRatio ratio={1}>
-            <Image src={imgUrl} height={100} alt="Norway" radius="md" />
+            <Image
+              component={NextImage}
+              src={imgUrl}
+              height={100}
+              alt="Norway"
+              radius="md"
+            />
           </AspectRatio>
         </div>
         <div className="!flex-1">

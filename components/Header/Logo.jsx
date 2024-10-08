@@ -8,11 +8,11 @@ const Logo = ({ setActive }) => {
       <Group className="!gap-2">
         <AspectRatio ratio={1}>
           <Image
+            component={NextImage}
             alt="classRoomWriters-logo"
             src="/assets/logo.svg"
             fit="contain"
             fallbackSrc="https://placehold.co/70x70?text=Logo"
-            component={NextImage}
             width={70}
             height={70}
             className="!w-[40px] sm:!w-[70px]"

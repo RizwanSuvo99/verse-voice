@@ -10,6 +10,7 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
+import NextImage from 'next/image';
 import Link from 'next/link';
 
 const SingleBlog = ({ blog }) => {
@@ -27,7 +28,13 @@ const SingleBlog = ({ blog }) => {
   return (
     <Card shadow="sm" padding="xl" radius="xl" withBorder className="!h-full">
       <AspectRatio ratio={4 / 3}>
-        <Image src={imgUrl} height={350} alt="Norway" radius="xl" />
+        <Image
+          component={NextImage}
+          src={imgUrl}
+          height={350}
+          alt="Norway"
+          radius="xl"
+        />
       </AspectRatio>
       <Space h={'xl'} />
       <Group justify="space-between">
