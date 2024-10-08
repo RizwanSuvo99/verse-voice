@@ -1,6 +1,13 @@
+# Enable the Rewrite Engine
 RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.html$ - [L]
+
+# Handle 404 errors
+ErrorDocument 404 /404.html
+
+# Redirect all requests to the appropriate HTML files
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L]
+RewriteRule ^(.*)$ $1.html [L]
+
+# Optional: Redirect to index.html for the root URL
+RewriteRule ^$ index.html [L]
