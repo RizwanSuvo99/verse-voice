@@ -196,7 +196,7 @@ From then on, sometimes the villagers hear some weird noises from that house. An
 After hearing that, some of our team members suggested leaving immediately, but a few wanted to stay. I also wanted to stay and figure out what was happening...
 
     `,
-    category: 'Non Fiction',
+    category: 'Non-Fiction',
     categoryImg:
       'https://cdn.pixabay.com/photo/2019/09/03/07/57/man-4448884_1280.jpg',
     authorName: 'Fariha Akter',
@@ -488,7 +488,7 @@ After hearing this, some of our team members wanted to leave immediately, while 
 To be continued...
 
     `,
-    category: 'Non Fiction',
+    category: 'Non-Fiction',
     categoryImg:
       'https://cdn.pixabay.com/photo/2019/09/03/07/57/man-4448884_1280.jpg',
     authorName: 'Fariha',
