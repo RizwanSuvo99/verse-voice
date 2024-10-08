@@ -15,13 +15,14 @@ const Logo = ({ setActive }) => {
             component={NextImage}
             width={70}
             height={70}
+            className="!w-[40px] sm:!w-[70px]"
           />
         </AspectRatio>
 
         <Text
           variant="gradient"
           component={Title}
-          className="!max-w-[170px] !text-[20px] !uppercase"
+          className="!max-w-[170px] !text-[15px] !uppercase sm:!text-[20px]"
         >
           Class Room Writers
         </Text>

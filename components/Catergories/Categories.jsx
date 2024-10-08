@@ -9,6 +9,7 @@ import CarouselItem from './CarouselItem';
 
 const Categories = () => {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
+
   const allCategories = allBlogs.reduce((acc, blog) => {
     const existingCategory = acc.find(
       (item) => item.categoryName === blog.category,
@@ -27,11 +28,12 @@ const Categories = () => {
   }, []);
 
   return (
-    <Container size={1350} className="!px-0 py-4">
+    <Container size={1350} className="!px-6 py-4">
       <Carousel
         dragFree
-        slideSize={{ base: '100%', sm: '50%', md: '25%' }}
-        slideGap={{ base: 0, sm: 'md' }}
+        // Responsive settings for different screen sizes
+        slideSize={{ base: '100%', sm: '50%', md: '33.333%', lg: '25%' }}
+        slideGap={{ base: 'xs', sm: 'md', md: 'lg' }}
         loop
         align="start"
         plugins={[autoplay.current]}

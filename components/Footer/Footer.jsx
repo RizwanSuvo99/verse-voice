@@ -55,15 +55,32 @@ const Footer = () => {
               </Title>
               <Group grow>
                 <Stack>
-                  {categories.map((cat) => (
-                    <Link
-                      href={`/category/${cat.toLowerCase()}`}
-                      key={cat}
-                      className="!no-underline"
-                    >
-                      {cat}
-                    </Link>
-                  ))}
+                  {categories.map(
+                    (cat, i) =>
+                      i <= Math.floor(categories.length / 2) && (
+                        <Link
+                          href={`/category/${cat.toLowerCase()}`}
+                          key={cat}
+                          className="!text-white"
+                        >
+                          {cat}
+                        </Link>
+                      ),
+                  )}
+                </Stack>
+                <Stack>
+                  {categories.map(
+                    (cat, i) =>
+                      i > Math.floor(categories.length / 2) && (
+                        <Link
+                          href={`/category/${cat.toLowerCase()}`}
+                          key={cat}
+                          className="!text-white"
+                        >
+                          {cat}
+                        </Link>
+                      ),
+                  )}
                 </Stack>
               </Group>
             </Grid.Col>

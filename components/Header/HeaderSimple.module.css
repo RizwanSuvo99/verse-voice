@@ -12,6 +12,49 @@
   align-items: center;
 }
 
+.mobileMenu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80%;
+  background-color: #1a1a1a; /* Dark background */
+  color: white; /* Text color for better contrast */
+  z-index: 1000;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+}
+
+.menuOpened {
+  display: block;
+  transform: translateX(0);
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Light dark background */
+  z-index: 900;
+}
+
+/* Center the ThemeToggle icon and ensure equal spacing */
+.mobileMenu .mantine-Button-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* Add horizontal gap between items */
+}
+
 /* .link {
   display: block;
   line-height: 1;

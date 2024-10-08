@@ -1,6 +1,13 @@
 'use client';
 
-import { Burger, Button, Container, Group } from '@mantine/core';
+import {
+  Burger,
+  Button,
+  Container,
+  Group,
+  Overlay,
+  Paper,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,7 +18,7 @@ import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const pathname = usePathname();
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(pathname);
   // const value = readLocalStorageValue({ key: 'isLoggedIn' });
 
@@ -61,9 +68,11 @@ const Navbar = () => {
 
   return (
     <header className={classes.header}>
-      <Container size={1350} className={`${classes.inner} !p-0`}>
+      <Container size={1350} className={`${classes.inner} !p-0 !px-6`}>
         <Logo setActive={setActive} />
-        <Group gap={5} visibleFrom="md">
+
+        {/* Desktop Navigation */}
+        <Group gap={5} visibleFrom="sm">
           {defaultLinks.map((link) => (
             <Button
               variant={active === link.link ? 'filled' : 'outline'}
@@ -76,6 +85,7 @@ const Navbar = () => {
             </Button>
           ))}
 
+          {/* Place for additional login/logout buttons */}
           {/*           <Group justify="center" grow px="md">
             <Button
               variant="default"
@@ -101,9 +111,44 @@ const Navbar = () => {
           >
             Log out
           </Button> */}
+
+          {/* Theme toggle button for both desktop and mobile */}
           <ThemeToggle />
         </Group>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="md" size="sm" />
+
+        {/* Burger Menu for Mobile */}
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+
+        {/* Overlay to darken the rest of the page when menu is open */}
+        {opened && (
+          <Overlay opacity={0.5} className={classes.overlay} onClick={close} />
+        )}
+
+        {/* Mobile Menu - slides from the left */}
+        <Paper
+          className={`${classes.mobileMenu} ${opened ? classes.menuOpened : ''}`}
+          withBorder
+          hiddenFrom="md"
+        >
+          {defaultLinks.map((link) => (
+            <Button
+              variant={active === link.link ? 'filled' : 'outline'}
+              component={Link}
+              key={link.label}
+              href={link.link}
+              onClick={() => {
+                setActive(link.link);
+                close(); // Close the menu when a link is clicked
+              }}
+              fullWidth
+              className="!mb-4"
+            >
+              {link.label}
+            </Button>
+          ))}
+          {/* Theme toggle button inside the mobile menu */}
+          <ThemeToggle />
+        </Paper>
       </Container>
     </header>
   );
