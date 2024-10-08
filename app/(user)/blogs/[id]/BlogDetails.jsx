@@ -1,5 +1,4 @@
 import { AspectRatio, Image, Space, Text } from '@mantine/core';
-import NextImage from 'next/image';
 
 const BlogDetails = ({ singleBlogData }) => {
   const data = singleBlogData.description.trim().split('\n\n');
@@ -8,7 +7,6 @@ const BlogDetails = ({ singleBlogData }) => {
     <>
       <AspectRatio ratio={1}>
         <Image
-          component={NextImage}
           src={singleBlogData.imgUrl}
           height={500}
           alt="Norway"

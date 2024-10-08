@@ -1,7 +1,6 @@
 'use client';
 
 import { Flex, Group, Image, Text } from '@mantine/core';
-import NextImage from 'next/image';
 
 import {
   IconArticle,
@@ -46,7 +45,6 @@ const AdminNavbar = () => {
         <div className={classes.navbarMain}>
           <Group className={classes.header} justify="space-between">
             <Image
-              component={NextImage}
               alt="classRoomWriters-logo"
               src="/assets/logo-white.svg"
               h={60}

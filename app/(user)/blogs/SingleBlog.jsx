@@ -12,7 +12,6 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
-import NextImage from 'next/image';
 import Link from 'next/link';
 
 const SingleBlog = ({ blog }) => {
@@ -34,13 +33,7 @@ const SingleBlog = ({ blog }) => {
       <Flex direction="column" className="!min-h-[570px] !gap-4">
         <div className="!flex-1">
           <AspectRatio ratio={1}>
-            <Image
-              component={NextImage}
-              src={imgUrl}
-              height={270}
-              alt="Norway"
-              radius="md"
-            />
+            <Image src={imgUrl} height={270} alt="Norway" radius="md" />
           </AspectRatio>
         </div>
         <div className="!flex-1">

@@ -12,7 +12,6 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { IconHeart } from '@tabler/icons-react';
-import NextImage from 'next/image';
 import classes from './ArticleCardFooter.module.css';
 
 const FavouritesSingle = () => {
@@ -22,7 +21,6 @@ const FavouritesSingle = () => {
     <Card withBorder padding="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Image
-          component={NextImage}
           src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
           alt="Top 50 underrated plants for house decoration"
           height={180}

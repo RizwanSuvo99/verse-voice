@@ -7,7 +7,6 @@ const Logo = ({ setActive }) => {
       <Group className="!gap-2">
         <AspectRatio ratio={1}>
           <Image
-            component={NextImage}
             alt="classRoomWriters-logo"
             src="/assets/logo.svg"
             fit="contain"

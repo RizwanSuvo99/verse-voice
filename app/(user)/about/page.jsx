@@ -19,7 +19,6 @@ import {
   IconBrandX,
   IconMail,
 } from '@tabler/icons-react';
-import NextImage from 'next/image';
 import LatestRole from './LatestRole';
 
 const About = () => {
@@ -37,7 +36,6 @@ const About = () => {
         >
           <AspectRatio ratio={1}>
             <Image
-              component={NextImage}
               alt="logo-img"
               src="/assets/admin.png"
               fit="contain"

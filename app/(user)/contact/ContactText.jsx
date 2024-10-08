@@ -4,7 +4,6 @@ const ContactText = ({ imgUrl, text_1, text_2 }) => {
   return (
     <Group className="!gap-2.5">
       <Image
-        component={NextImage}
         src={imgUrl}
         fit="contain"
         fallbackSrc="https://placehold.co/35x35?text=icon-img"
