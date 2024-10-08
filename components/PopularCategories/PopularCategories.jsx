@@ -25,7 +25,7 @@ const PopularCategories = () => {
             <Button
               key={i}
               component={Link}
-              href={`/category/${category}`}
+              href={`/category/${category.toLowerCase()}`}
               size="xl"
               variant="outline"
               className="!w-[47%]"
