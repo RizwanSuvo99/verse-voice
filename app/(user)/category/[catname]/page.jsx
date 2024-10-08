@@ -41,7 +41,7 @@ export default Category;
 
 export async function generateStaticParams() {
   const categories = [
-    ...new Set(allBlogs.map((item) => item.category.toLocaleLowerCase())),
+    ...new Set(allBlogs.map((item) => item.category.toLowerCase())),
   ];
 
   return categories.map((catname) => ({
