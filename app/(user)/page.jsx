@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       <Categories />
       <FeaturedBlog />
-      {/* <OtherBlogs /> */}
+      <OtherBlogs />
     </main>
   );
 }
