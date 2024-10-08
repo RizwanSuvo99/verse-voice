@@ -10,9 +10,11 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
+import Link from 'next/link';
 
 const RecentSingleBlog = ({ blog }) => {
   const {
+    id,
     imgUrl,
     title,
     description,
@@ -56,7 +58,11 @@ const RecentSingleBlog = ({ blog }) => {
               </Text>
             </div>
           </Group>
-          <Button variant="transparent">Read More</Button>
+          <Button variant="transparent">
+            <Link href={`/blogs/${id}`} className="!no-underline">
+              Read More
+            </Link>
+          </Button>
         </Group>
       </div>
     </Flex>

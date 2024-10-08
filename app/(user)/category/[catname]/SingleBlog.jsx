@@ -12,9 +12,11 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
+import Link from 'next/link';
 
 const SingleBlog = ({ blog }) => {
   const {
+    id,
     imgUrl,
     title,
     description,
@@ -62,7 +64,11 @@ const SingleBlog = ({ blog }) => {
                 </Text>
               </div>
             </Group>
-            <Button variant="transparent">Read More</Button>
+            <Button variant="transparent">
+              <Link href={`/blogs/${id}`} className="!no-underline">
+                Read More
+              </Link>
+            </Button>
           </Group>
         </div>
 

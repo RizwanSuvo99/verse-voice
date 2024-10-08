@@ -1,60 +1,32 @@
-import {
-  AspectRatio,
-  Avatar,
-  Card,
-  Divider,
-  Flex,
-  Group,
-  Image,
-  Space,
-  Text,
-} from '@mantine/core';
-import { chunk } from 'lodash';
-import Link from 'next/link';
+import { AspectRatio, Image, Space, Text } from '@mantine/core';
 
-const BlogDetails = ({ splitDescription, imgUrl, title }) => {
-  const data = chunk(splitDescription, 5);
+const BlogDetails = ({ singleBlogData }) => {
+  const data = singleBlogData.description.trim().split('\n\n');
 
-  let lastText = data.map((textArr, i) => {
-    if (!(i !== 0 || i !== 1 || i !== 2 || i !== 3 || i !== 4)) {
-      return textArr?.join('.') + '.';
-    }
-  });
-
-  lastText = lastText.join('');
-
-  const singleBlogData = {
-    imgUrl:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/healthy/img2.png',
-    title: 'Helpful Tips for Working from Home as a Freelancer',
-    category: 'Design',
-    authorName: 'Harry',
-    authorAvatar:
-      'https://genz-nextjs-v3.vercel.app/assets/imgs/page/homepage1/author2.png',
-    publishDate: '27 June 2023',
-    timeRead: '7 mins read',
-  };
   return (
     <>
-      <Text className="!text-[18px]">{data[0].join('.') + '.'}</Text>
-      <Space h={'md'} />
       <AspectRatio ratio={1}>
-        <Image src={imgUrl} height={500} alt="Norway" radius="md" />
+        <Image
+          src={singleBlogData.imgUrl}
+          height={500}
+          alt="Norway"
+          radius="md"
+        />
       </AspectRatio>
       <Space h={'md'} />
-      <Text className="!text-[18px]">{data[1]?.join('.') + '.'}</Text>
-      <Space h={'md'} />
-      <Text className="!text-[18px]">{data[2]?.join('.') + '.'}</Text>
-      <Space h={'md'} />
-      <Text className="!text-[18px]">{data[3]?.join('.') + '.'}</Text>
-      <Space h={'md'} />
-      <Text className="!text-[18px]">{data[4]?.join('.')}</Text>
-      <Space h={'md'} />
-      <Text className="!text-[18px]">{lastText}</Text>
-      <Space h={'xl'} />
-      <Divider size={'md'} />
-      <Space h={'xl'} />
-      <Text className="!text-3xl">1 Comment on {`"${title}":`}</Text>
+
+      {data.map((item) => {
+        return (
+          <>
+            <Text className="!text-[18px]">{item}</Text>
+            <Space h={'md'} />
+          </>
+        );
+      })}
+      {/*  <Space h={'xl'} />
+            <Text className="!text-3xl">
+        1 Comment on {`"${singleBlogData.title}":`}
+      </Text>
       <Space h={'xl'} />
       <Flex justify={'space-between'} align={'center'}>
         <Group>
@@ -117,7 +89,7 @@ const BlogDetails = ({ splitDescription, imgUrl, title }) => {
           logged in
         </Text>{' '}
         to post a comment.
-      </Text>
+      </Text> */}
     </>
   );
 };

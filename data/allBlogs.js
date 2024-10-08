@@ -1,5 +1,6 @@
 const allBlogs = [
   {
+    id: 1,
     imgUrl: '/assets/blog_1.jpg',
     title: 'A life full of promises cut short',
     description: `A video recorded just fifteen minutes before death shows him holding boxes of biscuits and water bottles, aiding the quota reform protesters. The viral clip captures protesting students running on a smoke-covered road with some taking water bottles from him. His act of kindness has touched the hearts of millions online. 
@@ -33,6 +34,7 @@ Mugdho didn’t deserve this. But, even in his last moments, his kindness is som
     isPopular: false,
   },
   {
+    id: 2,
     imgUrl: '/assets/blog_2.jpg',
     title: 'Tilottama',
     category: 'Poetry',
@@ -90,6 +92,7 @@ The unreal imagination that runs through my neurons,
     isPopular: false,
   },
   {
+    id: 3,
     imgUrl: '/assets/blog_3.jpg',
     title: 'Will we meet again?',
     category: 'Poetry',
@@ -120,6 +123,7 @@ Only wondered if we’d ever meet—again?
     isPopular: false,
   },
   {
+    id: 4,
     imgUrl: '/assets/blog_4.jpg',
     title: 'A Tale of Two Twins',
     category: 'Lifestyle',
@@ -154,6 +158,7 @@ We cannot let circumstances or other people control our lives! The only one!
     isPopular: false,
   },
   {
+    id: 5,
     imgUrl: '/assets/blog_5.jpg',
     title: 'Chameleon',
     description: `
@@ -171,6 +176,7 @@ We cannot let circumstances or other people control our lives! The only one!
     isPopular: false,
   },
   {
+    id: 6,
     imgUrl:
       'https://cdn.pixabay.com/photo/2016/11/29/06/07/skull-1867707_960_720.jpg',
     title: 'Whispers in the Dark',
@@ -208,6 +214,7 @@ After hearing that, some of our team members suggested leaving immediately, but 
     isPopular: false,
   },
   {
+    id: 7,
     imgUrl: '/assets/blog_6.jpg',
     title: 'Definition of happiness ',
     description: `
@@ -228,6 +235,7 @@ In conclusion, I want to say one thing: follow your heart and what it says. Don�
     isPopular: false,
   },
   {
+    id: 8,
     imgUrl: '/assets/blog_7.jpg',
     title: 'A Precious Little Life ',
     description: `
@@ -253,6 +261,7 @@ Everything hurt. It was the sort of pain that made it hard to breathe. The baby 
     isPopular: true,
   },
   {
+    id: 9,
     imgUrl: '/assets/blog_8.jpg',
     title: 'Mother’s Love',
     description: `
@@ -339,6 +348,7 @@ Immortal be the title you gave me.
     isPopular: true,
   },
   {
+    id: 10,
     imgUrl: '/assets/blog_9.jpg',
     title: 'Brain Drain in Bangladesh',
     description: `
@@ -363,6 +373,7 @@ Therefore, it’s important for the government to encourage talented students to
     isPopular: true,
   },
   {
+    id: 11,
     imgUrl: '/assets/blog_10.jpg',
     title: 'Brain Drain in Bangladesh',
     description: `
@@ -380,6 +391,7 @@ Therefore, it’s important for the government to encourage talented students to
     isPopular: false,
   },
   {
+    id: 12,
     imgUrl: '/assets/blog_11.jpg',
     title: 'About Being Creative',
     description: `
@@ -397,6 +409,7 @@ Creativeness can come naturally or forcefully. But there’s also one thing that
     isPopular: false,
   },
   {
+    id: 13,
     imgUrl: '/assets/blog_12.jpg',
     title: 'A time when I was challenged and how I faced it',
     description: `
@@ -414,6 +427,7 @@ One of the biggest challenges I ever faced in my life was moving to the city for
     isPopular: false,
   },
   {
+    id: 14,
     imgUrl: '/assets/blog_13.jpg',
     title: 'Lead Pollution',
     description: `
@@ -431,6 +445,7 @@ We are familiar with various types of pollution and are working tirelessly day a
     isPopular: true,
   },
   {
+    id: 15,
     imgUrl: '/assets/blog_14.jpg',
     title: 'Echoes of School Days',
     description: `
@@ -448,6 +463,7 @@ There are numerous memories in my school life as I made it with my school freind
     isPopular: false,
   },
   {
+    id: 16,
     imgUrl: '/assets/blog_15.jpg',
     title: 'The Power of Self-Employment',
     description: `
@@ -468,6 +484,7 @@ I believe there are no binding rules in this sector. You can work according to y
     isPopular: true,
   },
   {
+    id: 17,
     imgUrl: '/assets/blog_16.jpg',
     title: 'A Story',
     description: `
@@ -500,6 +517,7 @@ To be continued...
     isPopular: false,
   },
   {
+    id: 18,
     imgUrl: '/assets/blog_17.jpg',
     title: 'Happiness',
     description: `
@@ -556,6 +574,7 @@ Happiness is subjective. It's the simple joys like spending time with kids or ca
     isPopular: false,
   },
   {
+    id: 19,
     imgUrl: '/assets/blog_18.jpg',
     title: 'Therapy',
     description: `
