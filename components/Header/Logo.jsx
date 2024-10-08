@@ -1,5 +1,4 @@
 import { AspectRatio, Group, Image, Text, Title } from '@mantine/core';
-import NextImage from 'next/image';
 import Link from 'next/link';
 
 const Logo = ({ setActive }) => {

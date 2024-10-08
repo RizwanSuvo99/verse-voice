@@ -1,5 +1,4 @@
 import { Group, Image, Text } from '@mantine/core';
-import NextImage from 'next/image';
 
 const ContactText = ({ imgUrl, text_1, text_2 }) => {
   return (
