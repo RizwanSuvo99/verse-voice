@@ -1,5 +1,4 @@
 import { AspectRatio, Group, Image, Text, Title } from '@mantine/core';
-import NextImage from 'next/image';
 import Link from 'next/link';
 
 const Logo = ({ setActive }) => {
@@ -12,7 +11,6 @@ const Logo = ({ setActive }) => {
             src="/assets/logo.svg"
             fit="contain"
             fallbackSrc="https://placehold.co/70x70?text=Logo"
-            component={NextImage}
             width={70}
             height={70}
             className="!w-[40px] sm:!w-[70px]"

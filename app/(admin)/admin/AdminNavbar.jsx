@@ -1,6 +1,7 @@
 'use client';
 
 import { Flex, Group, Image, Text } from '@mantine/core';
+
 import {
   IconArticle,
   IconCategoryPlus,
