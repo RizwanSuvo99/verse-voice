@@ -9,7 +9,9 @@ const LatestRole = ({ text_1, text_2 }) => {
         {icon1 ? <IconBookUpload /> : <IconBriefcase2 />}
       </div>
       <div>
-        <Text fw={500} className="!text-[14px]">{text_1}</Text>
+        <Text fw={500} className="!text-[14px]">
+          {text_1}
+        </Text>
         <Text className="!text-[10px]">{text_2}</Text>
       </div>
     </Flex>

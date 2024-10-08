@@ -74,10 +74,10 @@ const Footer = () => {
                     <Button
                       className="!border-[2px] !border-[#1971c2]"
                       variant="transparent"
+                      key={cat}
                     >
                       <Link
                         href={`/category/${cat.toLowerCase()}`}
-                        key={cat}
                         className="!text-white !no-underline"
                       >
                         {cat}

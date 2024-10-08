@@ -32,7 +32,7 @@ const About = () => {
         <Card
           shadow="sm"
           radius="md"
-          className="!bg-[#0ea5ea] !p-[30px]  md:!p-[40px]  !text-[#fff]"
+          className="!bg-[#0ea5ea] !p-[30px] !text-[#fff] md:!p-[40px]"
         >
           <AspectRatio ratio={1}>
             <Image
@@ -41,11 +41,16 @@ const About = () => {
               fit="contain"
               fallbackSrc="https://placehold.co/70x70?text=admin-img"
               shadow="xl"
-              className='!h-[260px] sm:!h-[300px]'
+              className="!h-[260px] sm:!h-[300px]"
             />
           </AspectRatio>
           <Center>
-            <Text className="!text-center !text-[28px] md:!text-[40px]" fw={600}>Fakharuddin Pentu</Text>
+            <Text
+              className="!text-center !text-[28px] md:!text-[40px]"
+              fw={600}
+            >
+              Fakharuddin Pentu
+            </Text>
           </Center>
           <Center my={'0 1.5rem'}>
             <Text>fakharuddinpintu@gmail.com</Text>

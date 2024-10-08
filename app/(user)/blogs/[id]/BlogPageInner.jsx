@@ -6,8 +6,6 @@ import { Grid, Space } from '@mantine/core';
 import BlogDetails from './BlogDetails';
 
 const BlogPageInner = ({ singleBlogData }) => {
-
-
   return (
     <Grid>
       <Grid.Col span={8}>
