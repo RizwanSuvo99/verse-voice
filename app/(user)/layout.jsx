@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Footer from '@/components/Footer/Footer';
 import Navbar from '@/components/Header/Navbar';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
         <MantineProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <Notifications />
+            <ScrollToTopButton />
             <Navbar />
             {children}
             <Footer />
