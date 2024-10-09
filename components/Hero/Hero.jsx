@@ -1,5 +1,6 @@
+'use client';
 import { Center, Container, Stack, Text, Title } from '@mantine/core';
-// import Subscribe from './Subscribe';
+import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
@@ -10,36 +11,72 @@ const Hero = () => {
         className="h-[350px] md:h-[450px] lg:h-[550px]" // Responsive height
       >
         <Center>
-          <Text
-            variant="gradient"
-            component={Title}
-            className="text1 !text-center !text-[60px] md:!text-[100px] lg:!text-[150px]"
+          {/* Animated Main Title */}
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
           >
-            Thoughts Meet Words
-          </Text>
+            <Text
+              variant="gradient"
+              component={Title}
+              className="text1 !text-center !text-[80px] md:!text-[100px] lg:!text-[150px]"
+            >
+              Thoughts Meet Words
+            </Text>
+          </motion.div>
         </Center>
+
         <Center>
           {/* Left quote mark */}
-          <Text
-            span
-            className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           >
-            ❝
-          </Text>
+            <Text
+              span
+              className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+            >
+              ❝
+            </Text>
+          </motion.div>
+
           {/* Main text */}
-          <Text className="!px-2 !text-center !text-[20px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
-            Discover articles that spark new thoughts, guide you through
-            challenges, and inspire your next move.
-          </Text>
-          {/* Right quote mark */}
-          <Text
-            span
-            className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           >
-            ❞
-          </Text>
+            <Text className="!mb-4 !px-2 !text-center !text-[22px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
+              Discover articles that spark new thoughts, guide you through
+              challenges, and inspire your next move.
+            </Text>
+          </motion.div>
+
+          {/* Right quote mark */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+          >
+            <Text
+              span
+              className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+            >
+              ❞
+            </Text>
+          </motion.div>
         </Center>
-        {/* <Subscribe /> */}
+
+        {/* Subscribe form with slight animation */}
+        {/* <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+        >
+          <Subscribe />
+        </motion.div> */}
       </Stack>
     </Container>
   );
