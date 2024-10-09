@@ -1,6 +1,7 @@
 // components/ScrollToTopButton.jsx
 
-import { Button } from '@mantine/core'; // or your preferred UI library
+import { ActionIcon } from '@mantine/core';
+import { IconArrowUp } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 
 const ScrollToTopButton = () => {
@@ -31,22 +32,23 @@ const ScrollToTopButton = () => {
   }, []);
 
   return (
-    <Button
+    <ActionIcon
+      variant="filled"
+      aria-label="Settings"
       onClick={scrollToTop}
+      size={'xl'}
+      radius={'xl'}
       style={{
         position: 'fixed',
         bottom: '50px',
         right: '40px',
         display: visible ? 'block' : 'none',
-        borderWidth: '3px',
-        borderRadius: '10px',
-        fontSize: '16px',
+        borderWidth: '2px',
+        zIndex: '999',
       }}
-      variant="outline" // You can customize the variant and styles as needed
-      className="!h-[50px] !w-[70px]"
     >
-      Top
-    </Button>
+      <IconArrowUp />
+    </ActionIcon>
   );
 };
 
