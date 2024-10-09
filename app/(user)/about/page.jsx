@@ -53,7 +53,7 @@ const About = () => {
             </Text>
           </Center>
           <Center my={'0 1.5rem'}>
-            <Text>fakharuddinpintu@gmail.com</Text>
+            <Text>pintu.eng@gmail.com</Text>
           </Center>
           <Center>
             <Button variant="white">Download CV</Button>
@@ -72,15 +72,16 @@ const About = () => {
               <Space h={'sm'}></Space>
 
               <Text>
-                Hi, I’m Rizwan Suvo, a passionate Computer Science student from
-                Bangladesh, currently diving deep into Full Stack Web
-                Development.
+                Hey there! I’ve always imagined how great it would be to have a
+                writing website just for students, and now it’s finally a
+                reality!
               </Text>
               <Space h={'sm'}></Space>
               <Text>
-                With a solid foundation in front-end technologies like HTML,
-                CSS, Vanilla JavaScript, and React, I’m building dynamic,
-                responsive websites and continuously learning new skills.
+                This space is all about breaking free from those stiff, boring
+                syllabi. It’s your chance to unleash your creativity and let
+                your imagination soar—no idea is too wild! Let’s dive into this
+                adventure together!
               </Text>
             </Card>
           </Grid.Col>
@@ -97,11 +98,11 @@ const About = () => {
               <Space h={'sm'}></Space>
               <LatestRole
                 text_1={'Current Lecturer'}
-                text_2={'Cumilla Govt. College'}
+                text_2={'Comilla Govt. College, Comilla'}
               />
               <LatestRole
                 text_1={'Former Lecturer'}
-                text_2={'Chauddagram Govt. College, Cumilla'}
+                text_2={'Chauddagram Govt. College, Comilla'}
               />
               <LatestRole
                 text_1={'Former Assistant Director'}

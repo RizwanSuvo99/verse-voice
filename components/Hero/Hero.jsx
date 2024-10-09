@@ -49,8 +49,8 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           >
             <Text className="!mb-4 !px-2 !text-center !text-[20px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
-              Discover articles that spark new thoughts, guide you through
-              challenges, and inspire your next move.
+              Explore authentic writings from students, sharing their feelings,
+              experiences, and imaginative stories that inspire.
             </Text>
           </motion.div>
 

@@ -17,11 +17,10 @@ const Contact = () => {
       </Center>
       <Center>
         <Text className="!max-w-[780px] !text-center !text-[16px] !text-[#94A9C9] md:!text-[20px]">
-          We are Jthemes, a creative and dedicated group of individuals who love
-          web development almost as much as we love our customers. We are a
-          passionate team with the mission of achieving perfection in web
-          design. All designs are made with love, ensuring pixel-perfect designs
-          and excellent coding quality.
+          I’d love to hear from you! Whether you have questions, feedback, or
+          want to share your own writing journey, reach out to me. Your thoughts
+          are important, and together we can inspire creativity and connection.
+          Let’s build a vibrant community of young writers!
         </Text>
       </Center>
       <Space h={'xl'} />
@@ -33,18 +32,18 @@ const Contact = () => {
         >
           <ContactText
             imgUrl="/assets/headset.svg"
-            text_1={'01521408552'}
-            text_2={'01775137111'}
+            text_1={'+8801675697313'}
+            text_2={'+8801912033727'}
           />
           <ContactText
             imgUrl="/assets/location.svg"
-            text_1={'contact@genz.com'}
-            text_2={'user@genz.com'}
+            text_1={'pintu.eng@gmail.com'}
+            text_2={'classroomwriters@gmail.com'}
           />
           <ContactText
             imgUrl="/assets/paper-plane.svg"
-            text_1={'11567 E Broadview Dr'}
-            text_2={'Colorado(CO), 80117'}
+            text_1={'Police Line, Adarsha Sadar'}
+            text_2={'Cumilla 3500'}
           />
         </Flex>
       </Center>
