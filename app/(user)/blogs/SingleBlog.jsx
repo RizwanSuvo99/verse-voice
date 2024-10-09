@@ -26,14 +26,13 @@ const SingleBlog = ({ blog }) => {
     publishDate,
     timeRead,
   } = blog;
-  // const theme = useMantineTheme();
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
       <Flex direction="column" className="!min-h-[570px] !gap-4">
         <div className="!flex-1">
           <AspectRatio ratio={1}>
-            <Image src={imgUrl} height={270} alt="Norway" radius="md" />
+            <Image src={imgUrl} height={270} alt="Blog Image" radius="md" />
           </AspectRatio>
         </div>
         <div className="!flex-1">
@@ -63,28 +62,22 @@ const SingleBlog = ({ blog }) => {
                 </Text>
               </div>
             </Group>
-            <Button variant="transparent">
+            <Button
+              variant="outline" // Use outline variant for a bordered button
+              style={{
+                backgroundColor: 'transparent', // Transparent background
+                border: '2px solid transparent', // Initial transparent border
+                borderImage: 'linear-gradient(45deg, #0ea5ea, #0bd1d1) 1', // Gradient border
+                color: '#0ea5ea', // Text color
+                borderRadius: '5px', // Optional: round corners
+              }}
+            >
               <Link href={`/blogs/${id}`} className="!no-underline">
                 Read More
               </Link>
             </Button>
           </Group>
         </div>
-
-        {/*         <Group justify="space-between">
-          <Text fz="xs" c="dimmed">
-            733 people liked this
-          </Text>
-          <Group gap={0}>
-            <ActionIcon variant="subtle" color="gray">
-              <IconHeart
-                style={{ width: rem(20), height: rem(20) }}
-                color={theme.colors.red[6]}
-                stroke={1.5}
-              />
-            </ActionIcon>
-          </Group>
-        </Group> */}
       </Flex>
     </Card>
   );

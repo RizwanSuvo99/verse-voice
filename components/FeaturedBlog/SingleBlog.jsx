@@ -13,6 +13,24 @@ import { IconClock } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
+// CSS styles for the gradient button using the provided colors
+const gradientButtonStyles = {
+  background: 'linear-gradient(45deg, #0ea5ea, #0bd1d1)', // Use the specified gradient
+  backgroundSize: '200% 100%', // Double the size for the hover effect
+  backgroundPosition: '100% 0', // Start position for the gradient
+  transition: 'background-position 0.4s ease', // Transition for smooth background movement
+  color: '#fff', // Button text color
+  padding: '10px 20px', // Padding for the button
+  border: 'none', // Remove default border
+  borderRadius: '5px', // Round corners
+  cursor: 'pointer', // Pointer on hover
+};
+
+// CSS styles for hover effect
+const hoverStyles = {
+  backgroundPosition: '0 0', // Move gradient to left on hover
+};
+
 const SingleBlog = ({ blog }) => {
   const {
     id,
@@ -26,9 +44,8 @@ const SingleBlog = ({ blog }) => {
   } = blog;
 
   return (
-    <motion.div
-      whileHover="hover" // Trigger the animation on hover
-    >
+    <motion.div whileHover="hover">
+      {/* Trigger the animation on hover */}
       <Card shadow="sm" radius="md" withBorder className="!h-full">
         <AspectRatio ratio={4 / 3}>
           <motion.div
@@ -71,8 +88,17 @@ const SingleBlog = ({ blog }) => {
             </div>
           </Group>
 
-          <Button variant="transparent">
-            <Link href={`/blogs/${id}`} className="!no-underline">
+          <Button
+            variant="transparent"
+            style={gradientButtonStyles} // Apply gradient styles
+            onMouseOver={(e) => {
+              Object.assign(e.currentTarget.style, hoverStyles); // Change gradient direction on hover
+            }}
+            onMouseOut={(e) => {
+              Object.assign(e.currentTarget.style, gradientButtonStyles); // Reset to initial gradient
+            }}
+          >
+            <Link href={`/blogs/${id}`} className="!text-white !no-underline">
               Read More
             </Link>
           </Button>

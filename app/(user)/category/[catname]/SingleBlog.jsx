@@ -34,7 +34,7 @@ const SingleBlog = ({ blog }) => {
       <Flex direction="column" className="!min-h-[550px] !gap-4">
         <div className="!flex-1">
           <AspectRatio ratio={1}>
-            <Image src={imgUrl} height={250} alt="Norway" radius="md" />
+            <Image src={imgUrl} height={250} alt="Blog Image" radius="md" />
           </AspectRatio>
         </div>
         <div className="!flex-1">
@@ -64,7 +64,18 @@ const SingleBlog = ({ blog }) => {
                 </Text>
               </div>
             </Group>
-            <Button variant="transparent">
+
+            {/* Read More Button with Gradient Border */}
+            <Button
+              variant="outline" // Use outline variant for a bordered button
+              style={{
+                backgroundColor: 'transparent', // Transparent background
+                border: '2px solid transparent', // Initial transparent border
+                borderImage: 'linear-gradient(45deg, #0ea5ea, #0bd1d1) 1', // Gradient border
+                color: '#0ea5ea', // Text color to match gradient
+                borderRadius: '5px', // Optional: round corners
+              }}
+            >
               <Link href={`/blogs/${id}`} className="!no-underline">
                 Read More
               </Link>
