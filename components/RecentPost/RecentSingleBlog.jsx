@@ -26,7 +26,10 @@ const RecentSingleBlog = ({ blog }) => {
   } = blog;
 
   return (
-    <Flex className="!min-h-[280px] !gap-4">
+    <Flex
+      className="!min-h-[280px] !gap-4"
+      direction={{ base: 'column', sm: 'row' }}
+    >
       <div className="!flex-1">
         <AspectRatio ratio={1}>
           <Image src={imgUrl} height={270} alt="Blog Image" radius="md" />

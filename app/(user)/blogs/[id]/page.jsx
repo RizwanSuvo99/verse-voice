@@ -23,7 +23,7 @@ const BlogSingle = ({ params }) => {
   // console.log(splitDescription)
 
   return (
-    <Container size={1350} className="!mt-[50px] !p-0">
+    <Container size={1350} className="!mt-[50px] !px-6">
       <Text
         component={Title}
         variant="gradient"
