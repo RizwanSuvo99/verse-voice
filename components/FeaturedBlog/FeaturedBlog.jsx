@@ -18,14 +18,21 @@ const FeaturedBlog = () => {
   const featuredBlogs = allBlogs.filter((item) => item.isFeatured);
 
   return (
-    <Container size={1350} className="!mt-[100px] !px-6 !py-4">
+    <Container
+      size={1350}
+      className="!mt-[40px] !px-6 !py-4 md:!mt-[70px] lg:!mt-[100px]"
+    >
       <Center>
-        <Text component={Title} variant="gradient" className="!my-4 !text-6xl">
+        <Text
+          component={Title}
+          variant="gradient"
+          className="!my-2 !text-center !text-[40px] md:!text-[50px] lg:!text-5xl"
+        >
           Featured Blogs
         </Text>
       </Center>
       <Center>
-        <Text className="!mb-12 !text-2xl">
+        <Text className="!mb-12 !text-center !text-[16px] md:!text-[20px] lg:!text-2xl">
           Featured and highly rated articles
         </Text>
       </Center>

@@ -20,7 +20,7 @@ const Hero = () => {
             <Text
               variant="gradient"
               component={Title}
-              className="text1 !text-center !text-[80px] md:!text-[100px] lg:!text-[150px]"
+              className="text1 !text-center !text-[70px] md:!text-[100px] lg:!text-[150px]"
             >
               Thoughts Meet Words
             </Text>
@@ -36,7 +36,7 @@ const Hero = () => {
           >
             <Text
               span
-              className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+              className="text1 !text-[70px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
             >
               ❝
             </Text>
@@ -48,7 +48,7 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           >
-            <Text className="!mb-4 !px-2 !text-center !text-[22px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
+            <Text className="!mb-4 !px-2 !text-center !text-[20px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
               Discover articles that spark new thoughts, guide you through
               challenges, and inspire your next move.
             </Text>
@@ -62,7 +62,7 @@ const Hero = () => {
           >
             <Text
               span
-              className="text1 !text-[80px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+              className="text1 !text-[70px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
             >
               ❞
             </Text>

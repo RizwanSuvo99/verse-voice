@@ -26,11 +26,13 @@ const Blogs = () => {
       <Text
         component={Title}
         variant="gradient"
-        className="!text-5xl !leading-[60px]"
+        className="!text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
       >
         All Blogs
       </Text>
-      <Text className="!mb-6 !mt-2 !text-[18px]">All the latest blogs</Text>
+      <Text className="!mb-6 !mt-2 !text-center !text-[16px] md:!text-[20px] lg:!text-2xl">
+        All the latest blogs
+      </Text>
       <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>{items}</SimpleGrid>
       <Space h={'xl'} />
       <Pagination total={data.length} value={activePage} onChange={setPage} />

@@ -197,16 +197,16 @@ const Footer = () => {
                 Rizwan & Ekram
               </Text>
             </Text>
-            <Group gap="xl" className="flex-col md:flex-row">
-              <Group gap={'xs'}>
+            <Group gap="sm" className="flex-col md:flex-row">
+              <Group gap={'sm'}>
                 <IconBrandTwitter stroke={2} />
                 <Text>Twitter</Text>
               </Group>
-              <Group gap={'xs'}>
+              <Group gap={'sm'}>
                 <IconBrandLinkedin stroke={2} />
                 <Text>LinkedIn</Text>
               </Group>
-              <Group gap={'xs'}>
+              <Group gap={'sm'}>
                 <IconBrandInstagram stroke={2} />
                 <Text>Instagram</Text>
               </Group>

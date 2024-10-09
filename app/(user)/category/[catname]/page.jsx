@@ -14,7 +14,7 @@ const Category = ({ params }) => {
         <Text
           component={Title}
           variant="gradient"
-          className="!text-5xl !leading-[60px]"
+          className="!text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
         >
           {categoryName}
         </Text>
