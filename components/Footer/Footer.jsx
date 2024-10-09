@@ -193,8 +193,23 @@ const Footer = () => {
           <Group className="flex-col md:flex-row" justify="space-between">
             <Text className="text-center md:text-left">
               © 2024 Created by{' '}
-              <Text variant="gradient" span>
-                Rizwan & Ekram
+              <Text
+                component={Link}
+                variant="gradient"
+                href="https://www.facebook.com/rizwansuvo1"
+                className="!text-[20px] !font-bold"
+              >
+                {' '}
+                Rizwan
+              </Text>{' '}
+              & &nbsp;
+              <Text
+                component={Link}
+                variant="gradient"
+                href="https://www.facebook.com/ekramullah70"
+                className="!text-[20px] !font-bold"
+              >
+                Ekram
               </Text>
             </Text>
             <Group gap="sm" className="flex-col md:flex-row">

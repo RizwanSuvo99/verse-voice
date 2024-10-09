@@ -27,11 +27,11 @@ const RecentBlog = () => {
       <Text
         component={Title}
         variant="gradient"
-        className="!text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
+        className="!text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
       >
         Recent Blogs
       </Text>
-      <Text className="!mb-12 !mt-2 !text-center !text-[16px] md:!text-[20px] lg:!text-2xl">
+      <Text className="!mb-12 !mt-2 !text-[16px] md:!text-[20px] lg:!text-2xl">
         Don&apos;t miss the latest trends
       </Text>
       <Grid grow gutter="xl">

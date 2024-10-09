@@ -1,6 +1,7 @@
 // import LastCommentBlog from '@/components/LastCommentBlog/LastCommentBlog';
 import {
   Avatar,
+  Badge,
   Container,
   Flex,
   Group,
@@ -31,6 +32,7 @@ const BlogSingle = ({ params }) => {
       >
         {singleBlogData.title}
       </Text>
+      <Badge>{singleBlogData.category}</Badge>
       <Space h={'md'} />
       <Flex justify={'space-between'} align={'center'}>
         <Group>
