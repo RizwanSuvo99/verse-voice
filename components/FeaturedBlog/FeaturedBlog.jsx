@@ -31,7 +31,10 @@ const FeaturedBlog = () => {
       </Center>
       <Grid grow gutter="xl">
         {featuredBlogs.map((blog, i) => (
-          <Grid.Col span={i === 0 || i === 1 ? 6 : 4} key={i}>
+          <Grid.Col
+            span={{ base: 12, sm: 6, md: i === 0 || i === 1 ? 6 : 4 }} // Adjusting span based on breakpoints
+            key={i}
+          >
             <SingleBlog blog={blog} />
           </Grid.Col>
         ))}
