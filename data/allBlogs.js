@@ -21,11 +21,11 @@ Mugdho didn’t deserve this. But, even in his last moments, his kindness is som
     category: 'Inspirational',
     categoryImg: '/assets/Inspirational.jpg',
     authorName: 'Hamidul Haque Fahim',
-    authorAvatar: null,
+    authorAvatar: '/assets/blog_1_author.jpg',
     authorDetails: 'Roll: 1339 (Humanities, 24-25)',
     publishDate: '1 June 2024',
     timeRead: '3 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -87,7 +87,7 @@ We are very unsafe on the roads.
     authorAvatar: '/assets/blog_2_author.png',
     authorDetails: 'Roll: 1310 (Humanities, 24-25)',
     timeRead: '3 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -133,7 +133,7 @@ Only wondered if we’d ever meet—again?
     authorAvatar: '/assets/blog_3_author.png',
     authorDetails: 'Roll: 1310 (Humanities, 24-25)',
     timeRead: '3 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -182,7 +182,7 @@ We cannot let circumstances or other people control our lives! The only one!
     authorAvatar: '/assets/blog_4_author.jpg',
     authorDetails: '',
     timeRead: '5 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -217,7 +217,7 @@ We cannot let circumstances or other people control our lives! The only one!
     authorDetails: 'Science, HSC 2026, Roll-331',
     publishDate: '3 July 2024',
     timeRead: '4 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -273,7 +273,7 @@ After hearing that, some of our team members suggested leaving immediately, but 
     authorDetails: 'HSC 2025, Roll-1004',
     publishDate: '10 July 2024',
     timeRead: '5 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -303,7 +303,7 @@ In conclusion, I want to say one thing: follow your heart and what it says. Don�
     authorDetails: 'Roll:30 Group:Science Exam year:2025 ',
     publishDate: '17 July 2024',
     timeRead: '3 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -345,7 +345,7 @@ Everything hurt. It was the sort of pain that made it hard to breathe. The baby 
     publishDate: '23 July 2024',
     timeRead: '7 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 9,
@@ -497,7 +497,7 @@ Immortal be the title you gave me.
     publishDate: '28 July 2024',
     timeRead: '5 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 10,
@@ -530,7 +530,7 @@ Therefore, it’s important for the government to encourage talented students to
     publishDate: '3 August 2024',
     timeRead: '4 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 11,
@@ -557,7 +557,7 @@ I still had faith in him. Everyone was sobbing. But the voices became faint. A t
     authorDetails: 'Science Hsc-26 Roll:274',
     publishDate: '9 August 2024',
     timeRead: '4 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -635,7 +635,7 @@ The effects of lead poisoning are gradual but certain. Historically, the Roman E
     publishDate: '21 August 2024',
     timeRead: '3 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 15,
@@ -663,7 +663,7 @@ Sometimes we even bunked school. As our SSC exam approached, we started preparin
     publishDate: '26 August 2024',
     timeRead: '3 mins read',
     isFeatured: false,
-    isPopular: false,
+    isPopular: true,
   },
   {
     id: 16,
@@ -691,7 +691,7 @@ As a result, most students may not be aware of this topic. Students should know 
     publishDate: '1 September 2024',
     timeRead: '5 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 17,
@@ -739,7 +739,7 @@ To be continued...
     publishDate: '11 September 2024',
     timeRead: '10 mins read',
     isFeatured: false,
-    isPopular: false,
+    isPopular: true,
   },
   {
     id: 18,
@@ -821,7 +821,7 @@ Happiness is subjective. It's the simple joys like spending time with kids or ca
     publishDate: '19 September 2024',
     timeRead: '25 mins read',
     isFeatured: false,
-    isPopular: false,
+    isPopular: true,
   },
   {
     id: 19,
@@ -846,12 +846,12 @@ Basically, we experience therapy from people. We often think only a person can b
     category: 'Opinion',
     categoryImg: '/assets/Opinion.jpg',
     authorName: 'Syeda Anika Tabassum',
-    authorAvatar: null,
+    authorAvatar: '/assets/blog_18_author.jpg',
     authorDetails: 'HSC 2025, Business Studies, Roll-546',
     publishDate: '27 September 2024',
     timeRead: '4 mins read',
     isFeatured: false,
-    isPopular: false,
+    isPopular: true,
   },
   {
     id: 20,
@@ -895,6 +895,295 @@ From that moment on, I promised myself I would never love again. I would focus o
     authorAvatar: '/assets/blog_19_author.jpg',
     authorDetails: 'Roll: 1180 Group: Humanities HSC: 2026',
     publishDate: '5 October 2024',
+    timeRead: '4 mins read',
+    isFeatured: false,
+    isPopular: true,
+  },
+  {
+    id: 21,
+    imgUrl: '/assets/blog_20.jpg',
+    title: 'Understanding the LGBT Community',
+    description: `
+This is Nahida Koli. Today, I am going to write about a different topic. I don’t know how everyone will react to this topic. The topic is about the LGBT community. Most people don't know much about this community, so I will try my best to explain it in simple terms. I believe everyone should know what LGBT is,where it originated, and how it has evolved.
+
+Let’s start: LGBT is an acronym for a group of people who identify as lesbian, gay, bisexual, and transgender. The LGBT community is welcoming of differences. Unfortunately, society is not as accepting of the LGBT community. They face discrimination based on the preconceived notions that society holds against them. Society has many opinions on social norms, especially regarding gender roles. Society has specific expectations about how males and females should dress and act. If a person behaves outside these norms, they are likely to face criticism. Men may get criticized for not dressing or acting "masculine," and women may be criticized for not being "ladylike."
+
+One particular group of people from the LGBT community that is heavily discriminated against is transgender people. Transgender is defined as a person whose gender identity differs from the one assigned to them at birth. As bad as it sounds, being transgender often means facing societal stigmatization, a lack of support from friends, and numerous forms of discrimination. The lack of access to supportive mental and physical healthcare is also a significant issue.
+
+Being transgender is looked down upon in society, and they tend not to be accepted by family and friends. The Philippines, the United States, and Israel have the highest percentage of people identifying as LGBT, at 11 percent, while Thailand and Canada come in a close second place with 10 percent of adults, followed by Sweden and Brazil. In the United States, 3 percent of respondents identified as gay, 6 percent as bisexual, and 1 percent as pansexual. At the lower end of the spectrum, South Korea and Romania each have 3 percent of adults identifying as LGBT.
+
+"Members within the LGBT community experience mental health problems at disproportionate rates compared to the general population" (LGBT Foundation, 2019). This tweet by the LGBT Foundation shows that nearly 2% of the LGBT group experienced depression last year. The percentage of LGBT youth indicates that public support does not provide an adequate response for teenagers. While the situation of LGBT youth is a significant issue in current society, mental illness among them has increased dramatically in the past decade. From a sociological and psychological perspective, mental health disorders such as suicide and depression arise from the following causes: a lack of institutional support in schools, social exclusion, fear of family rejection, and a lack of interpersonal skills.
+
+Most people do not become LGBT members because of depression. It's a common misconception to think that being LGBT is related to mental health issues or that they try to join this community out of curiosity. The community members are not trying to increase the number of LGBT people; they are advocating for acceptance and rights.
+
+In this generation, many children use mobile phones for education or watching cartoons, but sometimes they may accidentally view adult content. Unfortunately, when community members or others create misleading narratives and spread them on the internet, it can impact teenagers’ understanding. Day by day, some people may develop misconceptions about this community. So, parents should be vigilant and guide their children.
+
+Homosexuality is illegal under Bangladeshi law. Bangladesh is a Muslim-majority country, and Islamic countries generally do not welcome members of this community. Every holy book, such as the Quran, the Bible, and the Gita, states that the LGBT community is haram or forbidden. Religious teachings emphasize traditional gender roles and reproduction. They argue that LGBT relationships disrupt societal norms, as members cannot procreate. If everyone were to adopt such lifestyles, it is feared that the world would be affected negatively, as reproduction would be hindered.
+
+I tried my best to explain the topic of LGBT simply. All of us should know about this community—not necessarily to endorse it, but to be informed so that we can guide future generations effectively.
+For now, that’s it. 
+
+kolinahida71@gmail.com
+    `,
+    category: 'Non-fiction',
+    categoryImg: '/assets/Non-fiction.jpg',
+    authorName: 'Nahida koli',
+    authorAvatar: '/assets/blog_20_author.jpg',
+    authorDetails: 'Humanities, HSC 2026',
+    publishDate: '7 October 2024',
+    timeRead: '5 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 22,
+    imgUrl: '/assets/blog_21.jpg',
+    title: 'An Unspoken Love',
+    description: `
+Love can be forgotten, but if you truly love someone, their name remains somewhere in your heart.
+
+My name is Siam. When I was six, my mother enrolled me in a nursery school. I didn't understand much at the time, but I remember having a friend who lived next door. Since then, I knew her and exchanged a few words whenever we met.
+
+After completing nursery and kindergarten, we got admitted to the first grade, and that’s how our days began. After about two years, around 2016, her parents, along with her elder brother, moved to the city so she could attend a good educational institution. I didn’t know how I would live without her or what I would do, but I didn’t understand much at that age.
+
+I continued studying at the same school for two years without her. When I reached fifth grade and started attending a private school, I suddenly heard that she was coming back home. Two months later, they moved back, and she met me on her first day. I was very nervous and thought she might have forgotten me, but I was wrong—she remembered me just as I was. Then, we both got admitted to the same private school and continued our studies together.
+
+After the final exam in fifth grade, we got admitted to two different schools. Due to the pressure of studying, we lost touch. Another three years passed like that.
+In 2022, we entered ninth grade. Both of us chose the science stream. There was a good teacher in our village, so we started studying with him. Her parents didn’t allow her to go alone to the city, but I wanted to study with the school master. Because of her, I agreed to study with the village teacher.
+
+After completing ninth grade, the teacher informed us that he would move to the city, and if possible, we could study at his house. We thought we should continue learning from him since he started teaching us.
+
+I began studying with him in the city, with my family’s consent. At that time, I was busy with reading and writing, as I was pursuing the science stream. I liked her since childhood, but I didn’t understand that liking and loving are two different things.
+
+As time passed, I started growing up and began loving her, driven by emotions. I used to go to private places with her, but I never told her that I loved her. Fear held me back—what if I told her my feelings and she stopped coming with me?
+
+Days went by like this. Many days passed, but I couldn’t express my feelings because I was afraid of seeing her reaction. I tried to express myself many times in different ways, but I understood that a girl's mind is not easily swayed. I used to recite beautiful poems to her, but she never seemed to grasp my true intentions. I tried to say the words many times, but I couldn’t.
+
+Time passed, and we were about to part ways, no longer studying together. Every day, my heart pounded as I tried to muster the courage to tell her that I’d loved her since childhood. One day, I finally dared to place her hand on my heart and said, "See how I feel when you’re with me."
+
+From then on, I gained more confidence. I would sit outside her window just to catch a glimpse of her and sometimes bring her a rose. I began to think that maybe she loved me too. Whether it was morning or afternoon, I would wait to see her, feeling at peace just by looking at her.
+
+One day, I gathered all my courage and told her everything I’d kept in my heart. I expressed how much I loved her. She listened quietly and then said, “Whatever you say, my family will never accept this. And most importantly, I see you as a close friend. I don’t have any romantic feelings for you.”
+
+I was shocked to hear this. I tried to explain myself many times, but she stood firm in her decision, saying it would be better not to continue. Since then, she hasn’t contacted me, and I haven’t disturbed her.
+
+Love is beautiful when you find someone who reciprocates your feelings and becomes your life partner. Love can elevate someone, but it can also bring them down. Love is as beautiful as it is terrible.
+
+    `,
+    category: 'Fiction',
+    categoryImg: '/assets/Fiction.jpg',
+    authorName: 'Jahidul Islam',
+    authorAvatar: '/assets/blog_21_author.jpg',
+    authorDetails: 'Humanities, HSC 2026',
+    publishDate: '9 October 2024',
+    timeRead: '5 mins read',
+    isFeatured: true,
+    isPopular: false,
+  },
+  {
+    id: 23,
+    imgUrl: '/assets/blog_22.jpg',
+    title: 'Dreamscapes',
+    description: `
+The word "dream" fills my mind with wonder, 
+
+As one sleeps, yet the brain won't slumber. 
+
+It’s astounding how we craft another realm, 
+
+Where the subconscious plays and takes the helm. 
+ 
+It feels like dreaming is one of the best human traits, 
+
+When reality suffocates and the mind hesitates. 
+
+Dreams come to the rescue, offering a sweet escape; 
+
+It is called “daydreaming,” yet they say it’s a disease. 
+ 
+But it is the other kind of dream that I love the most— 
+
+This dream unveils a vision for life, a vibrant new coast. 
+
+It drives one to strive for the best, 
+
+Igniting hope and sparking one’s interest. 
+
+That forms the urge to grow highest, 
+
+Inspiring one to live even at their lowest. 
+ 
+This is the kind of dream that sets goals in life, 
+
+That creates dedication and lights the fire of desire in the mind. 
+
+I love how dreams plant the seed of greed to succeed, 
+
+How they make one push themselves harder without ever getting exhausted. 
+
+(Amina Noor Punno, a 2026 HSC candidate from the Science Group, is a student at Comilla Government College. She can be reached at aminanoorpunno@gmail.com)
+`,
+    category: 'Poetry',
+    categoryImg: '/assets/Poetry.jpg',
+    authorName: 'Amina Noor Punno',
+    authorAvatar: '/assets/blog_22_author.jpg',
+    authorDetails: 'Class-11 group-Science. Roll-237',
+    publishDate: '11 October 2024',
+    timeRead: '5 mins read',
+    isFeatured: true,
+    isPopular: false,
+  },
+  {
+    id: 24,
+    imgUrl: '/assets/blog_23.jpg',
+    title: 'A Piece of Home ',
+    description: `
+Sitting by the school pool in late afternoon, 
+
+The campus nearly empty, silence thick as gloom. 
+
+Leaves danced softly in the warm summer breeze, 
+
+While small waves in the water bring back memories. 
+
+Laughter, games, and friends, like yesterday’s refrain— 
+
+If only I'd known how soon those days would wane. 
+ 
+10th grade finals done—how can it really be? 
+
+It's time to leave, but it’s so hard to see it clearly.  
+
+The time has come; we each take our separate ways, 
+
+Friends off to new schools, on paths that won’t delay. 
+
+Classes, labs, breaks—those memories stay 
+
+Oh, how much I’ll miss each and every day! 
+ 
+I walk through the halls, memories in each step I take, 
+
+The classroom where laughter and life lessons awake. 
+
+No more Kamal sir’s scolds or Masud sir’s advice on how to live a life, 
+
+When Faysal sir let us watch movies in the lab—it was a sweet surprise. 
+
+Every corner holds a piece of who I’ve become, 
+
+These walls and rooms, where my heart feels most at home. 
+ 
+Getting into this school was a battle, but it was worth the fight, 
+
+This school lifted me up, my shelter, my light. 
+
+When life felt heavy, it made me smile, kept me whole, 
+
+These days are golden, engraved deep in my soul. 
+
+Now I step forward, yet a part of me will stay, 
+
+For in these walls, a piece of me will forever play. 
+
+(Amina Noor Punno, a 2026 HSC candidate from the Science Group, is a student at Comilla Government College. She can be reached at aminanoorpunno@gmail.com)
+`,
+    category: 'Poetry',
+    categoryImg: '/assets/Poetry.jpg',
+    authorName: 'Amina Noor Punno',
+    authorAvatar: '/assets/blog_23_author.jpg',
+    authorDetails: 'Class-11 group-Science. Roll-237',
+    publishDate: '12 October 2024',
+    timeRead: '5 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 25,
+    imgUrl: '/assets/blog_24.jpg',
+    title: 'The Red Ribbon',
+    description: `
+In a college, Mawar, Vay, and Tikka were three friends. Among them, Mawar was the one whose birthday it was. So, Vay and Tikka wanted to give her a surprise. Every year, Mawar goes to visit her parents on her birthday. Like every year, after celebrating, she left for the cemetery as her parents were not alive. She took a bus to the cemetery where her parents were buried. Upon arrival, she first placed flowers on their graves and then sprinkled rose water on them. Then, she told her parents about two wishes. Her first wish was for the cake made by her mother, a taste she could never forget and had not found anywhere else. Her second wish was to find a man with a good heart. Since she was turning 20, she asked her parents for permission to have a boyfriend. After saying this, she cried about her loneliness to her parents. Suddenly, she realized it was evening, so she said "Ameen," saluted the graves, and left for home. Just then, she thought she heard footsteps behind her, as if someone else was coming out of the graveyard. She looked back to clear her mind and saw there was no one, so she returned home.
+
+Her friends, Vay and Tikka, were worried but very happy to see her return. They also noticed she had a different fragrance with her and a box in her hand. Jokingly, they asked Mawar if she had found a new boyfriend. Smiling a little, she went to her room and opened the box to find a red ribbon. She put the red ribbon in her hair with a strange smile. Just then, the telephone started ringing. Tikka picked it up and heard a strange sound for a while, but no one was talking. After that, she put down the phone and looked back. Mawar was standing behind her, looking at her strangely. Vay thought it might be Mawar's boyfriend calling, so she left the phone without saying anything.
+
+The next day was the first show of Tikka's radio station, where people could dedicate songs to their loved ones. Suddenly, the phone started ringing. She was very happy to get her first call, but on the call, she heard the same strange sound as the night before. After a while, someone started to talk, saying that he was Restu and wanted to dedicate the song "Promise" to his beloved. Tikka was very happy to hear this because she realized this was Mawar’s boyfriend. After dedicating the song and finishing her show, she went back home.
+
+Later that day, Atika, the landlady who looked upon Tikka, Vay, and Mawar as her daughters, went outside to throw away the garbage. She saw something strange in the garbage bag but, after checking again, found nothing. When she returned, she noticed the house gate opening by itself, but no one was there. Atika got scared and rushed inside, only to find Mawar in the kitchen making tea by holding a hot kettle with her bare hands. Atika offered to help, but Mawar said she would make tea alone for her "new guest" who would arrive soon. Atika told her friends they should leave the house before 10 o'clock, as she would close the gate by then.
+
+Later that night, Tikka and Vay went to ask Mawar about her new boyfriend, Restu. They suddenly noticed that Mawar's ear was bleeding. When they tried to check, Mawar behaved badly with them and told them to leave her room. She also said she couldn’t talk to anyone. Tikka and Vay got angry and left. The next morning, the landlady came to clean the house and discovered footprints, as if someone with rotting feet had walked all the way to the cup of tea on the table in the drawing room. She was very scared and shared everything with Tikka and Vay.
+
+Then, Tikka and Vay went to see Leena, who was Alex’s best friend. Leena had practical powers, so they asked her to find out what happened to Mawar. They shared everything about Mawar's behavior since returning from her parents' gravesite, mentioning the red ribbon in the box. Leena told them to bring the ribbon to her. After a day, Tikka and Vay managed to get the ribbon and gave it to Leena. Leena explained that this red ribbon was connected to "Amavas," and while Mawar was at her parents' grave, it possessed her. Leena advised them to return the ribbon to the cemetery. With the help of Mawar's elder sister, Mitali, Tikka and Vay went to her parents' graves and left the red ribbon there.
+
+A few days later, Mawar returned to her usual self and had fun with her friends again, though sometimes memories of Restu would flash in her eyes. One day, Vay found her dead. She saw Mawar with her dead body. Then, she woke up and found a note in her room. It was from Mawar, saying, "I know you all love me very much, but I cannot live without Restu. I can’t live without him." By reading this, they understood what Mawar was about to do. They ran toward Mawar's room and found the door locked from the inside. They broke into the room and saw Mawar hanging from the ceiling. The last words on her note were, "I would be happy if you all could feel Restu's love for me as I did." 
+`,
+    category: 'Fiction',
+    categoryImg: '/assets/Fiction.jpg',
+    authorName: 'Ria',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '15 October 2024',
+    timeRead: '12 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 26,
+    imgUrl: '/assets/blog_25.jpg',
+    title: 'Dreams and Realities',
+    description: `
+He asked, "If the first love was true, then why did the second one happen? And if the second one is true, then why is the first one still in memory?"
+
+She replied, "The first love was like a dream. What I lived was a thought that could never be fulfilled. The first love was a part of my life that was never complete, and that's why those memories still live in my heart. But the second love is real—it lives with me every day, every second. The moments I spend with you make me forget the first love."
+
+He asked again, "So, you still remember him?"
+
+She replied, "No, remembering him is just an unfulfilled thought, and living with you is a fulfilled dream. You are my life. You represent my happiness. The first love was a story, but what I have with you is true. What I feel every day is real."
+
+He said, "So, do you truly love me?"
+
+She said, "Yes. You are my life. The first love was a dream that left me behind. But you are the reason I live and the way to fulfill all my dreams. You are my present, and I see my future in you. Will you be my future forever?"
+
+He said, "Yes."
+
+Several days later, he left her for good. Once again, she lost the belief that she could speak freely with her partner, the one who is now her life partner, the sharer of everything, but not the sharer of her heartbreaks.
+
+(Syeda Anika Tabassum, a 2025 HSC candidate from the Business Studies Group, is a student at Comilla Government College.)
+`,
+    category: 'Non-fiction',
+    categoryImg: '/assets/Non-fiction.jpg',
+    authorName: 'Syeda Anika Tabassum',
+    authorAvatar: '/assets/blog_25_author.jpg',
+    authorDetails: 'HSC 2025, Business Studies, Roll-546',
+    publishDate: '17 October 2024',
+    timeRead: '4 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 27,
+    imgUrl: '/assets/blog_26.jpg',
+    title: 'Vain Man',
+    description: `
+I am a driver by profession. My parents thought about my future and arranged my marriage. I was 23 years old then, and the girl was 17 and in the ninth grade at the time. Her family told me repeatedly that she was a good, talented girl and asked me not to let her stop studying.
+
+My father-in-law held my hand and said, “Son, help my daughter with her studies.” I tutored her and worked extra hours to support her education. She studied well and achieved good results. In this way, seven years passed, and she completed her master’s degree. During that time, we had a son, who is now four years old. She finished her studies and got a good job.
+
+One day, I returned home and found that both my son and wife were gone. After searching, I discovered that two lakh taka I had saved and my wedding jewelry were missing. Later, I received a call. From the other end, she said, “Forget me. I love someone else and will stay with him now. You’re just a driver, and we have nothing in common anymore.” I didn’t know what to say. I thought it was the worst moment of my life, one I could never understand.
+
+After thinking for a long time, I called back and asked for my son, but she said he would stay with her and then ended the call. Some days later, I filed a case to gain custody of my son, but she agreed to let him stay with her. In the end, the court ruled that our son should remain with his mother, as he was too young to endure such difficulties.
+
+Today, I feel empty. In the end, I am a broken man.
+
+(Jahidul Islam, a 2026 HSC candidate from the Humanities Group, is a student at Comilla Government College. He can be reached at siam39290@gmail.com. 
+
+`,
+    category: 'Memories',
+    categoryImg: '/assets/Memories.jpg',
+    authorName: 'Jahidul Islam',
+    authorAvatar: '/assets/blog_26_author.jpg',
+    authorDetails: 'HSC 2026, Humanities',
+    publishDate: '20 October 2024',
     timeRead: '4 mins read',
     isFeatured: false,
     isPopular: false,
