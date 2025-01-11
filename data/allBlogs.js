@@ -191,24 +191,24 @@ We cannot let circumstances or other people control our lives! The only one!
     title: 'Chameleon',
     description: `
 
-    Once upon a time, there were two friends who were barely close, and they did not know much about each other. Their names were Ana and Deni. Ana thought they would be a good match and she felt relief because of finding a humble person.
-    
-    
-    So, their days were becoming colorful by the company of each other. One day, when Ana was going to her aunt's house, she saw Deni on the street and asked her what happened. Deni told Ana that some people were talking behind her and added that she had fought with them for her. Though Ana felt bad hearing that news, she was also happy to have such a good friend.
+Once upon a time, there were two friends who were barely close, and they did not know much about each other. Their names were Ana and Deni. Ana thought they would be a good match and she felt relief because of finding a humble person.
 
-    
-    She told Deni goodbye and went to her destination. At night, when she was thinking about the day, Deni's words rushed to her mind, and out of curiosity, she asked another friend about the incident. One of her closest friends told her that she had not heard anything about the incident and also commented that what Ana had done was right. The thing is, a few days ago they had joined college, and she had created a group to stay connected with all the classmates.
 
-    
-    One day, a boy named Joe sent a request to join the group, and she approved it. One day, while scrolling through her social media, she saw a group where she had been added by Joe. He had added her without asking. At that time, she saw that a reckless boy had sent a reel that didn't suit the environment of the group. As the admin of the group, she told him not to send this type of thing in a group where he didn’t know most of the people.
+So, their days were becoming colorful by the company of each other. One day, when Ana was going to her aunt's house, she saw Deni on the street and asked her what happened. Deni told Ana that some people were talking behind her and added that she had fought with them for her. Though Ana felt bad hearing that news, she was also happy to have such a good friend.
 
-    
-    After some conversation, he said that he wouldn’t send those things anymore. But after some time, another boy sent a meme, and that was the start button. Then all the immature people started to send unsuitable messages. Seeing that, she left the group. After leaving the group, the admin of the group, Joe, messaged her and said sorry. After some days, they started to talk recklessly bad about Ana, which was informed to her by Deni. So, that was the short incident. After some days, another friend of hers sent her some screenshots of the group where they talked about Ana.
 
-    
-    After seeing the conversation, Ana felt fooled. Her friend, Deni, who informed her about this incident, was also involved in the reckless conversations, and Deni's words were negative for Ana's image. She asked her nothing about the happenings. Not because she couldn’t get hold of her, but because she felt a vast amount of hatred for this two-faced person, whom she had loved and believed, had deceived her. Though Deni continued to send her messages and tried to talk to her in person, Ana declined the proposal. Ana just ignored her. The End. (Based on a true story).
+She told Deni goodbye and went to her destination. At night, when she was thinking about the day, Deni's words rushed to her mind, and out of curiosity, she asked another friend about the incident. One of her closest friends told her that she had not heard anything about the incident and also commented that what Ana had done was right. The thing is, a few days ago they had joined college, and she had created a group to stay connected with all the classmates.
 
-    (Bushra Jahan Shifa, a 2026 HSC candidate from the Science Group, is a student at Comilla Government College.)
+
+One day, a boy named Joe sent a request to join the group, and she approved it. One day, while scrolling through her social media, she saw a group where she had been added by Joe. He had added her without asking. At that time, she saw that a reckless boy had sent a reel that didn't suit the environment of the group. As the admin of the group, she told him not to send this type of thing in a group where he didn’t know most of the people.
+
+
+After some conversation, he said that he wouldn’t send those things anymore. But after some time, another boy sent a meme, and that was the start button. Then all the immature people started to send unsuitable messages. Seeing that, she left the group. After leaving the group, the admin of the group, Joe, messaged her and said sorry. After some days, they started to talk recklessly bad about Ana, which was informed to her by Deni. So, that was the short incident. After some days, another friend of hers sent her some screenshots of the group where they talked about Ana.
+
+
+After seeing the conversation, Ana felt fooled. Her friend, Deni, who informed her about this incident, was also involved in the reckless conversations, and Deni's words were negative for Ana's image. She asked her nothing about the happenings. Not because she couldn’t get hold of her, but because she felt a vast amount of hatred for this two-faced person, whom she had loved and believed, had deceived her. Though Deni continued to send her messages and tried to talk to her in person, Ana declined the proposal. Ana just ignored her. The End. (Based on a true story).
+
+(Bushra Jahan Shifa, a 2026 HSC candidate from the Science Group, is a student at Comilla Government College.)
     `,
     category: 'Fiction',
     categoryImg: '/assets/Fiction.jpg',
@@ -218,7 +218,7 @@ We cannot let circumstances or other people control our lives! The only one!
     publishDate: '3 July 2024',
     timeRead: '4 mins read',
     isFeatured: false,
-    isPopular: false,
+    isPopular: true,
   },
   {
     id: 6,
@@ -273,7 +273,7 @@ After hearing that, some of our team members suggested leaving immediately, but 
     authorDetails: 'HSC 2025, Roll-1004',
     publishDate: '10 July 2024',
     timeRead: '5 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -303,7 +303,7 @@ In conclusion, I want to say one thing: follow your heart and what it says. Don�
     authorDetails: 'Roll:30 Group:Science Exam year:2025 ',
     publishDate: '17 July 2024',
     timeRead: '3 mins read',
-    isFeatured: true,
+    isFeatured: false,
     isPopular: false,
   },
   {
@@ -557,8 +557,8 @@ I still had faith in him. Everyone was sobbing. But the voices became faint. A t
     authorDetails: 'Science Hsc-26 Roll:274',
     publishDate: '9 August 2024',
     timeRead: '4 mins read',
-    isFeatured: true,
-    isPopular: false,
+    isFeatured: false,
+    isPopular: true,
   },
   {
     id: 12,
@@ -663,7 +663,7 @@ Sometimes we even bunked school. As our SSC exam approached, we started preparin
     publishDate: '26 August 2024',
     timeRead: '3 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 16,
@@ -739,7 +739,7 @@ To be continued...
     publishDate: '11 September 2024',
     timeRead: '10 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 18,
@@ -821,7 +821,7 @@ Happiness is subjective. It's the simple joys like spending time with kids or ca
     publishDate: '19 September 2024',
     timeRead: '25 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 19,
@@ -851,7 +851,7 @@ Basically, we experience therapy from people. We often think only a person can b
     publishDate: '27 September 2024',
     timeRead: '4 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 20,
@@ -897,7 +897,7 @@ From that moment on, I promised myself I would never love again. I would focus o
     publishDate: '5 October 2024',
     timeRead: '4 mins read',
     isFeatured: false,
-    isPopular: true,
+    isPopular: false,
   },
   {
     id: 21,
@@ -977,8 +977,8 @@ Love is beautiful when you find someone who reciprocates your feelings and becom
     authorDetails: 'Humanities, HSC 2026',
     publishDate: '9 October 2024',
     timeRead: '5 mins read',
-    isFeatured: true,
-    isPopular: false,
+    isFeatured: false,
+    isPopular: true,
   },
   {
     id: 23,
@@ -1030,8 +1030,8 @@ How they make one push themselves harder without ever getting exhausted.
     authorDetails: 'Class-11 group-Science. Roll-237',
     publishDate: '11 October 2024',
     timeRead: '5 mins read',
-    isFeatured: true,
-    isPopular: false,
+    isFeatured: false,
+    isPopular: true,
   },
   {
     id: 24,
@@ -1095,7 +1095,7 @@ For in these walls, a piece of me will forever play.
     authorDetails: 'Class-11 group-Science. Roll-237',
     publishDate: '12 October 2024',
     timeRead: '5 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -1124,7 +1124,7 @@ A few days later, Mawar returned to her usual self and had fun with her friends 
     authorDetails: '',
     publishDate: '15 October 2024',
     timeRead: '12 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -1157,7 +1157,7 @@ Several days later, he left her for good. Once again, she lost the belief that s
     authorDetails: 'HSC 2025, Business Studies, Roll-546',
     publishDate: '17 October 2024',
     timeRead: '4 mins read',
-    isFeatured: false,
+    isFeatured: true,
     isPopular: false,
   },
   {
@@ -1185,6 +1185,194 @@ Today, I feel empty. In the end, I am a broken man.
     authorDetails: 'HSC 2026, Humanities',
     publishDate: '20 October 2024',
     timeRead: '4 mins read',
+    isFeatured: true,
+    isPopular: false,
+  },
+  {
+    id: 28,
+    imgUrl: '/assets/blog_27.jpg',
+    title: 'Unspoken Feelings',
+    description: `
+When I read in class 8, I fell in love with a senior boy. On the day of 24 June 2021, I was lying on my bed and watching cartoons on my mother's mobile phone. Then, I heard a noise from our gate, and someone knocked on our gate. So, I went to the gate and saw our new tenant. Then, I opened our gate and saw him for the first time. The new tenant started to live on the other side of our flat. The boy was very attentive to his studies, and he always completed his 5 daily prayers. In a word, he was very polite.
+
+As my mom and his mom became friendly, they started to come and go to each other's houses. One day, his mom invited me for dinner because my mom had gone to my maternal grandmother’s home. So, I went to their flat and saw him reading attentively. Then, I saw many storybooks on his table. I like to read storybooks. So, addressing him as bhaiya, I asked him if he would give me a book. He looked at me and gave me a book named Tin Goyenda. I felt very happy.
+
+The next day, he came to my flat and asked me, "Can you give me a storybook?" I smiled and gave him a book named Rasha. One winter afternoon, his sister and I talked about our daily activities on our roof. We were the same age. Then, he came to the roof, and I started to blush. He noticed and asked me, "Why are your cheeks so red?" At that, I went down from the roof.
+
+One day, I went to the roof to hang clothes, and he also came to the roof after taking a shower. He saw me and asked, "How are you, Madam?" I blushed again because he called me "Madam." I replied and went down from the roof as fast as I could. On the same day, he suggested a book named Ami Topu, written by Muhammad Zafar Iqbal. I read the whole book in one night and got very emotional at the ending.
+
+I returned his book, and he looked at me and asked, "Why are your eyes so red? Did you cry all night?" I was astonished and silently glanced at him. He understood and said to me, "Crying is normal after reading this book. I also cried while reading it." Then, my mom called me, so I went to my flat.
+
+After a few months, his SSC exam was about to start. He came to our flat and asked my parents to pray for him. Before going back to his flat, he said to me, "Please pray for me, Madam." I replied, "Fi Amanillah."
+
+A few days later, while I was chatting with my friends, I saw his Facebook ID. I felt very happy and started to check his profile. After that, I began to observe his daily activities on Facebook. But I had no courage to send him a friend request. I checked his profile comments and reactions every day. He had many friends who were girls, which made me feel very angry and jealous.
+
+A few months later, he, his sister, and I went to the roof together. Then, he asked us, "Have you ever liked anyone, guys?" His sister replied that she liked someone. But I didn’t reply. Then, his sister asked, "Did you like someone, brother?" Looking at the sky, he replied that he liked someone. Hearing this, my eyes were full of tears. So, I bowed my head and came down with difficulty. All night, I looked at his photo and cried for him.
+
+After that day, I started to ignore him. A few months later, his SSC result was published, and he began preparing for Notre Dame College. Before the exam, he asked my mom about me and also came to our flat.
+
+But seeing him, I went to the washroom and started to cry silently. A few days later, the NDC result was published, and he got the chance. Hearing this news, my eyes were full of tears. I didn’t understand anything and asked myself, "Are these tears of joy or of losing him?"
+
+After a few weeks, my mom sent me to him for tutoring. Then, I sat down beside him and bowed my head. He smiled at me and said, "How are you, Madam? Here is your physics and chemistry book." I didn’t reply. He started to teach me very carefully. I was afraid to learn physics, but he always inspired me.
+
+A few days later, he gave me a physics exam. But I didn’t get good marks, so my eyes filled with tears, and my cheeks became red. He noticed that and asked me, "Why are you crying? Are you a little girl?" Then, he told me, "It was your first exam in physics, so getting poor marks is very normal." He motivated me by saying, "Your marks are actually good, and you will get the highest marks in physics next time." But I wasn’t satisfied with my marks, so I left his flat as fast as I could.
+
+One day, when I secretly looked at his Facebook photos, I accidentally liked one of them. I was very afraid. A few moments later, he came to our flat and asked, "Did you like my Facebook photo?" I replied, "No." Hearing this, he went back to his flat. Yet, I could not express my feelings for him. I became restless with anger and grief.
+
+Then, the day of his departure came, and he left for Cumilla. I just stared at him through the window as he left. A few months later, they changed their flat and started to live in the building opposite ours. One day, when I came back from school, I suddenly saw him going to the mosque. I glanced at him, and my heartbeat was going so fast. But after a while, I got hold of myself.
+
+Then, two years passed. My SSC exam had just ended. A few weeks later, I found out that he got admitted to RUET. I felt happy for him. Then, one day, my mother told me that he would come to tutor me from that day. I was surprised at that and told my mom that I wouldn’t study with him. But my mom didn’t listen to me.
+At last, he came to our house to teach me. I was very nervous. I never looked at him. When he gave me math using the calculator, my hands shivered with nervousness. Seeing this, he asked, "Why are you so nervous?" I didn’t reply to anything.
+
+A few months passed, yet I could not express my feelings. I still didn’t know if I could express my feelings to him. So, I didn’t look into his eyes anymore because whenever I looked into his eyes, I felt a lot of pain. I tried to express my feelings for him again and again, but I failed. A scornful sense worked in my mind.
+
+But one day, when I was ready to express my feelings, he didn’t come that day to teach me. I was very upset that day. My eyes turned red with pain. I didn’t talk a single word that day. I got to know from my mom that he had suddenly gone to Rajshahi because his classes would start the next day and RUET had suddenly declared that.
+
+I asked myself, "Why can’t I express my feelings to him? Why? Maybe in this life, I won’t be able to express my feelings to him anymore. It will be one-sided. But I really wanted to know if he ever had feelings for me."
+    `,
+    category: 'Memories',
+    categoryImg: '/assets/Memories.jpg',
+    authorName: 'Jumatul Bida',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '3 November 2024',
+    timeRead: '8 mins read',
+    isFeatured: true,
+    isPopular: false,
+  },
+  {
+    id: 29,
+    imgUrl: '/assets/blog_28.jpg',
+    title: 'The Most Recent Thing I’ve Learned About Myself',
+    description: `
+There’s a saying that people can learn from the day they are born to the day they die. This world is filled with countless opportunities for learning, and we gain knowledge every day, every moment.
+
+Recently, I learned something about myself: I’ve become more mature. Maturity is a concept we define in various ways, and the way I see it, I’ve discovered a sense of maturity within myself.
+
+For example, a rickshaw puller might define maturity as the ability to drive a rickshaw. Similarly, from a child’s perspective, if you can solve their math problem, you’re mature. But to me, maturity is the ability to respond thoughtfully and spontaneously to questions or situations, especially when you’re mindful of your surroundings.
+
+Imagine you’re speaking with a senior or a junior. If you can say exactly what needs to be said, based on the context, without overwhelming them or showing off, that’s maturity. It’s about understanding what is appropriate in a given situation.
+
+Take another example: a doctor might be well-versed in medical terms, but if they were to discuss these terms with a businessman or an engineer, it would be unreasonable to expect them to understand everything. Trying to showcase one’s knowledge in such a setting would be unwise. True maturity lies in adapting to the audience and sharing knowledge in a way that fits the context.
+
+I recently reflected on this and realized that I possess this quality. I’ve grown to understand my surroundings better and communicate accordingly, and I believe this is a valuable aspect of maturity that everyone should strive to develop.
+    `,
+    category: 'Lifestyle',
+    categoryImg: '/assets/Lifestyle.jpg',
+    authorName: 'Fatematuj Juhora',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '5 November 2024',
+    timeRead: '5 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 30,
+    imgUrl: '/assets/blog_29.jpg',
+    title: 'A wonderful girl',
+    description: `
+I have discovered a wonderful thing in  my eyes since I got matured. This made me think about the greatness of the almighty. How beautiful he can make!!! . I discovered the greatness of the almighty by seeing a girl who is considered as one of the most beautiful inventions of the almighty in my eyesight. Her beauty is like a tan level of 90, infinite—meaning her allure never fades.
+
+When she smiles, it feels as if thousands of flowers are blooming simultaneously, with the music of life playing in every petal. Her eyes resemble vast, deep oceans where I long to get lost, discovering something new with each wave.
+
+Her presence is like a beam of light that touches the darkness and illuminates everything. When she speaks, it creates a melodious harmony in the silence of the universe that enchants my heart.
+
+She is like a quantum particle, her beauty is changing with every moment but never diminishing 
+
+If beauty were a number, she would be the greatest square root in algebra. Being with her feels like the neural signals between two cells, where each moment reveals a new discovery.                     
+##I didn't specify who she is !!
+
+    `,
+    category: 'Memories',
+    categoryImg: '/assets/Memories.jpg',
+    authorName: 'Muntasir Hasan',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '10 November 2024',
+    timeRead: '3 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 31,
+    imgUrl: '/assets/blog_30.jpg',
+    title: 'Father',
+    description: `
+In a bustling seaside town, there lived a fisherman named Tomas. Tomas was strong, with hands calloused by years of casting nets into the sea and pulling in heavy catches. He was a quiet, steady man, and while his life was simple, he was devoted to his family, especially his young daughter, Lina.
+
+Lina was Tomas's light—her laughter filled their modest home, and her curious questions kept him smiling, even after the hardest days. She loved the sea, just like her father, and would sit for hours by the docks watching him work, fascinated by the waves and the world beyond the shore.
+
+One stormy night, Tomas set out on the sea. The winds had picked up suddenly, and though it was dangerous, he couldn't afford to return empty-handed. Lina’s mother had fallen ill, and the cost of medicine had drained their savings. Tomas needed a good catch.
+
+But as the storm raged, the sea became wild, tossing his small boat like a leaf. Lightning split the sky, illuminating waves as tall as buildings. His heart pounded with fear, but he held tightly to the wheel, praying to the sea to show mercy. Hours passed as he fought to keep his boat from capsizing, pushing himself beyond exhaustion.
+
+When he finally returned to shore at dawn, Tomas was battered and bruised, but his boat was full. As he docked, he saw a small figure running towards him in the dim light. It was Lina, her face streaked with tears, her hair wild from the wind. She had been waiting by the shore all night, worried he wouldn't come back.
+
+Tomas knelt down and wrapped his arms around her, realizing how close he had come to losing everything that mattered. He promised Lina that he would never risk his life so recklessly again, that nothing was worth losing each other. They stood by the shore together, watching the sun rise over the calming waves.
+
+From that day on, Tomas found a new way to provide for his family, teaching Lina the art of fishing, but only from the safety of the docks. Years later, as Lina grew and took over her father’s work, she carried the lessons of that night with her—a reminder of her father’s strength and of his love, which was as vast and boundless as the sea. 
+    `,
+    category: 'Memories',
+    categoryImg: '/assets/Memories.jpg',
+    authorName: 'Md Abir Rahman Shuvro',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '15 November 2024',
+    timeRead: '3 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 32,
+    imgUrl: '/assets/blog_31.jpg',
+    title: 'Werewolf',
+    description: `
+In a quiet, fog-shrouded village nestled deep in a valley, there lived a young man named Aldric. By day, Aldric was a humble woodsman, a quiet soul who had spent his life on the outskirts of the town, cutting wood and providing for his elderly mother. He was known for his kindness and strong sense of duty, though he kept mostly to himself. But Aldric held a terrible secret, one he dared not share with anyone—not even his family.
+
+One night, under the light of a full moon, Aldric had wandered into the woods to clear his mind. He had felt restless, haunted by strange dreams and an inexplicable hunger gnawing at his bones. As he entered the darkest part of the forest, a pain unlike anything he had ever felt surged through his body. His skin grew hot, his bones twisted, and his teeth elongated into sharp fangs. Before he understood what was happening, Aldric had transformed into a creature of legend—a towering, vicious werewolf.
+
+He awoke the next morning, naked and shaken, his hands stained with blood. He had no memory of the night, but whispers in the village soon told him everything he needed to know: a pack of sheep had been slaughtered, and several villagers reported seeing a hulking beast with eyes that glowed like embers prowling through the shadows. Fear and suspicion gripped the town, and Aldric began to feel the creeping dread of what he had done.
+
+Days turned to weeks, and Aldric did all he could to control the curse, locking himself away each full moon. He even considered leaving the village, but his mother’s frail health anchored him to the place he called home. Rumors spread, and the villagers grew fearful. Some took to leaving silver at their doorsteps, hoping it would ward off the beast. They spoke of a hunt to rid the valley of the creature, unaware that the monster they feared was one of their own.
+
+In desperation, Aldric sought out a reclusive old woman rumored to be a healer with knowledge of ancient curses. She told him the transformation had been triggered by the bite of a wolf that had passed through the woods months ago—one that had been cursed long ago by a powerful spirit. “To break it,” she warned, “you must find the wolf that bit you and kill it under the light of a full moon.”
+
+For months, Aldric hunted, tracking the beast through dark forests and moonlit glades. On the night of the harvest moon, Aldric finally confronted the cursed wolf, its fur matted and eyes blazing with a hunger he recognized in himself. After a fierce, terrible struggle, Aldric struck the wolf down, and as its blood mingled with the soil, he felt the curse lift.
+
+    `,
+    category: 'Fiction',
+    categoryImg: '/assets/Fiction.jpg',
+    authorName: 'Md Abir Rahman Shuvro',
+    authorAvatar: null,
+    authorDetails: '',
+    publishDate: '18 November 2024',
+    timeRead: '5 mins read',
+    isFeatured: false,
+    isPopular: false,
+  },
+  {
+    id: 33,
+    imgUrl: '/assets/blog_32.jpg',
+    title: 'Broken Ties',
+    description: `
+  Hello everyone, how are you all? Today I will write some stories from my real life. Whatever you call this story or incident, there are some good moments, some bad experiences and some bad times. My grandma died when I was in first grade. I heard grandma. Or he loved me more than everyone else and I understood a little at that timeAfter my grandmother's death, some of our things were separated between the three families, but we were still together.
+  
+  We used to hang out together, chat, attend occasion and cook a lot of fun together. Those were the best days I have ever spent. Those were the days. We still haven't forgotten. My younger uncle died when I was in class 7. Ever since he died, bad days came in our life. We were not at all prepared for these days. Day by day our relationship became bad. 
+  
+  What is money and wealth in people's life!! For these things brother does not know brother, sister does not know brother.From that time till today I study in 11th standard, till now we have no contact with my uncle.But we can solve it if we want, we can all be together again. But we don't want to solve it, because of our ego, our relationships remain like this forever.
+  
+  In fact, this is the reality, now people don't want to be together like before. But our mother -Fathers also don't understand the effect it will have on their children.If they see them, they will do the same when they grow up, they will not get the joy of being together, the education. Shouldn't our parents have taken care of us so that this influence does not fall on us?These things are common in our society now.
+  
+  That's why I don't consider this society as a healthy society. Can't we transform this sick society into a healthy society if we want? Yes, we can but we love this sick society more.I have faced many things at a very young age. Maybe it's bad for me but I learned a lot through it. I learned the difference between good and bad. Even today I miss those days so much that it's hard to explain. Finally, I want to say one thing, "This is how people's relationships are lost to money."
+    `,
+    category: 'Reviews',
+    categoryImg: '/assets/Reviews.jpg',
+    authorName: 'Mst. Taspia Mazumder',
+    authorAvatar: '/assets/blog_32_author.jpg',
+    authorDetails: '',
+    publishDate: '21 November 2024',
+    timeRead: '7 mins read',
     isFeatured: false,
     isPopular: false,
   },
