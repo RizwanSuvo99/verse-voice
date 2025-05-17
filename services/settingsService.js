@@ -18,6 +18,8 @@ const defaultSettings = {
   // Appearance settings
   primaryColor: '#0ea5ea',
   secondaryColor: '#0bd1d1',
+  logoPath: '/assets/logo.svg',
+  logoWhitePath: '/assets/logo-white.svg',
   
   // Hero settings
   heroTitle: 'Thoughts Meet Words',
@@ -76,6 +78,48 @@ export const saveSettings = (settings) => {
 export const getSetting = (key) => {
   const settings = getSettings();
   return settings[key] || defaultSettings[key];
+};
+
+// Save an image to local storage
+export const saveImageToLocalStorage = (file, key) => {
+  return new Promise((resolve, reject) => {
+    if (!file) {
+      resolve(null);
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const base64Image = e.target.result;
+        localStorage.setItem(`image_${key}`, base64Image);
+        resolve(base64Image);
+      } catch (error) {
+        console.error('Error saving image:', error);
+        reject(error);
+      }
+    };
+    reader.onerror = (error) => {
+      console.error('Error reading file:', error);
+      reject(error);
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+// Get an image from local storage
+export const getImageFromLocalStorage = (key, defaultValue) => {
+  if (typeof window === 'undefined') {
+    return defaultValue;
+  }
+  
+  try {
+    const image = localStorage.getItem(`image_${key}`);
+    return image || defaultValue;
+  } catch (error) {
+    console.error('Error getting image:', error);
+    return defaultValue;
+  }
 };
 
 // In a real application, these would be API calls

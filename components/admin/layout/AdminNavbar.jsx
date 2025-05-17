@@ -1,9 +1,11 @@
 'use client';
 
 import { useAuth } from '@/hooks/useAuth';
+import { getImageFromLocalStorage, getSetting } from '@/services/settingsService';
 import { Divider, Flex, Group, Image, Text, UnstyledButton } from '@mantine/core';
 import {
   IconArticle,
+  IconBrandTaobao,
   IconCategoryPlus,
   IconDashboard,
   IconLayoutDashboard,
@@ -15,6 +17,7 @@ import {
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import classes from '../../../app/(admin)/admin/NavbarSimpleColored.module.css';
 
 // Navigation items with proper routes
@@ -24,6 +27,7 @@ const navItems = [
   { path: '/admin/posts/new', label: 'Create Post', icon: IconPencilPlus },
   { path: '/admin/categories', label: 'Categories', icon: IconCategoryPlus },
   { path: '/admin/hero', label: 'Edit Hero', icon: IconLayoutDashboard },
+  { path: '/admin/logo', label: 'Logo Settings', icon: IconBrandTaobao },
   { path: '/admin/media', label: 'Media Library', icon: IconPhoto },
   { path: '/admin/users', label: 'Users', icon: IconUsers },
   { path: '/admin/settings', label: 'Settings', icon: IconSettings },
@@ -32,6 +36,18 @@ const navItems = [
 export function AdminNavbar() {
   const pathname = usePathname();
   const { logout, user } = useAuth();
+  const [logoSrc, setLogoSrc] = useState('/assets/logo-white.svg');
+  
+  useEffect(() => {
+    // Try to get the custom white logo from localStorage
+    const customLogo = getImageFromLocalStorage('whiteLogo', null);
+    if (customLogo) {
+      setLogoSrc(customLogo);
+    } else {
+      // Fall back to the setting or default
+      setLogoSrc(getSetting('logoWhitePath'));
+    }
+  }, []);
 
   // Check if the current path matches a nav item
   const isActive = (path, exact = false) => {
@@ -59,7 +75,7 @@ export function AdminNavbar() {
           <Group className={classes.header} justify="space-between">
             <Image
               alt="classRoomWriters-logo"
-              src="/assets/logo-white.svg"
+              src={logoSrc}
               h={60}
             />
             <Text fw={600} c={'white'}>
