@@ -11,7 +11,7 @@ import { notifications } from '@mantine/notifications';
 import { IconArrowLeft, IconCheck, IconDeviceFloppy, IconUpload } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 // Helper function to convert file to base64
 const fileToBase64 = (file) => {
@@ -34,6 +34,7 @@ export default function EditPostClient({ params }) {
   const [saving, setSaving] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   const form = useForm({
     initialValues: {
@@ -55,57 +56,61 @@ export default function EditPostClient({ params }) {
   });
 
   // Load post and categories data
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        // Load post data
-        const postData = getPostById(postId);
-        if (!postData) {
-          notifications.show({
-            title: 'Error',
-            message: 'Post not found',
-            color: 'red',
-          });
-          router.push('/admin/posts');
-          return;
-        }
-        
-        setPost(postData);
-        setPreviewImage(postData.imgUrl);
-        
-        // Initialize form with post data
-        form.setValues({
-          title: postData.title || '',
-          description: postData.description || '',
-          category: postData.category || '',
-          imgUrl: postData.imgUrl || '',
-          authorName: postData.authorName || '',
-          authorDetails: postData.authorDetails || '',
-          isFeatured: postData.isFeatured || false,
-          isPopular: postData.isPopular || false,
-        });
-
-        // Load categories
-        const allCategories = getCategories();
-        setCategories(allCategories.map(cat => ({
-          value: cat.name,
-          label: cat.name
-        })));
-      } catch (error) {
-        console.error('Error loading post:', error);
+  const loadData = useCallback(async () => {
+    if (dataLoaded || !postId) return;
+    
+    setLoading(true);
+    try {
+      // Load post data
+      const postData = getPostById(postId);
+      if (!postData) {
         notifications.show({
           title: 'Error',
-          message: 'Failed to load post data',
+          message: 'Post not found',
           color: 'red',
         });
-      } finally {
-        setLoading(false);
+        router.push('/admin/posts');
+        return;
       }
-    };
+      
+      setPost(postData);
+      setPreviewImage(postData.imgUrl);
+      
+      // Initialize form with post data
+      form.setValues({
+        title: postData.title || '',
+        description: postData.description || '',
+        category: postData.category || '',
+        imgUrl: postData.imgUrl || '',
+        authorName: postData.authorName || '',
+        authorDetails: postData.authorDetails || '',
+        isFeatured: postData.isFeatured || false,
+        isPopular: postData.isPopular || false,
+      });
 
+      // Load categories
+      const allCategories = getCategories();
+      setCategories(allCategories.map(cat => ({
+        value: cat.name,
+        label: cat.name
+      })));
+      
+      setDataLoaded(true);
+    } catch (error) {
+      console.error('Error loading post:', error);
+      notifications.show({
+        title: 'Error',
+        message: 'Failed to load post data',
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
+    }
+  }, [postId, router, form, dataLoaded]);
+
+  useEffect(() => {
     loadData();
-  }, [postId, router, form]);
+  }, [loadData]);
 
   const handleImageChange = async (file) => {
     if (!file) {
