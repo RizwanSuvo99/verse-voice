@@ -1,17 +1,26 @@
-import allBlogs from '@/data/allBlogs';
+'use client';
+
+import { getCategories } from '@/services/categoriesService';
 import {
-  Button,
-  Card,
-  Container,
-  Divider,
-  Flex,
-  Text,
-  Title,
+    Button,
+    Card,
+    Container,
+    Divider,
+    Flex,
+    Text,
+    Title,
 } from '@mantine/core';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const PopularCategories = () => {
-  const popularCategories = [...new Set(allBlogs.map((item) => item.category))];
+  const [categories, setCategories] = useState([]);
+  
+  useEffect(() => {
+    // Get categories from the service which reads from localStorage
+    const allCategories = getCategories();
+    setCategories(allCategories);
+  }, []);
 
   return (
     <Container size={1350} className="!m-0">
@@ -25,15 +34,16 @@ const PopularCategories = () => {
           gap={'md'}
           direction={{ base: 'column', sm: 'row' }}
         >
-          {popularCategories?.map((category, i) => (
+          {categories?.map((category, i) => (
             <Button
               key={i}
               component={Link}
-              href={`/category/${category.toLowerCase()}`}
+              href={`/category/${category.slug}`}
               size="xl"
               variant="outline"
+              style={{ borderColor: category.color, color: category.color }}
             >
-              {category}
+              {category.name}
             </Button>
           ))}
         </Flex>

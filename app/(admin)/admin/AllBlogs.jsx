@@ -1,5 +1,6 @@
 'use client';
 
+import { getCategories } from '@/services/categoriesService';
 import { getPosts } from '@/services/postsService';
 import {
     ActionIcon,
@@ -15,38 +16,42 @@ import {
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 
-const categoryColors = [
-  '#FF5733', // Persimmon
-  '#33FF57', // Lime Green
-  '#3357FF', // Royal Blue
-  '#F39C12', // Orange
-  '#8E44AD', // Purple
-  '#1ABC9C', // Turquoise
-  '#E74C3C', // Red
-  '#3498DB', // Light Blue
-  '#9B59B6', // Amethyst
-  '#2ECC71', // Emerald
-  '#D35400', // Pumpkin
-  '#F1C40F', // Sunflower
-  '#C0392B', // Pomegranate
-  '#2980B9', // Belize Hole
-  '#E67E22', // Carrot
-  '#27AE60', // Sea Green
-  '#F0E68C', // Khaki
-  '#DA70D6', // Orchid
-];
-
 const AllBlogs = () => {
   const [blogs, setBlogs] = useState([]);
+  const [categoryColors, setCategoryColors] = useState({});
   
-  useEffect(() => {
+  // Load blogs and category colors
+  const loadData = () => {
     // Get posts from the postsService which reads from localStorage
     const allBlogs = getPosts();
     setBlogs(allBlogs);
+    
+    // Get categories for colors
+    const categories = getCategories();
+    const colorMap = {};
+    categories.forEach(cat => {
+      colorMap[cat.name] = cat.color;
+    });
+    setCategoryColors(colorMap);
+  };
+  
+  useEffect(() => {
+    loadData();
+    
+    // Set up an interval to refresh data every 5 seconds to catch changes from category updates
+    const refreshInterval = setInterval(() => {
+      loadData();
+    }, 5000);
+    
+    return () => clearInterval(refreshInterval);
   }, []);
   
-  const rows = blogs?.map((item, index) => (
-    <Table.Tr key={item.title} className="!text-center">
+  const getCategoryColor = (category) => {
+    return categoryColors[category] || '#777777';
+  };
+  
+  const rows = blogs?.map((item) => (
+    <Table.Tr key={item.id || item.title} className="!text-center">
       <Table.Td>
         <Group gap="sm">
           <Avatar size={80} src={item.authorAvatar} radius={'lg'} />
@@ -58,11 +63,11 @@ const AllBlogs = () => {
 
       <Table.Td>
         <Badge
-          color={categoryColors[index % categoryColors.length]}
+          color={getCategoryColor(item.category)}
           variant="light"
           className="!min-w-[100px]"
         >
-          {item.category}
+          {item.category || 'Uncategorized'}
         </Badge>
       </Table.Td>
       <Table.Td>
@@ -80,7 +85,12 @@ const AllBlogs = () => {
       </Table.Td>
       <Table.Td>
         <Group gap={0} justify="flex-end">
-          <ActionIcon variant="subtle" color="gray">
+          <ActionIcon 
+            variant="subtle" 
+            color="gray"
+            component="a"
+            href={`/admin/posts/edit/${item.id}`}
+          >
             <IconPencil
               style={{ width: rem(16), height: rem(16) }}
               stroke={1.5}

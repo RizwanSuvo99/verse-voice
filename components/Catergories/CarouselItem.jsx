@@ -1,33 +1,54 @@
-import { BackgroundImage, Card, Overlay, Text } from '@mantine/core';
+'use client';
+import { ActionIcon, Group, Text, Title } from '@mantine/core';
+import { Icon123 } from '@tabler/icons-react';
 import Link from 'next/link';
 
-const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
+const CarouselItem = ({ backUrl, categoryName, categorySize, categorySlug, categoryColor }) => {
   return (
-    <Link
-      href={`/category/${categoryName.toLowerCase()}`}
-      className="!no-underline"
+    <div
+      className="relative mb-4 overflow-hidden rounded-lg"
+      style={{
+        height: '300px',
+        position: 'relative',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        marginBottom: '16px',
+      }}
     >
-      <Card shadow="sm" padding="lg" radius="md" withBorder className="!p-0">
-        <BackgroundImage
-          src={backUrl}
-          className="!relative !flex !h-[300px] flex-col !items-center !justify-center"
+      <div
+        className="w-full"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backUrl})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          height: '100%',
+          width: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
+      />
+      <Link
+        href={`/category/${categorySlug}`}
+        className="absolute inset-0 flex flex-col items-center justify-center"
+      >
+        <Title
+          className="!mb-4 !text-white"
+          style={{ color: categoryColor || 'white', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}
         >
-          {/* Overlay with opacity */}
-          <Overlay opacity={0.6} color="#000" zIndex={1} />
-
-          {/* Text content */}
-          <Text
-            className="!mb-2 !text-3xl !font-bold !text-white"
-            style={{ zIndex: 2 }}
-          >
-            {categoryName}
+          {categoryName}
+        </Title>
+        <Group>
+          <ActionIcon variant="light" radius="xl" size="lg">
+            <Icon123 style={{ color: categoryColor || 'white' }} />
+          </ActionIcon>
+          <Text className="!text-white" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+            {categorySize} {categorySize === 1 ? 'Post' : 'Posts'}
           </Text>
-          <Text className="!text-2xl !text-white" style={{ zIndex: 2 }}>
-            {categorySize}
-          </Text>
-        </BackgroundImage>
-      </Card>
-    </Link>
+        </Group>
+      </Link>
+    </div>
   );
 };
 

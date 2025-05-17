@@ -105,8 +105,27 @@ export const deletePost = (id) => {
 
 // Get posts by category
 export const getPostsByCategory = (category) => {
+  if (!category) return getPosts();
+  
   const posts = getPosts();
-  return category ? posts.filter(post => post.category === category) : posts;
+  const categoryLower = category.toLowerCase();
+  
+  // Try to match with some flexibility (case insensitive)
+  return posts.filter(post => {
+    // If post has no category, skip it
+    if (!post.category) return false;
+    
+    // Try exact match first (case insensitive)
+    if (post.category.toLowerCase() === categoryLower) {
+      return true;
+    }
+    
+    // Try with singular/plural variations
+    const singular = categoryLower.endsWith('s') ? categoryLower.slice(0, -1) : categoryLower;
+    const plural = categoryLower.endsWith('s') ? categoryLower : categoryLower + 's';
+    
+    return post.category.toLowerCase() === singular || post.category.toLowerCase() === plural;
+  });
 };
 
 // Search posts by title or content

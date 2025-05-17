@@ -2,11 +2,12 @@
 
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
+import { getCategories } from '@/services/categoriesService';
 import { deletePost, getPosts, togglePostStatus } from '@/services/postsService';
 import { ActionIcon, AppShell, Badge, Box, Button, Card, Group, Loader, Menu, Modal, Table, Text, TextInput, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconEdit, IconEye, IconFilter, IconPlus, IconSearch, IconStar, IconTrash } from '@tabler/icons-react';
+import { IconCheck, IconEdit, IconEye, IconFilter, IconPlus, IconRefresh, IconSearch, IconTrash } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -15,31 +16,50 @@ export default function PostsPage() {
   const [opened, { toggle }] = useDisclosure();
   const [searchQuery, setSearchQuery] = useState('');
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState({});
   const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [statusFilter, setStatusFilter] = useState('all');
   const router = useRouter();
 
+  // Load posts and categories
+  const loadData = () => {
+    setLoading(true);
+    try {
+      // Get all posts
+      const allPosts = getPosts();
+      setPosts(allPosts);
+      
+      // Get categories for colors
+      const allCategories = getCategories();
+      const categoryMap = {};
+      allCategories.forEach(cat => {
+        categoryMap[cat.name] = cat;
+      });
+      setCategories(categoryMap);
+    } catch (error) {
+      console.error('Error loading data:', error);
+      notifications.show({
+        title: 'Error',
+        message: 'Failed to load posts and categories',
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Load posts on mount
   useEffect(() => {
-    const loadPosts = () => {
-      try {
-        const allPosts = getPosts();
-        setPosts(allPosts);
-      } catch (error) {
-        console.error('Error loading posts:', error);
-        notifications.show({
-          title: 'Error',
-          message: 'Failed to load posts',
-          color: 'red',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPosts();
+    loadData();
+    
+    // Set up interval to refresh data periodically to catch category changes
+    const refreshInterval = setInterval(() => {
+      loadData();
+    }, 10000); // Refresh every 10 seconds
+    
+    return () => clearInterval(refreshInterval);
   }, []);
 
   // Handle search
@@ -59,6 +79,11 @@ export default function PostsPage() {
       if (statusFilter === 'popular') return post.isPopular;
       return true;
     });
+
+  // Get category color
+  const getCategoryColor = (categoryName) => {
+    return categoryName && categories[categoryName] ? categories[categoryName].color : '#777777';
+  };
 
   // Delete post handler
   const handleDeletePost = (post) => {
@@ -170,6 +195,13 @@ export default function PostsPage() {
               <Title order={4}>All Posts</Title>
               
               <Group>
+                <Button 
+                  variant="outline" 
+                  leftSection={<IconRefresh size={16} />}
+                  onClick={loadData}
+                >
+                  Refresh
+                </Button>
                 <Link href="/admin/posts/new" passHref>
                   <Button leftSection={<IconPlus size={16} />}>
                     New Post
@@ -224,35 +256,37 @@ export default function PostsPage() {
                     {filteredPosts.length > 0 ? (
                       filteredPosts.map((post) => (
                         <Table.Tr key={post.id}>
-                          <Table.Td>{post.title}</Table.Td>
-                          <Table.Td>{post.category || 'Uncategorized'}</Table.Td>
                           <Table.Td>
-                            <Badge color={getStatusColor(post.isFeatured, post.isPopular)}>
+                            <Text fw={500}>{post.title}</Text>
+                          </Table.Td>
+                          <Table.Td>
+                            <Badge 
+                              color={getCategoryColor(post.category)}
+                              variant="light"
+                            >
+                              {post.category || 'Uncategorized'}
+                            </Badge>
+                          </Table.Td>
+                          <Table.Td>
+                            <Badge
+                              color={getStatusColor(post.isFeatured, post.isPopular)}
+                              variant="filled"
+                            >
                               {getStatusLabel(post.isFeatured, post.isPopular)}
                             </Badge>
                           </Table.Td>
-                          <Table.Td>{post.publishDate}</Table.Td>
+                          <Table.Td>
+                            <Text size="sm">{post.publishDate}</Text>
+                          </Table.Td>
                           <Table.Td>
                             <Group gap="xs">
-                              <ActionIcon variant="subtle" color="blue" onClick={() => handleViewPost(post)}>
+                              <ActionIcon variant="subtle" onClick={() => handleViewPost(post)}>
                                 <IconEye size={16} />
                               </ActionIcon>
-                              <ActionIcon variant="subtle" color="blue" onClick={() => handleEditPost(post)}>
+                              <ActionIcon variant="subtle" onClick={() => handleEditPost(post)}>
                                 <IconEdit size={16} />
                               </ActionIcon>
-                              <ActionIcon 
-                                variant="subtle" 
-                                color={post.isFeatured ? "green" : "gray"}
-                                onClick={() => handleToggleStatus(post, 'isFeatured')}
-                                title={post.isFeatured ? "Remove from featured" : "Add to featured"}
-                              >
-                                <IconStar size={16} />
-                              </ActionIcon>
-                              <ActionIcon 
-                                variant="subtle" 
-                                color="red"
-                                onClick={() => handleDeletePost(post)}
-                              >
+                              <ActionIcon color="red" variant="subtle" onClick={() => handleDeletePost(post)}>
                                 <IconTrash size={16} />
                               </ActionIcon>
                             </Group>
@@ -262,8 +296,8 @@ export default function PostsPage() {
                     ) : (
                       <Table.Tr>
                         <Table.Td colSpan={5}>
-                          <Text ta="center" fz="sm" c="dimmed" py="md">
-                            No posts found
+                          <Text ta="center" py="xl" c="dimmed">
+                            {searchQuery ? 'No posts matching your search' : 'No posts found'}
                           </Text>
                         </Table.Td>
                       </Table.Tr>

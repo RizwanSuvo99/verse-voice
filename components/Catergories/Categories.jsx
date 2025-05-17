@@ -1,30 +1,21 @@
 'use client';
-import allBlogs from '@/data/allBlogs';
+
+import { getCategories } from '@/services/categoriesService';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
 import { Container } from '@mantine/core';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CarouselItem from './CarouselItem';
 
 const Categories = () => {
   const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const [categories, setCategories] = useState([]);
 
-  const allCategories = allBlogs.reduce((acc, blog) => {
-    const existingCategory = acc.find(
-      (item) => item.categoryName === blog.category,
-    );
-    if (existingCategory) {
-      existingCategory.categorySize += 1;
-    } else {
-      acc.push({
-        categoryName: blog.category,
-        categoryImg: blog.categoryImg,
-        categorySize: 1,
-      });
-    }
-
-    return acc;
+  useEffect(() => {
+    // Get categories from the service which reads from localStorage
+    const allCategories = getCategories();
+    setCategories(allCategories);
   }, []);
 
   return (
@@ -41,12 +32,14 @@ const Categories = () => {
         onMouseLeave={autoplay.current.reset}
         controlSize={40}
       >
-        {allCategories.map((category) => (
-          <Carousel.Slide key={category.categoryName}>
+        {categories.map((category) => (
+          <Carousel.Slide key={category.id}>
             <CarouselItem
-              backUrl={category.categoryImg}
-              categoryName={category.categoryName}
-              categorySize={category.categorySize}
+              backUrl={category.image || `/assets/category-default.jpg`}
+              categoryName={category.name}
+              categorySize={category.posts}
+              categorySlug={category.slug}
+              categoryColor={category.color}
             />
           </Carousel.Slide>
         ))}
