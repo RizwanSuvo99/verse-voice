@@ -7,6 +7,7 @@ import { Yesteryear } from 'next/font/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { AuthProvider } from '@/hooks/useAuth';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '../../(user)/globals.css';
@@ -43,12 +44,14 @@ export default function RootLayout({ children }) {
       <body>
         <MantineProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
-            <Notifications />
-            {children}
-            <ReactQueryDevtools initialIsOpen={false} />
+            <AuthProvider>
+              <Notifications />
+              {children}
+              <ReactQueryDevtools initialIsOpen={false} />
+            </AuthProvider>
           </QueryClientProvider>
         </MantineProvider>
       </body>
     </html>
   );
-}
+} 
