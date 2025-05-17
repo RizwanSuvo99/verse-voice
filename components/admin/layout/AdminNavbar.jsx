@@ -29,6 +29,7 @@ const navItems = [
   { path: '/admin/categories', label: 'Categories', icon: IconCategoryPlus },
   { path: '/admin/hero', label: 'Edit Hero', icon: IconLayoutDashboard },
   { path: '/admin/footer', label: 'Edit Footer', icon: IconFileText },
+  { path: '/admin/about', label: 'Edit About', icon: IconFileText },
   { path: '/admin/logo', label: 'Logo Settings', icon: IconBrandTaobao },
   { path: '/admin/media', label: 'Media Library', icon: IconPhoto },
   { path: '/admin/users', label: 'Users', icon: IconUsers },

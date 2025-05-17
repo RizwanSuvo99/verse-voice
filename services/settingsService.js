@@ -29,6 +29,24 @@ const defaultSettings = {
   footerDescription1: `In Bangladesh, students often memorize answers for exams without really engaging with writing as a craft. Sadly, they lack the motivation or platforms to express themselves freely in writing. That's where this site comes in! We're offering a space where you can write about anything—no topic is off-limits. Whether you're interested in fiction, social issues, or personal experiences, you can explore your voice and ideas with full freedom.`,
   footerDescription2: `Writing is more than just a subject for exams; it's a life skill. It helps you think critically, express your thoughts clearly, and solve problems creatively. Plus, the more you practice, the better your results will be—without memorizing answers! Writing here will help you improve not just for your exams, but for life.`,
   
+  // About page settings
+  aboutName: 'Fakharuddin Pentu',
+  aboutEmail: 'pintu.eng@gmail.com',
+  aboutDescription: 'Hey there! I\'ve always imagined how great it would be to have a writing website just for students, and now it\'s finally a reality! This space is all about breaking free from those stiff, boring syllabi. It\'s your chance to unleash your creativity and let your imagination soar—no idea is too wild! Let\'s dive into this adventure together!',
+  aboutImage: '/assets/admin.png',
+  aboutCVLink: '#',
+  aboutRoles: [
+    { title: 'Current Lecturer', organization: 'Comilla Govt. College, Comilla' },
+    { title: 'Former Lecturer', organization: 'Chauddagram Govt. College, Comilla' },
+    { title: 'Former Assistant Director', organization: 'Anti-Corruption Commission - Bangladesh' },
+  ],
+  aboutSocials: {
+    linkedin: '#',
+    twitter: '#',
+    facebook: '#',
+    email: 'pintu.eng@gmail.com'
+  },
+  
   // Social settings
   facebookUrl: 'https://facebook.com/classroomwriters',
   twitterUrl: 'https://twitter.com/classroomwriters',
@@ -84,45 +102,33 @@ export const getSetting = (key) => {
   return settings[key] || defaultSettings[key];
 };
 
-// Save an image to local storage
-export const saveImageToLocalStorage = (file, key) => {
-  return new Promise((resolve, reject) => {
-    if (!file) {
-      resolve(null);
-      return;
-    }
-    
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const base64Image = e.target.result;
-        localStorage.setItem(`image_${key}`, base64Image);
-        resolve(base64Image);
-      } catch (error) {
-        console.error('Error saving image:', error);
-        reject(error);
-      }
-    };
-    reader.onerror = (error) => {
-      console.error('Error reading file:', error);
-      reject(error);
-    };
-    reader.readAsDataURL(file);
-  });
-};
-
-// Get an image from local storage
-export const getImageFromLocalStorage = (key, defaultValue) => {
+// Get image from localStorage or return default
+export const getImageFromLocalStorage = (key, defaultImage = null) => {
   if (typeof window === 'undefined') {
-    return defaultValue;
+    return defaultImage;
   }
   
   try {
-    const image = localStorage.getItem(`image_${key}`);
-    return image || defaultValue;
+    const image = localStorage.getItem(key);
+    return image || defaultImage;
   } catch (error) {
-    console.error('Error getting image:', error);
-    return defaultValue;
+    console.error(`Error getting ${key} from localStorage:`, error);
+    return defaultImage;
+  }
+};
+
+// Save image to localStorage
+export const saveImageToLocalStorage = (key, imageData) => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  
+  try {
+    localStorage.setItem(key, imageData);
+    return true;
+  } catch (error) {
+    console.error(`Error saving ${key} to localStorage:`, error);
+    return false;
   }
 };
 

@@ -1,27 +1,72 @@
 'use client';
+import { getImageFromLocalStorage, getSettings } from '@/services/settingsService';
 import {
-  AspectRatio,
-  Button,
-  Card,
-  Center,
-  Container,
-  Grid,
-  Group,
-  Image,
-  SimpleGrid,
-  Space,
-  Text,
-  Title,
+    AspectRatio,
+    Button,
+    Card,
+    Center,
+    Container,
+    Grid,
+    Group,
+    Image,
+    SimpleGrid,
+    Space,
+    Text,
+    Title,
 } from '@mantine/core';
 import {
-  IconBrandFacebook,
-  IconBrandLinkedin,
-  IconBrandX,
-  IconMail,
+    IconBrandFacebook,
+    IconBrandLinkedin,
+    IconBrandX,
+    IconMail,
 } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 import LatestRole from './LatestRole';
 
 const About = () => {
+  const [aboutData, setAboutData] = useState({
+    name: 'Fakharuddin Pentu',
+    email: 'pintu.eng@gmail.com',
+    description: '',
+    image: '/assets/admin.png',
+    cvLink: '#',
+    roles: [],
+    socials: {
+      linkedin: '#',
+      twitter: '#',
+      facebook: '#',
+      email: 'pintu.eng@gmail.com'
+    }
+  });
+
+  useEffect(() => {
+    const settings = getSettings();
+    
+    // Check for custom image in localStorage first
+    const customImage = getImageFromLocalStorage('aboutImage');
+    
+    setAboutData({
+      name: settings.aboutName || 'Fakharuddin Pentu',
+      email: settings.aboutEmail || 'pintu.eng@gmail.com',
+      description: settings.aboutDescription || '',
+      image: customImage || settings.aboutImage || '/assets/admin.png',
+      cvLink: settings.aboutCVLink || '#',
+      roles: Array.isArray(settings.aboutRoles) && settings.aboutRoles.length > 0 
+        ? settings.aboutRoles 
+        : [
+            { title: 'Current Lecturer', organization: 'Comilla Govt. College, Comilla' },
+            { title: 'Former Lecturer', organization: 'Chauddagram Govt. College, Comilla' },
+            { title: 'Former Assistant Director', organization: 'Anti-Corruption Commission - Bangladesh' }
+          ],
+      socials: settings.aboutSocials || {
+        linkedin: '#',
+        twitter: '#',
+        facebook: '#',
+        email: 'pintu.eng@gmail.com'
+      }
+    });
+  }, []);
+
   return (
     <Container size={1350} className="!px-0 pt-[100px]">
       <SimpleGrid
@@ -37,7 +82,7 @@ const About = () => {
           <AspectRatio ratio={1}>
             <Image
               alt="logo-img"
-              src="/assets/admin.png"
+              src={aboutData.image}
               fit="contain"
               fallbackSrc="https://placehold.co/70x70?text=admin-img"
               shadow="xl"
@@ -49,14 +94,16 @@ const About = () => {
               className="!text-center !text-[28px] md:!text-[40px]"
               fw={600}
             >
-              Fakharuddin Pentu
+              {aboutData.name}
             </Text>
           </Center>
           <Center my={'0 1.5rem'}>
-            <Text>pintu.eng@gmail.com</Text>
+            <Text>{aboutData.email}</Text>
           </Center>
           <Center>
-            <Button variant="white">Download CV</Button>
+            <Button variant="white" component="a" href={aboutData.cvLink}>
+              Download CV
+            </Button>
           </Center>
         </Card>
 
@@ -72,16 +119,7 @@ const About = () => {
               <Space h={'sm'}></Space>
 
               <Text>
-                Hey there! I’ve always imagined how great it would be to have a
-                writing website just for students, and now it’s finally a
-                reality!
-              </Text>
-              <Space h={'sm'}></Space>
-              <Text>
-                This space is all about breaking free from those stiff, boring
-                syllabi. It’s your chance to unleash your creativity and let
-                your imagination soar—no idea is too wild! Let’s dive into this
-                adventure together!
+                {aboutData.description}
               </Text>
             </Card>
           </Grid.Col>
@@ -96,18 +134,15 @@ const About = () => {
                 Latest Roles
               </Text>
               <Space h={'sm'}></Space>
-              <LatestRole
-                text_1={'Current Lecturer'}
-                text_2={'Comilla Govt. College, Comilla'}
-              />
-              <LatestRole
-                text_1={'Former Lecturer'}
-                text_2={'Chauddagram Govt. College, Comilla'}
-              />
-              <LatestRole
-                text_1={'Former Assistant Director'}
-                text_2={'Anti-Corruption Commission - Bangladesh'}
-              />
+              
+              {aboutData.roles.map((role, index) => (
+                <LatestRole
+                  key={index}
+                  text_1={role.title}
+                  text_2={role.organization}
+                />
+              ))}
+              
               <Space h={'sm'}></Space>
               <Text fw={600} className="!text-md">
                 Connect Me
@@ -115,6 +150,10 @@ const About = () => {
               <Space h={'5px'}></Space>
               <Group>
                 <Button
+                  component="a"
+                  href={aboutData.socials.linkedin && aboutData.socials.linkedin.startsWith('http') ? aboutData.socials.linkedin : `https://${aboutData.socials.linkedin}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   fw={500}
                   variant="white"
                   className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
@@ -122,6 +161,10 @@ const About = () => {
                   <IconBrandLinkedin />
                 </Button>
                 <Button
+                  component="a"
+                  href={aboutData.socials.twitter && aboutData.socials.twitter.startsWith('http') ? aboutData.socials.twitter : `https://${aboutData.socials.twitter}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   fw={500}
                   variant="white"
                   className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
@@ -129,6 +172,10 @@ const About = () => {
                   <IconBrandX />
                 </Button>
                 <Button
+                  component="a"
+                  href={aboutData.socials.facebook && aboutData.socials.facebook.startsWith('http') ? aboutData.socials.facebook : `https://${aboutData.socials.facebook}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   fw={500}
                   variant="white"
                   className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
@@ -136,6 +183,8 @@ const About = () => {
                   <IconBrandFacebook />
                 </Button>
                 <Button
+                  component="a"
+                  href={`mailto:${aboutData.socials.email}`}
                   fw={500}
                   variant="white"
                   className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
