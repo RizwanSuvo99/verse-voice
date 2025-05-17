@@ -2,7 +2,7 @@
 
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
-import { AppShell, Burger, Card, Grid, Group, RingProgress, Text, Title } from '@mantine/core';
+import { AppShell, Card, Grid, Group, RingProgress, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconArticle, IconEye, IconMessage, IconUsers } from '@tabler/icons-react';
 
@@ -35,15 +35,8 @@ export default function AdminDashboard() {
         }}
         padding="md"
       >
-        <AppShell.Header p="md">
-          <Group>
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <Title order={4}>Admin Dashboard</Title>
-          </Group>
-        </AppShell.Header>
-
         <AppShell.Navbar p="md">
-          <AdminNavbar />
+          <AdminNavbar opened={opened} toggle={toggle} />
         </AppShell.Navbar>
 
         <AppShell.Main>

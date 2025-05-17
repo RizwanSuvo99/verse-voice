@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { getImageFromLocalStorage, getSetting } from '@/services/settingsService';
-import { Divider, Flex, Group, Image, Text, UnstyledButton } from '@mantine/core';
+import { Burger, Divider, Flex, Group, Image, Text, UnstyledButton } from '@mantine/core';
 import {
   IconArticle,
   IconBrandTaobao,
@@ -22,7 +22,7 @@ import classes from '../../../app/(admin)/admin/NavbarSimpleColored.module.css';
 
 // Navigation items with proper routes
 const navItems = [
-  { path: '/admin', label: 'Dashboard', icon: IconDashboard, exact: true },
+  { path: '/admin', label: 'Dashboard', icon: IconDashboard },
   { path: '/admin/posts', label: 'Posts', icon: IconArticle },
   { path: '/admin/posts/new', label: 'Create Post', icon: IconPencilPlus },
   { path: '/admin/categories', label: 'Categories', icon: IconCategoryPlus },
@@ -33,7 +33,7 @@ const navItems = [
   { path: '/admin/settings', label: 'Settings', icon: IconSettings },
 ];
 
-export function AdminNavbar() {
+export function AdminNavbar({ opened, toggle }) {
   const pathname = usePathname();
   const { logout, user } = useAuth();
   const [logoSrc, setLogoSrc] = useState('/assets/logo-white.svg');
@@ -50,8 +50,21 @@ export function AdminNavbar() {
   }, []);
 
   // Check if the current path matches a nav item
-  const isActive = (path, exact = false) => {
-    if (exact) return pathname === path;
+  const isActive = (path) => {
+    // For exact paths that shouldn't match their sub-routes
+    if (path === '/admin') {
+      return pathname === '/admin' || pathname === '/admin/';
+    }
+    
+    if (path === '/admin/posts') {
+      return pathname === '/admin/posts' || pathname === '/admin/posts/';
+    }
+    
+    if (path === '/admin/posts/new') {
+      return pathname === '/admin/posts/new' || pathname === '/admin/posts/new/';
+    }
+    
+    // For other items, use startsWith for sub-routes
     return pathname.startsWith(path);
   };
 
@@ -61,7 +74,7 @@ export function AdminNavbar() {
       href={item.path} 
       key={item.label}
       className={classes.link}
-      data-active={isActive(item.path, item.exact) || undefined}
+      data-active={isActive(item.path) || undefined}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
@@ -78,9 +91,12 @@ export function AdminNavbar() {
               src={logoSrc}
               h={60}
             />
-            <Text fw={600} c={'white'}>
-              Admin Panel
-            </Text>
+            <Group>
+              <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" color="white" />
+              <Text fw={600} c={'white'}>
+                Admin Panel
+              </Text>
+            </Group>
           </Group>
           
           {links}

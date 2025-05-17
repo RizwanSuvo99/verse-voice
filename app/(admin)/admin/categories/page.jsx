@@ -2,7 +2,7 @@
 
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
-import { ActionIcon, AppShell, Burger, Button, Card, ColorInput, Group, Stack, Table, TextInput, Title } from '@mantine/core';
+import { ActionIcon, AppShell, Button, Card, ColorInput, Group, Stack, Table, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { IconDeviceFloppy, IconEdit, IconPlus, IconTrash, IconX } from '@tabler/icons-react';
@@ -110,15 +110,8 @@ export default function CategoriesPage() {
         }}
         padding="md"
       >
-        <AppShell.Header p="md">
-          <Group>
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <Title order={4}>Categories</Title>
-          </Group>
-        </AppShell.Header>
-
         <AppShell.Navbar p="md">
-          <AdminNavbar />
+          <AdminNavbar opened={opened} toggle={toggle} />
         </AppShell.Navbar>
 
         <AppShell.Main>

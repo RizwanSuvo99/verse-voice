@@ -4,7 +4,7 @@ import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
 import { HeroSettings } from '@/components/admin/layout/HeroSettings';
 import { getSettings, saveSettings } from '@/services/settingsService';
-import { AppShell, Burger, Button, Card, ColorInput, Divider, FileInput, Group, Image, NumberInput, Stack, Switch, Tabs, Text, TextInput, Textarea, Title } from '@mantine/core';
+import { AppShell, Button, Card, ColorInput, Divider, FileInput, Group, Image, NumberInput, Stack, Switch, Tabs, Text, TextInput, Textarea, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
@@ -89,15 +89,8 @@ export default function SettingsPage() {
         }}
         padding="md"
       >
-        <AppShell.Header p="md">
-          <Group>
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <Title order={4}>Site Settings</Title>
-          </Group>
-        </AppShell.Header>
-
         <AppShell.Navbar p="md">
-          <AdminNavbar />
+          <AdminNavbar opened={opened} toggle={toggle} />
         </AppShell.Navbar>
 
         <AppShell.Main>

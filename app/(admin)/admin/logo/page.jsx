@@ -3,7 +3,7 @@
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
 import { getImageFromLocalStorage, getSetting, saveImageToLocalStorage, saveSettings } from '@/services/settingsService';
-import { AppShell, Burger, Button, Card, Divider, FileInput, Group, Image, Stack, Text, Title } from '@mantine/core';
+import { AppShell, Button, Card, Divider, FileInput, Group, Image, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconDeviceFloppy, IconUpload } from '@tabler/icons-react';
@@ -114,13 +114,6 @@ export default function LogoSettingsPage() {
         }}
         padding="md"
       >
-        <AppShell.Header p="md">
-          <Group>
-            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-            <Title order={4}>Logo Settings</Title>
-          </Group>
-        </AppShell.Header>
-
         <AppShell.Navbar p="md">
           <AdminNavbar />
         </AppShell.Navbar>

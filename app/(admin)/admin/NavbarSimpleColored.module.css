@@ -37,28 +37,25 @@
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-sm);
   font-weight: 500;
+}
 
-  @mixin hover {
-    background-color: var(--mantine-color-blue-7);
-    color: var(--mantine-color-white);
+.link:hover {
+  background-color: var(--mantine-color-blue-7);
+  color: var(--mantine-color-white);
+}
 
-    .linkIcon {
-      color: var(--mantine-color-white);
-    }
-  }
+.link:hover .linkIcon {
+  color: var(--mantine-color-white);
+}
 
-  &[data-active] {
-    &,
-    &:hover {
-      box-shadow: var(--mantine-shadow-sm);
-      background-color: var(--mantine-color-white);
-      color: var(--mantine-color-blue-filled);
+.link[data-active="true"] {
+  box-shadow: var(--mantine-shadow-sm);
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-blue-filled);
+}
 
-      .linkIcon {
-        color: var(--mantine-color-blue-filled);
-      }
-    }
-  }
+.link[data-active="true"] .linkIcon {
+  color: var(--mantine-color-blue-filled);
 }
 
 .linkIcon {
@@ -66,4 +63,14 @@
   margin-right: var(--mantine-spacing-sm);
   width: rem(25px);
   height: rem(25px);
+}
+
+.activeLink {
+  box-shadow: var(--mantine-shadow-sm);
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-blue-filled);
+}
+
+.activeLink .linkIcon {
+  color: var(--mantine-color-blue-filled);
 }
