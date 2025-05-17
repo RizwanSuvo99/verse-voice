@@ -1,16 +1,19 @@
-import allBlogs from '@/data/allBlogs';
+'use client';
+
+import { getPosts } from '@/services/postsService';
 import {
-  ActionIcon,
-  Anchor,
-  Avatar,
-  Badge,
-  Center,
-  Group,
-  rem,
-  Table,
-  Text,
+    ActionIcon,
+    Anchor,
+    Avatar,
+    Badge,
+    Center,
+    Group,
+    rem,
+    Table,
+    Text,
 } from '@mantine/core';
 import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
 const categoryColors = [
   '#FF5733', // Persimmon
@@ -34,7 +37,15 @@ const categoryColors = [
 ];
 
 const AllBlogs = () => {
-  const rows = allBlogs?.map((item, index) => (
+  const [blogs, setBlogs] = useState([]);
+  
+  useEffect(() => {
+    // Get posts from the postsService which reads from localStorage
+    const allBlogs = getPosts();
+    setBlogs(allBlogs);
+  }, []);
+  
+  const rows = blogs?.map((item, index) => (
     <Table.Tr key={item.title} className="!text-center">
       <Table.Td>
         <Group gap="sm">

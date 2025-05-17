@@ -1,25 +1,34 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
+import { getPosts } from '@/services/postsService';
 import {
-  Container,
-  Pagination,
-  SimpleGrid,
-  Space,
-  Text,
-  Title,
+    Container,
+    Pagination,
+    SimpleGrid,
+    Space,
+    Text,
+    Title,
 } from '@mantine/core';
 import { chunk } from 'lodash';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SingleBlog from './SingleBlog';
 
 const Blogs = () => {
-  const data = chunk(allBlogs, 6);
-
+  const [blogs, setBlogs] = useState([]);
   const [activePage, setPage] = useState(1);
-  const items = data[activePage - 1].map((blog, i) => (
+  
+  useEffect(() => {
+    // Get posts from the postsService which reads from localStorage
+    const allBlogs = getPosts();
+    setBlogs(allBlogs);
+  }, []);
+  
+  // Only proceed with pagination if blogs are loaded
+  const data = blogs.length > 0 ? chunk(blogs, 6) : [[]];
+  
+  const items = data[activePage - 1]?.map((blog, i) => (
     <SingleBlog blog={blog} key={i} />
-  ));
+  )) || [];
 
   return (
     <Container size={1300} className="!pt-[50px]">

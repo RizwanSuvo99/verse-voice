@@ -1,9 +1,18 @@
-import allBlogs from '@/data/allBlogs';
+'use client';
+
+import { getPopularPosts } from '@/services/postsService';
 import { Card, Container, Divider, Grid, Text, Title } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import PopularSingleBlog from './PopularSingleBlog';
 
 const PopularBlog = () => {
-  const popularBlogs = allBlogs.filter((item) => item.isPopular);
+  const [popularBlogs, setPopularBlogs] = useState([]);
+
+  useEffect(() => {
+    // Get popular posts from the postsService which reads from localStorage
+    const posts = getPopularPosts();
+    setPopularBlogs(posts);
+  }, []);
 
   return (
     <Container size={1350} className="!mt-[10px]">

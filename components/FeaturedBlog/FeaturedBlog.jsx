@@ -1,21 +1,28 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
+import { getFeaturedPosts } from '@/services/postsService';
 import {
-  Button,
-  Center,
-  Container,
-  Grid,
-  Space,
-  Text,
-  Title,
+    Button,
+    Center,
+    Container,
+    Grid,
+    Space,
+    Text,
+    Title,
 } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import SingleBlog from './SingleBlog';
 
 const FeaturedBlog = () => {
-  const featuredBlogs = allBlogs.filter((item) => item.isFeatured);
+  const [featuredBlogs, setFeaturedBlogs] = useState([]);
+
+  useEffect(() => {
+    // Get featured posts from the postsService which reads from localStorage
+    const posts = getFeaturedPosts();
+    setFeaturedBlogs(posts);
+  }, []);
 
   return (
     <Container
