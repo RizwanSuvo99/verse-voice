@@ -3,14 +3,15 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Divider, Flex, Group, Image, Text, UnstyledButton } from '@mantine/core';
 import {
-    IconArticle,
-    IconCategoryPlus,
-    IconDashboard,
-    IconLogout,
-    IconPencilPlus,
-    IconPhoto,
-    IconSettings,
-    IconUsers
+  IconArticle,
+  IconCategoryPlus,
+  IconDashboard,
+  IconLayoutDashboard,
+  IconLogout,
+  IconPencilPlus,
+  IconPhoto,
+  IconSettings,
+  IconUsers
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -22,6 +23,7 @@ const navItems = [
   { path: '/admin/posts', label: 'Posts', icon: IconArticle },
   { path: '/admin/posts/new', label: 'Create Post', icon: IconPencilPlus },
   { path: '/admin/categories', label: 'Categories', icon: IconCategoryPlus },
+  { path: '/admin/hero', label: 'Edit Hero', icon: IconLayoutDashboard },
   { path: '/admin/media', label: 'Media Library', icon: IconPhoto },
   { path: '/admin/users', label: 'Users', icon: IconUsers },
   { path: '/admin/settings', label: 'Settings', icon: IconSettings },

@@ -2,51 +2,31 @@
 
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
+import { HeroSettings } from '@/components/admin/layout/HeroSettings';
+import { getSettings, saveSettings } from '@/services/settingsService';
 import { AppShell, Burger, Button, Card, ColorInput, Divider, FileInput, Group, Image, NumberInput, Stack, Switch, Tabs, Text, TextInput, Textarea, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { IconBrandFacebook, IconBrandInstagram, IconBrandTwitter, IconBrandYoutube, IconDeviceFloppy, IconUpload } from '@tabler/icons-react';
-import { useState } from 'react';
+import { notifications } from '@mantine/notifications';
+import { IconBrandFacebook, IconBrandInstagram, IconBrandTwitter, IconBrandYoutube, IconCheck, IconDeviceFloppy, IconUpload } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
 
 export default function SettingsPage() {
   const [opened, { toggle }] = useDisclosure();
   const [logoPreview, setLogoPreview] = useState('/assets/logo-white.svg');
   const [faviconPreview, setFaviconPreview] = useState('/favicon.ico');
+  const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('general');
   
   const form = useForm({
-    initialValues: {
-      // General settings
-      siteName: 'Class Room Writers',
-      siteDescription: 'A blog about writing and education',
-      postsPerPage: 10,
-      
-      // SEO settings
-      metaTitle: 'Class Room Writers - Education and Writing Blog',
-      metaDescription: 'Discover the latest articles about writing, education, and classroom tips',
-      googleAnalyticsId: 'UA-XXXXXXXXX-X',
-      
-      // Appearance settings
-      logoImage: null,
-      faviconImage: null,
-      primaryColor: '#0ea5ea',
-      secondaryColor: '#0bd1d1',
-      
-      // Social settings
-      facebookUrl: 'https://facebook.com/classroomwriters',
-      twitterUrl: 'https://twitter.com/classroomwriters',
-      instagramUrl: 'https://instagram.com/classroomwriters',
-      youtubeUrl: '',
-      
-      // Comments settings
-      enableComments: true,
-      moderateComments: true,
-      
-      // Contact settings
-      contactEmail: 'info@classroomwriters.com',
-      contactPhone: '+1 (123) 456-7890',
-      contactAddress: '123 Education St, Learning City, 12345',
-    },
+    initialValues: getSettings(),
   });
+
+  // Load settings when component mounts
+  useEffect(() => {
+    const settings = getSettings();
+    form.setValues(settings);
+  }, []);
 
   const handleLogoChange = (file) => {
     form.setFieldValue('logoImage', file);
@@ -67,9 +47,36 @@ export default function SettingsPage() {
   };
 
   const handleSubmit = (values) => {
-    console.log('Settings values:', values);
-    // Here you would save the settings to your backend
-    alert('Settings saved successfully!');
+    setLoading(true);
+    
+    try {
+      // Save settings
+      const success = saveSettings(values);
+      
+      if (success) {
+        notifications.show({
+          title: 'Settings saved',
+          message: 'Your settings have been saved successfully',
+          color: 'green',
+          icon: <IconCheck />,
+        });
+      } else {
+        notifications.show({
+          title: 'Error',
+          message: 'There was an error saving your settings',
+          color: 'red',
+        });
+      }
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      notifications.show({
+        title: 'Error',
+        message: 'There was an error saving your settings',
+        color: 'red',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -95,14 +102,20 @@ export default function SettingsPage() {
 
         <AppShell.Main>
           <form onSubmit={form.onSubmit(handleSubmit)}>
-            <Tabs defaultValue="general">
-              <Tabs.List mb="md">
-                <Tabs.Tab value="general">General</Tabs.Tab>
-                <Tabs.Tab value="seo">SEO</Tabs.Tab>
-                <Tabs.Tab value="appearance">Appearance</Tabs.Tab>
-                <Tabs.Tab value="social">Social Media</Tabs.Tab>
-                <Tabs.Tab value="comments">Comments</Tabs.Tab>
-                <Tabs.Tab value="contact">Contact</Tabs.Tab>
+            <Tabs 
+              value={activeTab} 
+              onChange={setActiveTab}
+              variant="pills"
+              radius="md"
+            >
+              <Tabs.List mb="xl" style={{ overflowX: 'auto', whiteSpace: 'nowrap', padding: '8px 0' }}>
+                <Tabs.Tab value="general" fw={activeTab === 'general' ? 'bold' : 'normal'}>General</Tabs.Tab>
+                <Tabs.Tab value="seo" fw={activeTab === 'seo' ? 'bold' : 'normal'}>SEO</Tabs.Tab>
+                <Tabs.Tab value="appearance" fw={activeTab === 'appearance' ? 'bold' : 'normal'}>Appearance</Tabs.Tab>
+                <Tabs.Tab value="hero" fw={activeTab === 'hero' ? 'bold' : 'normal'}>Hero Section</Tabs.Tab>
+                <Tabs.Tab value="social" fw={activeTab === 'social' ? 'bold' : 'normal'}>Social Media</Tabs.Tab>
+                <Tabs.Tab value="comments" fw={activeTab === 'comments' ? 'bold' : 'normal'}>Comments</Tabs.Tab>
+                <Tabs.Tab value="contact" fw={activeTab === 'contact' ? 'bold' : 'normal'}>Contact</Tabs.Tab>
               </Tabs.List>
 
               <Tabs.Panel value="general">
@@ -221,6 +234,10 @@ export default function SettingsPage() {
                 </Card>
               </Tabs.Panel>
 
+              <Tabs.Panel value="hero">
+                <HeroSettings form={form} />
+              </Tabs.Panel>
+
               <Tabs.Panel value="social">
                 <Card withBorder p="lg" radius="md" mb="md">
                   <Title order={5} mb="md">Social Media Settings</Title>
@@ -296,11 +313,16 @@ export default function SettingsPage() {
               </Tabs.Panel>
             </Tabs>
 
-            <Group justify="flex-end" mt="xl">
-              <Button type="submit" leftSection={<IconDeviceFloppy size={16} />}>
-                Save Settings
-              </Button>
-            </Group>
+            <Button 
+              type="submit"
+              leftSection={<IconDeviceFloppy size={16} />}
+              loading={loading}
+              fullWidth
+              size="lg"
+              mt="xl"
+            >
+              Save All Settings
+            </Button>
           </form>
         </AppShell.Main>
       </AppShell>

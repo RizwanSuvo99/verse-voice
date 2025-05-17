@@ -1,8 +1,21 @@
 'use client';
+import { getSetting } from '@/services/settingsService';
 import { Center, Container, Stack, Text, Title } from '@mantine/core';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 const Hero = () => {
+  const [heroTitle, setHeroTitle] = useState('Thoughts Meet Words');
+  const [heroSubtitle, setHeroSubtitle] = useState(
+    'Explore authentic writings from students, sharing their feelings, experiences, and imaginative stories that inspire.'
+  );
+
+  // Load hero settings when component mounts
+  useEffect(() => {
+    setHeroTitle(getSetting('heroTitle'));
+    setHeroSubtitle(getSetting('heroSubtitle'));
+  }, []);
+
   return (
     <Container size={1350} className="!px-6 !py-4 !pt-[100px]">
       <Stack
@@ -22,7 +35,7 @@ const Hero = () => {
               component={Title}
               className="text1 !text-center !text-[70px] md:!text-[100px] lg:!text-[150px]"
             >
-              Thoughts Meet Words
+              {heroTitle}
             </Text>
           </motion.div>
         </Center>
@@ -49,8 +62,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
           >
             <Text className="!mb-4 !px-2 !text-center !text-[20px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
-              Explore authentic writings from students, sharing their feelings,
-              experiences, and imaginative stories that inspire.
+              {heroSubtitle}
             </Text>
           </motion.div>
 
