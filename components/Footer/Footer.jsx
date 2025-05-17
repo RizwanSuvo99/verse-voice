@@ -1,6 +1,7 @@
 'use client';
 
 import allBlogs from '@/data/allBlogs';
+import { getSetting } from '@/services/settingsService';
 import {
   Button,
   Container,
@@ -30,6 +31,8 @@ import Logo from '../Header/Logo';
 
 const Footer = () => {
   const categories = [...new Set(allBlogs.map((item) => item.category))];
+  const [footerText1, setFooterText1] = useState('');
+  const [footerText2, setFooterText2] = useState('');
 
   // Define animation variants with stronger upward motion
   const fadeInUp = {
@@ -57,9 +60,13 @@ const Footer = () => {
     }
   };
 
-  // Add scroll event listener
+  // Add scroll event listener and load footer settings
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+    
+    // Load footer text from settings
+    setFooterText1(getSetting('footerDescription1'));
+    setFooterText2(getSetting('footerDescription2'));
 
     // Cleanup event listener on component unmount
     return () => {
@@ -87,23 +94,11 @@ const Footer = () => {
                 <Logo />
                 <Space h={'lg'} />
                 <Text className="!text-md sm:!text-xl">
-                  In Bangladesh, students often memorize answers for exams
-                  without really engaging with writing as a craft. Sadly, they
-                  lack the motivation or platforms to express themselves freely
-                  in writing. That’s where this site comes in! We’re offering a
-                  space where you can write about anything—no topic is
-                  off-limits. Whether you’re interested in fiction, social
-                  issues, or personal experiences, you can explore your voice
-                  and ideas with full freedom.
+                  {footerText1}
                 </Text>
                 <Space h={'lg'} />
                 <Text className="!text-md sm:!text-xl">
-                  Writing is more than just a subject for exams; it’s a life
-                  skill. It helps you think critically, express your thoughts
-                  clearly, and solve problems creatively. Plus, the more you
-                  practice, the better your results will be—without memorizing
-                  answers! Writing here will help you improve not just for your
-                  exams, but for life.
+                  {footerText2}
                 </Text>
               </motion.div>
             </Grid.Col>

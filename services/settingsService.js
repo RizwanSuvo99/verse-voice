@@ -25,6 +25,10 @@ const defaultSettings = {
   heroTitle: 'Thoughts Meet Words',
   heroSubtitle: 'Explore authentic writings from students, sharing their feelings, experiences, and imaginative stories that inspire.',
   
+  // Footer settings
+  footerDescription1: `In Bangladesh, students often memorize answers for exams without really engaging with writing as a craft. Sadly, they lack the motivation or platforms to express themselves freely in writing. That's where this site comes in! We're offering a space where you can write about anything—no topic is off-limits. Whether you're interested in fiction, social issues, or personal experiences, you can explore your voice and ideas with full freedom.`,
+  footerDescription2: `Writing is more than just a subject for exams; it's a life skill. It helps you think critically, express your thoughts clearly, and solve problems creatively. Plus, the more you practice, the better your results will be—without memorizing answers! Writing here will help you improve not just for your exams, but for life.`,
+  
   // Social settings
   facebookUrl: 'https://facebook.com/classroomwriters',
   twitterUrl: 'https://twitter.com/classroomwriters',
