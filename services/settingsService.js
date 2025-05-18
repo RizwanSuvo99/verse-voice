@@ -20,6 +20,7 @@ const defaultSettings = {
   secondaryColor: '#0bd1d1',
   logoPath: '/assets/logo.svg',
   logoWhitePath: '/assets/logo-white.svg',
+  faviconPath: '/favicon.ico',
   
   // Hero settings
   heroTitle: 'Thoughts Meet Words',
@@ -58,9 +59,16 @@ const defaultSettings = {
   moderateComments: true,
   
   // Contact settings
-  contactEmail: 'info@classroomwriters.com',
-  contactPhone: '+1 (123) 456-7890',
-  contactAddress: '123 Education St, Learning City, 12345',
+  contactTitle: 'Contact Us',
+  contactDescription: "I'd love to hear from you! Whether you have questions, feedback, or want to share your own writing journey, reach out to me. Your thoughts are important, and together we can inspire creativity and connection. Let's build a vibrant community of young writers!",
+  contactEmail: 'pintu.eng@gmail.com',
+  contactEmail2: 'classroomwriters@gmail.com',
+  contactPhone: '+8801675697313',
+  contactPhone2: '+8801912033727',
+  contactAddress: 'Police Line, Adarsha Sadar, Cumilla 3500',
+  contactMapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3659.7776947401735!2d91.1724365!3d23.468481999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37547ed5ea38a001%3A0xa888b09fb49bc32!2sPolice%20Line%2C%20Cumilla!5e0!3m2!1sen!2sbd!4v1728494003876!5m2!1sen!2sbd',
+  contactFormTitle: 'Drop Us a Message',
+  contactFormDescription: 'Your email address will not be published. All the fields are required.',
 };
 
 // Get settings from localStorage or use defaults
@@ -120,15 +128,60 @@ export const getImageFromLocalStorage = (key, defaultImage = null) => {
 // Save image to localStorage
 export const saveImageToLocalStorage = (key, imageData) => {
   if (typeof window === 'undefined') {
+    console.error('Cannot save to localStorage in server environment');
     return false;
   }
   
   try {
+    // Check if the imageData is valid
+    if (!imageData || typeof imageData !== 'string') {
+      console.error(`Invalid image data for ${key}:`, imageData);
+      return false;
+    }
+    
+    // Check if the data is not too large (localStorage has ~5MB limit)
+    const dataSize = new Blob([imageData]).size;
+    if (dataSize > 4 * 1024 * 1024) { // 4MB limit to be safe
+      console.error(`Image too large for localStorage (${(dataSize/1024/1024).toFixed(2)}MB). Max recommended is 4MB.`);
+      return false;
+    }
+    
+    // Try to save the data
     localStorage.setItem(key, imageData);
-    return true;
+    
+    // Verify the data was saved correctly
+    const savedData = localStorage.getItem(key);
+    if (savedData === imageData) {
+      console.log(`Successfully saved ${key} to localStorage (${(dataSize/1024).toFixed(2)}KB)`);
+      return true;
+    } else {
+      console.error(`Verification failed: saved data doesn't match for ${key}`);
+      return false;
+    }
   } catch (error) {
     console.error(`Error saving ${key} to localStorage:`, error);
+    
+    // Try to determine specific error cause
+    if (error.name === 'QuotaExceededError' || error.code === 22) {
+      console.error('localStorage quota exceeded. Try clearing some space or using a smaller image.');
+    }
+    
     return false;
+  }
+};
+
+// Get favicon URL
+export const getFaviconUrl = () => {
+  if (typeof window === 'undefined') {
+    return defaultSettings.faviconPath;
+  }
+  
+  try {
+    const faviconData = localStorage.getItem('siteFavicon');
+    return faviconData || defaultSettings.faviconPath;
+  } catch (error) {
+    console.error('Error getting favicon:', error);
+    return defaultSettings.faviconPath;
   }
 };
 

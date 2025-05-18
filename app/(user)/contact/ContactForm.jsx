@@ -1,15 +1,20 @@
 'use client';
 import {
-  Button,
-  Center,
-  Group,
-  SimpleGrid,
-  TextInput,
-  Textarea,
+    Button,
+    Center,
+    Group,
+    SimpleGrid,
+    TextInput,
+    Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import { useState } from 'react';
 
-const ContactForm = () => {
+const ContactForm = ({ contactEmail }) => {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm({
     initialValues: {
       name: '',
@@ -25,8 +30,29 @@ const ContactForm = () => {
     },
   });
 
+  const handleSubmit = (values) => {
+    setLoading(true);
+    
+    // In a real application, this would be an API call to send the email
+    // For now, we'll just simulate success after a delay
+    setTimeout(() => {
+      console.log('Sending to:', contactEmail || 'info@classroomwriters.com');
+      console.log('Form values:', values);
+      
+      notifications.show({
+        title: 'Message sent',
+        message: 'Thanks for reaching out! We will get back to you soon.',
+        color: 'green',
+        icon: <IconCheck />,
+      });
+      
+      form.reset();
+      setLoading(false);
+    }, 1000);
+  };
+
   return (
-    <form onSubmit={form.onSubmit(() => {})} className="!w-full">
+    <form onSubmit={form.onSubmit(handleSubmit)} className="!w-full">
       <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
         <TextInput
           placeholder="Your name"
@@ -88,7 +114,7 @@ const ContactForm = () => {
 
       <Group justify="center" mt="xl">
         <Center>
-          <Button variant="gradient" size={'xl'} type="submit">
+          <Button variant="gradient" size={'xl'} type="submit" loading={loading}>
             Send Message
           </Button>
         </Center>

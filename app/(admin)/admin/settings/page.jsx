@@ -3,13 +3,14 @@
 import { AdminNavbar } from '@/components/admin/layout/AdminNavbar';
 import { AuthGuard } from '@/components/admin/layout/AuthGuard';
 import { HeroSettings } from '@/components/admin/layout/HeroSettings';
-import { getSettings, saveSettings } from '@/services/settingsService';
+import { getImageFromLocalStorage, getSettings, saveImageToLocalStorage, saveSettings } from '@/services/settingsService';
 import { AppShell, Button, Card, ColorInput, Divider, FileInput, Group, Image, NumberInput, Stack, Switch, Tabs, Text, TextInput, Textarea, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconBrandFacebook, IconBrandInstagram, IconBrandTwitter, IconBrandYoutube, IconCheck, IconDeviceFloppy, IconUpload } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import ForceRefresh from './ForceRefresh';
 
 export default function SettingsPage() {
   const [opened, { toggle }] = useDisclosure();
@@ -17,6 +18,7 @@ export default function SettingsPage() {
   const [faviconPreview, setFaviconPreview] = useState('/favicon.ico');
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('general');
+  const [faviconChanged, setFaviconChanged] = useState(false);
   
   const form = useForm({
     initialValues: getSettings(),
@@ -26,6 +28,12 @@ export default function SettingsPage() {
   useEffect(() => {
     const settings = getSettings();
     form.setValues(settings);
+    
+    // Load favicon preview if available
+    const savedFavicon = getImageFromLocalStorage('siteFavicon');
+    if (savedFavicon) {
+      setFaviconPreview(savedFavicon);
+    }
   }, []);
 
   const handleLogoChange = (file) => {
@@ -38,10 +46,51 @@ export default function SettingsPage() {
   };
 
   const handleFaviconChange = (file) => {
-    form.setFieldValue('faviconImage', file);
     if (file) {
+      // Check if file is too large (max 2MB recommended for favicons)
+      if (file.size > 2 * 1024 * 1024) {
+        notifications.show({
+          title: 'File too large',
+          message: 'Favicon should be less than 2MB for optimal performance',
+          color: 'yellow',
+        });
+      }
+      
       const reader = new FileReader();
-      reader.onload = (e) => setFaviconPreview(e.target.result);
+      reader.onload = (e) => {
+        const faviconDataUrl = e.target.result;
+        console.log('Favicon loaded as data URL, size:', Math.round(faviconDataUrl.length / 1024), 'KB');
+        setFaviconPreview(faviconDataUrl);
+        form.setFieldValue('faviconImage', file);
+        
+        // Save to localStorage and provide immediate feedback
+        const success = saveImageToLocalStorage('siteFavicon', faviconDataUrl);
+        if (success) {
+          setFaviconChanged(true);
+          notifications.show({
+            title: 'Favicon saved',
+            message: 'Favicon has been saved to localStorage successfully',
+            color: 'green',
+            icon: <IconCheck />,
+          });
+        } else {
+          notifications.show({
+            title: 'Error saving favicon',
+            message: 'Failed to save favicon to localStorage. Check browser console for details.',
+            color: 'red',
+          });
+        }
+      };
+      
+      reader.onerror = (error) => {
+        console.error('Error reading favicon file:', error);
+        notifications.show({
+          title: 'Error',
+          message: 'Failed to read favicon file',
+          color: 'red',
+        });
+      };
+      
       reader.readAsDataURL(file);
     }
   };
@@ -50,6 +99,8 @@ export default function SettingsPage() {
     setLoading(true);
     
     try {
+      // Favicon handling moved to handleFaviconChange for immediate feedback
+      
       // Save settings
       const success = saveSettings(values);
       
@@ -71,7 +122,7 @@ export default function SettingsPage() {
       console.error('Error saving settings:', error);
       notifications.show({
         title: 'Error',
-        message: 'There was an error saving your settings',
+        message: 'There was an error saving your settings: ' + error.message,
         color: 'red',
       });
     } finally {
@@ -94,6 +145,7 @@ export default function SettingsPage() {
         </AppShell.Navbar>
 
         <AppShell.Main>
+          <ForceRefresh trigger={faviconChanged} />
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <Tabs 
               value={activeTab} 
@@ -283,23 +335,66 @@ export default function SettingsPage() {
 
               <Tabs.Panel value="contact">
                 <Card withBorder p="lg" radius="md" mb="md">
-                  <Title order={5} mb="md">Contact Information</Title>
+                  <Title order={5} mb="md">Contact Page Settings</Title>
                   <Stack gap="md">
                     <TextInput
-                      label="Contact Email"
+                      label="Contact Page Title"
+                      placeholder="Contact Us"
+                      {...form.getInputProps('contactTitle')}
+                    />
+                    <Textarea
+                      label="Contact Page Description"
+                      placeholder="Description for the top of your contact page"
+                      minRows={2}
+                      {...form.getInputProps('contactDescription')}
+                    />
+                    <Divider my="xs" label="Contact Information" labelPosition="center" />
+                    <TextInput
+                      label="Primary Contact Email"
                       placeholder="contact@yoursite.com"
                       {...form.getInputProps('contactEmail')}
                     />
                     <TextInput
-                      label="Phone Number"
+                      label="Secondary Contact Email"
+                      placeholder="info@yoursite.com"
+                      {...form.getInputProps('contactEmail2')}
+                    />
+                    <TextInput
+                      label="Primary Phone Number"
                       placeholder="+1 (123) 456-7890"
                       {...form.getInputProps('contactPhone')}
                     />
+                    <TextInput
+                      label="Secondary Phone Number"
+                      placeholder="+1 (123) 456-7890"
+                      {...form.getInputProps('contactPhone2')}
+                    />
                     <Textarea
                       label="Address"
-                      placeholder="Your physical address"
+                      placeholder="Your physical address (use comma to separate lines)"
                       minRows={2}
                       {...form.getInputProps('contactAddress')}
+                      description="Use a comma to separate address lines, e.g. 'Street, City Postal'"
+                    />
+                    <Divider my="xs" label="Google Map" labelPosition="center" />
+                    <Textarea
+                      label="Google Maps Embed URL"
+                      placeholder="https://www.google.com/maps/embed?pb=..."
+                      minRows={2}
+                      {...form.getInputProps('contactMapUrl')}
+                      description="Get this from Google Maps by clicking Share > Embed a map > Copy HTML, then extract the src URL"
+                    />
+                    <Divider my="xs" label="Contact Form" labelPosition="center" />
+                    <TextInput
+                      label="Contact Form Title"
+                      placeholder="Drop Us a Message"
+                      {...form.getInputProps('contactFormTitle')}
+                    />
+                    <Textarea
+                      label="Contact Form Description"
+                      placeholder="Short text below the contact form title"
+                      minRows={2}
+                      {...form.getInputProps('contactFormDescription')}
                     />
                   </Stack>
                 </Card>
