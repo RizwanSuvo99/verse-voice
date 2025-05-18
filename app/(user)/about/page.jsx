@@ -17,7 +17,7 @@ import {
 import {
     IconBrandFacebook,
     IconBrandLinkedin,
-    IconBrandX,
+    IconBrandTwitter,
     IconMail,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
@@ -66,6 +66,12 @@ const About = () => {
       }
     });
   }, []);
+  
+  // Helper function to format URLs (ensure they have https://)
+  const formatUrl = (url) => {
+    if (!url || url === '#') return '#';
+    return url.startsWith('http') ? url : `https://${url}`;
+  };
 
   return (
     <Container size={1350} className="!px-0 pt-[100px]">
@@ -151,7 +157,7 @@ const About = () => {
               <Group>
                 <Button
                   component="a"
-                  href={aboutData.socials.linkedin && aboutData.socials.linkedin.startsWith('http') ? aboutData.socials.linkedin : `https://${aboutData.socials.linkedin}`}
+                  href={formatUrl(aboutData.socials.linkedin)}
                   target="_blank"
                   rel="noopener noreferrer"
                   fw={500}
@@ -162,18 +168,18 @@ const About = () => {
                 </Button>
                 <Button
                   component="a"
-                  href={aboutData.socials.twitter && aboutData.socials.twitter.startsWith('http') ? aboutData.socials.twitter : `https://${aboutData.socials.twitter}`}
+                  href={formatUrl(aboutData.socials.twitter)}
                   target="_blank"
                   rel="noopener noreferrer"
                   fw={500}
                   variant="white"
                   className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
                 >
-                  <IconBrandX />
+                  <IconBrandTwitter />
                 </Button>
                 <Button
                   component="a"
-                  href={aboutData.socials.facebook && aboutData.socials.facebook.startsWith('http') ? aboutData.socials.facebook : `https://${aboutData.socials.facebook}`}
+                  href={formatUrl(aboutData.socials.facebook)}
                   target="_blank"
                   rel="noopener noreferrer"
                   fw={500}

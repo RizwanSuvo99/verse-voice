@@ -3,26 +3,27 @@
 import allBlogs from '@/data/allBlogs';
 import { getSetting } from '@/services/settingsService';
 import {
-  Button,
-  Container,
-  Divider,
-  Flex,
-  Grid,
-  Group,
-  Paper,
-  Space,
-  Stack,
-  Text,
-  TextInput,
-  Title,
+    Button,
+    Container,
+    Divider,
+    Flex,
+    Grid,
+    Group,
+    Paper,
+    Space,
+    Stack,
+    Text,
+    TextInput,
+    Title,
 } from '@mantine/core';
 import {
-  IconArrowRight,
-  IconBrandInstagram,
-  IconBrandLinkedin,
-  IconBrandTwitter,
-  IconMail,
-  IconUser,
+    IconArrowRight,
+    IconBrandFacebook,
+    IconBrandInstagram,
+    IconBrandTwitter,
+    IconBrandYoutube,
+    IconMail,
+    IconUser,
 } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -33,6 +34,12 @@ const Footer = () => {
   const categories = [...new Set(allBlogs.map((item) => item.category))];
   const [footerText1, setFooterText1] = useState('');
   const [footerText2, setFooterText2] = useState('');
+  const [socialLinks, setSocialLinks] = useState({
+    facebookUrl: '#',
+    twitterUrl: '#',
+    instagramUrl: '#',
+    youtubeUrl: '',
+  });
 
   // Define animation variants with stronger upward motion
   const fadeInUp = {
@@ -67,12 +74,26 @@ const Footer = () => {
     // Load footer text from settings
     setFooterText1(getSetting('footerDescription1'));
     setFooterText2(getSetting('footerDescription2'));
+    
+    // Load social media links from settings
+    setSocialLinks({
+      facebookUrl: getSetting('facebookUrl'),
+      twitterUrl: getSetting('twitterUrl'),
+      instagramUrl: getSetting('instagramUrl'),
+      youtubeUrl: getSetting('youtubeUrl'),
+    });
 
     // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  
+  // Helper function to format URLs (ensure they have https://)
+  const formatUrl = (url) => {
+    if (!url || url === '#') return '#';
+    return url.startsWith('http') ? url : `https://${url}`;
+  };
 
   return (
     <footer id="footer">
@@ -208,18 +229,30 @@ const Footer = () => {
               </Text>
             </Text>
             <Group gap="sm" className="flex-col md:flex-row">
-              <Group gap={'sm'}>
-                <IconBrandTwitter stroke={2} />
-                <Text>Twitter</Text>
-              </Group>
-              <Group gap={'sm'}>
-                <IconBrandLinkedin stroke={2} />
-                <Text>LinkedIn</Text>
-              </Group>
-              <Group gap={'sm'}>
-                <IconBrandInstagram stroke={2} />
-                <Text>Instagram</Text>
-              </Group>
+              {socialLinks.twitterUrl && socialLinks.twitterUrl !== '#' && (
+                <Group gap={'sm'} component={Link} href={formatUrl(socialLinks.twitterUrl)} target="_blank" className="!no-underline">
+                  <IconBrandTwitter stroke={2} />
+                  <Text>Twitter</Text>
+                </Group>
+              )}
+              {socialLinks.facebookUrl && socialLinks.facebookUrl !== '#' && (
+                <Group gap={'sm'} component={Link} href={formatUrl(socialLinks.facebookUrl)} target="_blank" className="!no-underline">
+                  <IconBrandFacebook stroke={2} />
+                  <Text>Facebook</Text>
+                </Group>
+              )}
+              {socialLinks.instagramUrl && socialLinks.instagramUrl !== '#' && (
+                <Group gap={'sm'} component={Link} href={formatUrl(socialLinks.instagramUrl)} target="_blank" className="!no-underline">
+                  <IconBrandInstagram stroke={2} />
+                  <Text>Instagram</Text>
+                </Group>
+              )}
+              {socialLinks.youtubeUrl && socialLinks.youtubeUrl !== '#' && (
+                <Group gap={'sm'} component={Link} href={formatUrl(socialLinks.youtubeUrl)} target="_blank" className="!no-underline">
+                  <IconBrandYoutube stroke={2} />
+                  <Text>YouTube</Text>
+                </Group>
+              )}
             </Group>
           </Group>
         </Paper>
