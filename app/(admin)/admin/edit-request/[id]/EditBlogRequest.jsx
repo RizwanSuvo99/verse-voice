@@ -14,8 +14,10 @@ import RichTextEditor from '@/components/Editor/RichTextEditor';
 import { useForm } from '@mantine/form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
-const EditBlogRequest = ({ request, setActiveView }) => {
+const EditBlogRequest = ({ request }) => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { data: settings } = useQuery({
@@ -50,7 +52,7 @@ const EditBlogRequest = ({ request, setActiveView }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allRequests'] });
       toast.success('Request updated and approved! Blog published.');
-      setActiveView('Blog Requests');
+      router.push('/admin/blog-requests');
     },
     onError: () => {
       toast.error('Failed to approve request');
@@ -78,7 +80,7 @@ const EditBlogRequest = ({ request, setActiveView }) => {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['allRequests'] });
           toast.success('Request updated');
-          setActiveView('Blog Requests');
+          router.push('/admin/blog-requests');
         },
         onError: () => {
           toast.error('Failed to update request');
@@ -132,7 +134,7 @@ const EditBlogRequest = ({ request, setActiveView }) => {
         <Button
           variant="default"
           size="md"
-          onClick={() => setActiveView('Blog Requests')}
+          onClick={() => router.push('/admin/blog-requests')}
         >
           Cancel
         </Button>

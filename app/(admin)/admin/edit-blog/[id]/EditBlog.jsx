@@ -20,8 +20,10 @@ import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-const EditBlog = ({ blog, setActiveView }) => {
+const EditBlog = ({ blog, onSuccess }) => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [blogImage, setBlogImage] = useState(null);
   const [authorImage, setAuthorImage] = useState(null);
@@ -65,7 +67,7 @@ const EditBlog = ({ blog, setActiveView }) => {
       queryClient.invalidateQueries({ queryKey: ['blogs'] });
       queryClient.invalidateQueries({ queryKey: ['featuredBlogs'] });
       queryClient.invalidateQueries({ queryKey: ['popularBlogs'] });
-      setActiveView('All Blogs');
+      if (onSuccess) onSuccess();
     },
     onError: () => {
       toast.error('Failed to update blog');
@@ -164,7 +166,7 @@ const EditBlog = ({ blog, setActiveView }) => {
         <Button
           variant="default"
           size="md"
-          onClick={() => setActiveView('All Blogs')}
+          onClick={() => router.push('/admin/all-blogs')}
         >
           Cancel
         </Button>

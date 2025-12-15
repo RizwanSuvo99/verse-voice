@@ -22,11 +22,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import TableSkeleton from '@/components/Skeletons/TableSkeleton';
 
 const LIMIT = 10;
 
-const AllBlogs = ({ setActiveView, setEditBlog }) => {
+const AllBlogs = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [searchTitle, setSearchTitle] = useState('');
@@ -129,10 +131,7 @@ const AllBlogs = ({ setActiveView, setEditBlog }) => {
           <ActionIcon
             variant="subtle"
             color="blue"
-            onClick={() => {
-              setEditBlog(item);
-              setActiveView('Edit Blog');
-            }}
+            onClick={() => router.push(`/admin/edit-blog/${item._id}`)}
           >
             <IconEdit
               style={{ width: rem(16), height: rem(16) }}

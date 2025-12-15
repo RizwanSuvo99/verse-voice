@@ -7,33 +7,37 @@ import {
   IconCategoryPlus,
   IconEdit,
   IconFileText,
+  IconFlag,
   IconInfoCircle,
   IconLogout,
   IconMail,
   IconNews,
   IconPencilPlus,
 } from '@tabler/icons-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useLocalStorage } from '@mantine/hooks';
 import { useComputedColorScheme } from '@mantine/core';
 import classes from './NavbarSimpleColored.module.css';
 import ThemeToggle from '@/components/Header/ThemeToggle';
 
 const data = [
-  { label: 'Create Blog', icon: IconPencilPlus },
-  { label: 'All Blogs', icon: IconArticle },
-  { label: 'Blog Requests', icon: IconFileText },
-  { label: 'Customize Hero', icon: IconEdit },
-  { label: 'Customize Footer', icon: IconEdit },
-  { label: 'Customize About', icon: IconInfoCircle },
-  { label: 'Customize Contact', icon: IconAddressBook },
-  { label: 'Manage Categories', icon: IconCategoryPlus },
-  { label: 'Contact Messages', icon: IconMail },
-  { label: 'Newsletter', icon: IconNews },
+  { label: 'Create Blog', href: '/admin/create-blog', icon: IconPencilPlus },
+  { label: 'All Blogs', href: '/admin/all-blogs', icon: IconArticle },
+  { label: 'Blog Requests', href: '/admin/blog-requests', icon: IconFileText },
+  { label: 'Comment Reports', href: '/admin/comment-reports', icon: IconFlag },
+  { label: 'Customize Hero', href: '/admin/customize-hero', icon: IconEdit },
+  { label: 'Customize Footer', href: '/admin/customize-footer', icon: IconEdit },
+  { label: 'Customize About', href: '/admin/customize-about', icon: IconInfoCircle },
+  { label: 'Customize Contact', href: '/admin/customize-contact', icon: IconAddressBook },
+  { label: 'Manage Categories', href: '/admin/manage-categories', icon: IconCategoryPlus },
+  { label: 'Contact Messages', href: '/admin/contact-messages', icon: IconMail },
+  { label: 'Newsletter', href: '/admin/newsletter', icon: IconNews },
 ];
 
-const AdminNavbar = ({ activeView, setActiveView }) => {
+const AdminNavbar = ({ onNavClick }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const colorScheme = useComputedColorScheme('dark');
   const [, setToken] = useLocalStorage({ key: 'token', defaultValue: null });
   const [, setIsLoggedIn] = useLocalStorage({
@@ -47,20 +51,22 @@ const AdminNavbar = ({ activeView, setActiveView }) => {
     router.push('/');
   };
 
+  const isActive = (href) => {
+    if (href === '/admin/create-blog' && pathname === '/admin') return true;
+    return pathname === href || pathname.startsWith(href + '/');
+  };
+
   const links = data.map((item) => (
-    <a
+    <Link
       className={classes.link}
-      data-active={item.label === activeView || undefined}
-      href="#"
+      data-active={isActive(item.href) || undefined}
+      href={item.href}
       key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActiveView(item.label);
-      }}
+      onClick={onNavClick}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   return (

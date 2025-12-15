@@ -17,6 +17,11 @@ export const getAllRequests = async () => {
   return response.data;
 };
 
+export const getRequestById = async (id) => {
+  const response = await axiosPrivate.get(`/blog-requests/${id}`);
+  return response.data;
+};
+
 export const approveRequest = async (id) => {
   const response = await axiosPrivate.put(`/blog-requests/${id}/approve`);
   return response.data;

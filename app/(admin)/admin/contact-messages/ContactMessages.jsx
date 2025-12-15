@@ -1,6 +1,6 @@
 'use client';
 
-import { getAllContacts, markAsRead } from '@/api/contact.mjs';
+import { getAllContacts, markAsRead, deleteContact } from '@/api/contact.mjs';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
@@ -29,6 +29,17 @@ const ContactMessages = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
       toast.success('Marked as read');
+    },
+  });
+
+  const { mutate: deleteMutate } = useMutation({
+    mutationFn: deleteContact,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contacts'] });
+      toast.success('Message deleted');
+    },
+    onError: () => {
+      toast.error('Failed to delete message');
     },
   });
 
@@ -63,16 +74,29 @@ const ContactMessages = () => {
               </Text>
               <Space h="sm" />
               <Text fz="sm">{msg.message}</Text>
-              {!msg.isRead && (
+              <Group mt="md" gap="xs">
+                {!msg.isRead && (
+                  <Button
+                    size="xs"
+                    variant="light"
+                    onClick={() => markRead(msg._id)}
+                  >
+                    Mark as Read
+                  </Button>
+                )}
                 <Button
-                  mt="md"
                   size="xs"
                   variant="light"
-                  onClick={() => markRead(msg._id)}
+                  color="red"
+                  onClick={() => {
+                    if (confirm('Are you sure you want to delete this message?')) {
+                      deleteMutate(msg._id);
+                    }
+                  }}
                 >
-                  Mark as Read
+                  Delete
                 </Button>
-              )}
+              </Group>
             </Card>
           ))}
         </SimpleGrid>

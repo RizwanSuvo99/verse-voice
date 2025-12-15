@@ -22,10 +22,12 @@ import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const statusColors = { pending: 'yellow', approved: 'green', rejected: 'red' };
 
-const BlogRequests = ({ setActiveView, setEditRequest }) => {
+const BlogRequests = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [rejectNote, setRejectNote] = useState({});
 
@@ -120,10 +122,7 @@ const BlogRequests = ({ setActiveView, setEditRequest }) => {
                     <Button
                       color="cyan"
                       size="sm"
-                      onClick={() => {
-                        setEditRequest(req);
-                        setActiveView('Edit Blog Request');
-                      }}
+                      onClick={() => router.push(`/admin/edit-request/${req._id}`)}
                     >
                       Edit &amp; Approve
                     </Button>

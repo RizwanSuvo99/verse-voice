@@ -15,3 +15,8 @@ export const markAsRead = async (id) => {
   const response = await axiosPrivate.put(`/contact/${id}/read`);
   return response.data;
 };
+
+export const deleteContact = async (id) => {
+  const response = await axiosPrivate.delete(`/contact/${id}`);
+  return response.data;
+};
