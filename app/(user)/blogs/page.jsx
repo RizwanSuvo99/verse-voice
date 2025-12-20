@@ -1,6 +1,6 @@
 'use client';
 
-import { getBlogs } from '@/api/blogs.mjs';
+import { useBlogs } from '@/hooks/queries';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Container,
@@ -10,17 +10,13 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import SingleBlog from './SingleBlog';
 
 const Blogs = () => {
   const [activePage, setPage] = useState(1);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['blogs', activePage],
-    queryFn: () => getBlogs({ page: activePage, limit: 6 }),
-  });
+  const { data, isLoading } = useBlogs({ page: activePage, limit: 6 });
 
   if (isLoading) {
     return (

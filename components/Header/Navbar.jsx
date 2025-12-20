@@ -15,10 +15,9 @@ import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import NotificationBell from './NotificationBell';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { logOut } from '@/api/logOut.mjs';
-import { getMe } from '@/api/user.mjs';
-import { getSettings } from '@/api/siteSettings.mjs';
+import { useSiteSettings, useCurrentUser } from '@/hooks/queries';
 import { IconSettings } from '@tabler/icons-react';
 
 const Navbar = () => {
@@ -43,18 +42,11 @@ const Navbar = () => {
   const loggedIn = hydrated && isLoggedIn && !!token;
 
   // Fetch current user to check admin status
-  const { data: currentUser } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: getMe,
-    enabled: loggedIn,
-  });
+  const { data: currentUser } = useCurrentUser({ enabled: loggedIn });
 
   const isAdmin = currentUser?.isSuperUser === true;
 
-  const { data: siteSettings } = useQuery({
-    queryKey: ['siteSettings'],
-    queryFn: getSettings,
-  });
+  const { data: siteSettings } = useSiteSettings();
 
   const defaultLinks = [
     { link: '/', label: 'Home' },

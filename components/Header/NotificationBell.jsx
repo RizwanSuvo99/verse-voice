@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  getNotifications,
-  getUnreadCount,
-} from '@/api/notifications.mjs';
+import { useNotifications, useUnreadCount } from '@/hooks/queries';
 import { useMarkNotificationRead, useMarkAllNotificationsRead } from '@/hooks/mutations';
 import { OptimizedAvatar } from '@/components/ui';
 import {
@@ -18,7 +15,6 @@ import {
   Text,
 } from '@mantine/core';
 import { IconBell, IconHeart, IconMessage } from '@tabler/icons-react';
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -28,16 +24,8 @@ dayjs.extend(relativeTime);
 const NotificationBell = () => {
   const router = useRouter();
 
-  const { data: unreadData } = useQuery({
-    queryKey: ['unreadCount'],
-    queryFn: getUnreadCount,
-    refetchInterval: 30000, // Poll every 30 seconds
-  });
-
-  const { data: notifications } = useQuery({
-    queryKey: ['notifications'],
-    queryFn: getNotifications,
-  });
+  const { data: unreadData } = useUnreadCount();
+  const { data: notifications } = useNotifications();
 
   // Use optimistic mutation hooks
   const { mutate: markRead } = useMarkNotificationRead();

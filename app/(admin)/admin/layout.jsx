@@ -4,14 +4,7 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { Inter, Yesteryear } from 'next/font/google';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import dynamic from 'next/dynamic';
-
-const ReactQueryDevtools = dynamic(
-  () => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
-  { ssr: false }
-);
-
+import { QueryProvider } from '@/components/providers/QueryProvider';
 import {
   Center,
   ColorSchemeScript,
@@ -264,18 +257,6 @@ const theme = createTheme({
   },
 });
 
-// Create a client with optimized caching for faster navigation
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes - data is fresh for 5 minutes
-      gcTime: 1000 * 60 * 30, // 30 minutes - keep in cache for 30 minutes
-      refetchOnWindowFocus: false, // Don't refetch when window regains focus
-      retry: 1, // Only retry once on failure
-    },
-  },
-});
-
 function AdminGuard({ children }) {
   const [status, setStatus] = useState('loading');
 
@@ -336,14 +317,11 @@ export default function RootLayout({ children }) {
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
           <ModalsProvider>
-            <QueryClientProvider client={queryClient}>
+            <QueryProvider enablePersistence={false}>
               <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
               <Toaster position="top-center" richColors theme="dark" />
               <AdminGuard>{children}</AdminGuard>
-              {process.env.NODE_ENV === 'development' && (
-                <ReactQueryDevtools initialIsOpen={false} />
-              )}
-            </QueryClientProvider>
+            </QueryProvider>
           </ModalsProvider>
         </MantineProvider>
       </body>

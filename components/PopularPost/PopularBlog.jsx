@@ -1,16 +1,12 @@
 'use client';
 
-import { getPopularBlogs } from '@/api/blogs.mjs';
+import { usePopularBlogs } from '@/hooks/queries';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import { Card, Container, Divider, Grid, Text, Title } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
 import PopularSingleBlog from './PopularSingleBlog';
 
 const PopularBlog = () => {
-  const { data: popularBlogs, isLoading } = useQuery({
-    queryKey: ['popularBlogs'],
-    queryFn: getPopularBlogs,
-  });
+  const { data: popularBlogs, isLoading } = usePopularBlogs();
 
   if (isLoading) {
     return (
