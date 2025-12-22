@@ -1,15 +1,14 @@
 'use client';
 import FavoriteButton from '@/components/FavoriteButton';
 import { stripHtml } from '@/utils/stripHtml';
+import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   AspectRatio,
-  Avatar,
   Badge,
   Button,
   Card,
   Flex,
   Group,
-  Image,
   Space,
   Text,
 } from '@mantine/core';
@@ -34,7 +33,15 @@ const SingleBlog = ({ blog }) => {
       <Flex direction="column" className="!min-h-[380px] !gap-2">
         <div className="!flex-1">
           <AspectRatio ratio={1}>
-            <Image src={blogPicUrl} height={200} alt="Blog Image" radius="md" />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <OptimizedImage
+                src={blogPicUrl}
+                alt={title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                style={{ borderRadius: 'var(--mantine-radius-md)' }}
+              />
+            </div>
           </AspectRatio>
         </div>
         <div className="!flex-1">
@@ -57,7 +64,7 @@ const SingleBlog = ({ blog }) => {
           </Text>
           <Group justify="space-between" mt="xs" mb="xs">
             <Group className="!items-center">
-              <Avatar src={createdBy?.avatar} alt="author-img" size="sm" />
+              <OptimizedAvatar src={createdBy?.avatar} name={createdBy?.name} preset="sm" />
               <div>
                 <Text className="!text-sm !font-medium">{createdBy?.name}</Text>
                 <Text fw={400} size="xs" c="dimmed">

@@ -1,13 +1,12 @@
 import { memo } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
+import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   AspectRatio,
-  Avatar,
   Badge,
   Button,
   Card,
   Group,
-  Image,
   Space,
   Text,
 } from '@mantine/core';
@@ -29,14 +28,14 @@ const SingleBlog = memo(({ blog }) => {
               hover: { scale: 1.03 },
             }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            style={{ borderRadius: '0.5rem', overflow: 'hidden' }}
+            style={{ borderRadius: '0.5rem', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}
           >
-            <Image
+            <OptimizedImage
               src={blogPicUrl}
-              height={300}
               alt={title}
-              radius="md"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+              style={{ borderRadius: 'var(--mantine-radius-md)' }}
             />
           </motion.div>
         </AspectRatio>
@@ -58,7 +57,7 @@ const SingleBlog = memo(({ blog }) => {
 
         <Group justify="space-between" mt="xs" mb="xs">
           <Group className="!items-center">
-            <Avatar src={createdBy?.avatar} alt="author-img" size="sm" />
+            <OptimizedAvatar src={createdBy?.avatar} name={createdBy?.name} preset="sm" />
             <div>
               <Text className="!text-sm !font-medium">{createdBy?.name}</Text>
               <Text size="xs" c="dimmed">

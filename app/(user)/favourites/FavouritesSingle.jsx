@@ -1,12 +1,11 @@
 'use client';
 
+import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
-  Avatar,
   Badge,
   Card,
   Group,
-  Image,
   rem,
   Text,
   useMantineTheme,
@@ -26,7 +25,14 @@ const FavouritesSingle = ({ favorite, onRemove }) => {
     <Card withBorder padding="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Link href={`/blogs/${blog._id}`}>
-          <Image src={blog.blogPicUrl} alt={blog.title} height={180} />
+          <div style={{ position: 'relative', width: '100%', height: 180 }}>
+            <OptimizedImage
+              src={blog.blogPicUrl}
+              alt={blog.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 33vw"
+            />
+          </div>
         </Link>
       </Card.Section>
 
@@ -41,7 +47,7 @@ const FavouritesSingle = ({ favorite, onRemove }) => {
       </Text>
 
       <Group mt="md">
-        <Avatar src={blog.createdBy?.avatar} radius="sm" size="sm" />
+        <OptimizedAvatar src={blog.createdBy?.avatar} name={blog.createdBy?.name} preset="sm" />
         <div>
           <Text fw={500} size="sm">
             {blog.createdBy?.name}

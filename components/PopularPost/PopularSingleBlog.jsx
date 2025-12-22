@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { AspectRatio, Divider, Flex, Image, Text } from '@mantine/core';
+import { OptimizedImage } from '@/components/ui';
+import { AspectRatio, Divider, Flex, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -15,8 +16,15 @@ const PopularSingleBlog = memo(({ blog, divider }) => {
             <motion.div
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.2 }}
+              style={{ position: 'relative', width: '100%', height: '100%' }}
             >
-              <Image src={blogPicUrl} height={80} alt={title} radius="lg" />
+              <OptimizedImage
+                src={blogPicUrl}
+                alt={title}
+                fill
+                sizes="80px"
+                style={{ borderRadius: 'var(--mantine-radius-lg)' }}
+              />
             </motion.div>
           </AspectRatio>
         </div>

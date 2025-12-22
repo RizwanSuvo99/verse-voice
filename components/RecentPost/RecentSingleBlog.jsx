@@ -1,14 +1,13 @@
 import { memo } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
 import { stripHtml } from '@/utils/stripHtml';
+import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   AspectRatio,
-  Avatar,
   Badge,
   Button,
   Flex,
   Group,
-  Image,
   Space,
   Text,
 } from '@mantine/core';
@@ -35,7 +34,15 @@ const RecentSingleBlog = memo(({ blog }) => {
     >
       <div className="!flex-1">
         <AspectRatio ratio={1}>
-          <Image src={blogPicUrl} height={200} alt="Blog Image" radius="md" />
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <OptimizedImage
+              src={blogPicUrl}
+              alt={title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              style={{ borderRadius: 'var(--mantine-radius-md)' }}
+            />
+          </div>
         </AspectRatio>
       </div>
       <div className="!flex-1">
@@ -58,7 +65,7 @@ const RecentSingleBlog = memo(({ blog }) => {
         </Text>
         <Group justify="space-between" mt="xs" mb="xs">
           <Group className="!items-center">
-            <Avatar src={createdBy?.avatar} alt="author-img" size="sm" />
+            <OptimizedAvatar src={createdBy?.avatar} name={createdBy?.name} preset="sm" />
             <div>
               <Text className="!text-sm !font-medium">{createdBy?.name}</Text>
               <Text fw={400} size="xs" c="dimmed">
