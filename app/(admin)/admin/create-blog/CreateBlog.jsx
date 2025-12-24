@@ -52,7 +52,6 @@ const CreateBlog = () => {
       authorName: '',
       authorDetails: '',
       timeRead: '',
-      isFeatured: false,
     },
     validate: {
       title: (value) => (value.trim().length < 2 ? 'Title required' : null),
@@ -90,7 +89,6 @@ const CreateBlog = () => {
     formData.append('name', values.authorName);
     formData.append('authorDetails', values.authorDetails);
     formData.append('timeRead', values.timeRead || '3 mins read');
-    formData.append('isFeatured', values.isFeatured);
     if (publishDate) formData.append('publishDate', publishDate.toISOString());
     if (blogImage) formData.append('blogImage', blogImage);
     if (authorImage) formData.append('authorImage', authorImage);
@@ -140,7 +138,7 @@ const CreateBlog = () => {
         />
       </SimpleGrid>
 
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+      <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
         <TextInput
           placeholder="Author Details (e.g. Roll: 1234)"
           {...form.getInputProps('authorDetails')}
@@ -148,11 +146,6 @@ const CreateBlog = () => {
         <TextInput
           placeholder="Time Read (e.g. 5 mins read)"
           {...form.getInputProps('timeRead')}
-        />
-        <Select
-          placeholder="Featured?"
-          data={['No', 'Yes']}
-          onChange={(val) => form.setFieldValue('isFeatured', val === 'Yes')}
         />
       </SimpleGrid>
 
