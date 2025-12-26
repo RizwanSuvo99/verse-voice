@@ -11,39 +11,50 @@ import {
   Text,
   useMantineTheme,
 } from '@mantine/core';
-import { IconHeart } from '@tabler/icons-react';
+import { IconHeartFilled } from '@tabler/icons-react';
+import dayjs from 'dayjs';
+import Link from 'next/link';
 import classes from './ArticleCardFooter.module.css';
 
-const FavouritesSingle = () => {
+const FavouritesSingle = ({ favorite, onRemove }) => {
   const theme = useMantineTheme();
+  const blog = favorite?.blog;
+
+  if (!blog) return null;
 
   return (
-    <Card withBorder padding="lg" radius="md" className={classes.card}>
+    <Card withBorder padding="lg" radius="md" className={`${classes.card} glass-card`}>
       <Card.Section mb="sm">
-        <Image
-          src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80"
-          alt="Top 50 underrated plants for house decoration"
-          height={180}
-        />
+        <Link href={`/blogs/${blog._id}`}>
+          <Image
+            src={blog.blogPicUrl}
+            alt={blog.title}
+            height={180}
+          />
+        </Link>
       </Card.Section>
 
       <Badge w="fit-content" variant="light">
-        decorations
+        {blog.category}
       </Badge>
 
-      <Text fw={700} className={classes.title} mt="xs">
-        Top 50 underrated plants for house decoration
+      <Text fw={700} className={classes.title} mt="xs" lineClamp={2}>
+        <Link href={`/blogs/${blog._id}`} className="!no-underline">
+          {blog.title}
+        </Link>
       </Text>
 
       <Group mt="lg">
         <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png"
+          src={blog.createdBy?.avatar}
           radius="sm"
         />
         <div>
-          <Text fw={500}>Elsa Gardenowl</Text>
+          <Text fw={500}>{blog.createdBy?.name}</Text>
           <Text fz="xs" c="dimmed">
-            posted 34 minutes ago
+            {blog.publishDate
+              ? dayjs(blog.publishDate).format('D MMM YYYY')
+              : ''}
           </Text>
         </div>
       </Group>
@@ -51,11 +62,11 @@ const FavouritesSingle = () => {
       <Card.Section className={classes.footer}>
         <Group justify="space-between">
           <Text fz="xs" c="dimmed">
-            733 people liked this
+            {blog.likesCount || 0} likes
           </Text>
           <Group gap={0}>
-            <ActionIcon variant="subtle" color="gray">
-              <IconHeart
+            <ActionIcon variant="subtle" color="gray" onClick={onRemove}>
+              <IconHeartFilled
                 style={{ width: rem(20), height: rem(20) }}
                 color={theme.colors.red[6]}
                 stroke={1.5}
