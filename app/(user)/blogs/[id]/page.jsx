@@ -1,6 +1,7 @@
 'use client';
 
 import { getBlogById } from '@/api/blogs.mjs';
+import { getCurrentUser } from '@/api/users.mjs';
 import BlogDetailSkeleton from '@/components/Skeletons/BlogDetailSkeleton';
 import {
   Avatar,
@@ -13,17 +14,25 @@ import {
   Title,
 } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
+import { readLocalStorageValue } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import { useParams } from 'next/navigation';
 import BlogPageInner from './BlogPageInner';
 
 const BlogSingle = () => {
   const { id } = useParams();
+  const isLoggedIn = readLocalStorageValue({ key: 'isLoggedIn' });
 
   const { data: blog, isLoading } = useQuery({
     queryKey: ['blog', id],
     queryFn: () => getBlogById(id),
     enabled: !!id,
+  });
+
+  const { data: currentUser } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: getCurrentUser,
+    enabled: !!isLoggedIn,
   });
 
   if (isLoading || !blog) {
@@ -69,7 +78,7 @@ const BlogSingle = () => {
         </Group>
       </Flex>
       <Space h={'sm'} />
-      <BlogPageInner blog={blog} />
+      <BlogPageInner blog={blog} currentUser={currentUser} />
     </Container>
   );
 };

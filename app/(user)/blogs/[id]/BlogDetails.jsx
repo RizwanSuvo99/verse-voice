@@ -1,9 +1,10 @@
 'use client';
 
-import { createComment } from '@/api/comments.mjs';
+import { createComment, deleteComment, reportComment } from '@/api/comments.mjs';
 import { getFavoritedUsers } from '@/api/favorites.mjs';
 import FavoriteButton from '@/components/FavoriteButton';
 import {
+  ActionIcon,
   AspectRatio,
   Avatar,
   Button,
@@ -12,22 +13,169 @@ import {
   Flex,
   Group,
   Image,
+  Modal,
+  Select,
   Space,
   Text,
   Textarea,
   Tooltip,
 } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconCornerDownRight, IconFlag, IconTrash } from '@tabler/icons-react';
 import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { readLocalStorageValue } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import DOMPurify from 'dompurify';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import '@/components/Editor/editor.css';
 
-const BlogDetails = ({ blog }) => {
+// CommentItem component moved outside to prevent re-creation on parent re-render
+const CommentItem = memo(function CommentItem({
+  comment,
+  isReply = false,
+  replies,
+  isLoggedIn,
+  currentUser,
+  isAdmin,
+  replyingTo,
+  setReplyingTo,
+  replyText,
+  setReplyText,
+  handleSubmitReply,
+  isPending,
+  openReport,
+  deleteCommentMutate,
+  canDeleteComment,
+}) {
+  const commentReplies = replies.filter((r) => r.parentComment === comment._id);
+
+  return (
+    <div style={{ marginLeft: isReply ? '32px' : 0 }}>
+      <Flex gap="sm" align="flex-start">
+        <Avatar
+          radius="xl"
+          size={isReply ? 'sm' : 'md'}
+          alt={comment.createdBy?.name || 'User'}
+          src={comment.createdBy?.avatar || null}
+        >
+          {comment.createdBy?.name?.charAt(0)?.toUpperCase()}
+        </Avatar>
+        <div style={{ flex: 1 }}>
+          <Group justify="space-between" wrap="nowrap">
+            <div>
+              <Text fw={500} fz={isReply ? 'xs' : 'sm'}>
+                {comment.createdBy?.name || 'User'}
+              </Text>
+              <Text fz="xs" c="dimmed">
+                {comment.createdAt ? dayjs(comment.createdAt).format('D MMM YYYY HH:mm') : ''}
+              </Text>
+            </div>
+            {isLoggedIn && (
+              <Group gap={4}>
+                {!isReply && (
+                  <Tooltip label="Reply">
+                    <ActionIcon
+                      variant="subtle"
+                      size="sm"
+                      onClick={() => setReplyingTo(replyingTo === comment._id ? null : comment._id)}
+                    >
+                      <IconCornerDownRight size={14} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+                {currentUser && comment.createdBy?._id !== currentUser._id && (
+                  <Tooltip label="Report">
+                    <ActionIcon
+                      variant="subtle"
+                      size="sm"
+                      color="yellow"
+                      onClick={() => openReport(comment)}
+                    >
+                      <IconFlag size={14} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+                {canDeleteComment(comment) && (
+                  <Tooltip label="Delete">
+                    <ActionIcon
+                      variant="subtle"
+                      size="sm"
+                      color="red"
+                      onClick={() => {
+                        if (confirm('Delete this comment?')) {
+                          deleteCommentMutate(comment._id);
+                        }
+                      }}
+                    >
+                      <IconTrash size={14} />
+                    </ActionIcon>
+                  </Tooltip>
+                )}
+              </Group>
+            )}
+          </Group>
+          <Card withBorder mt="xs" p="sm" className="glass-card">
+            <Text size="sm">{comment.text}</Text>
+          </Card>
+
+          {/* Reply input */}
+          {replyingTo === comment._id && (
+            <div style={{ marginTop: '8px' }}>
+              <Textarea
+                placeholder="Write a reply..."
+                value={replyText}
+                onChange={(e) => setReplyText(e.target.value)}
+                minRows={2}
+                size="sm"
+              />
+              <Group mt="xs" gap="xs">
+                <Button size="xs" variant="gradient" onClick={() => handleSubmitReply(comment._id)} loading={isPending}>
+                  Reply
+                </Button>
+                <Button size="xs" variant="subtle" onClick={() => { setReplyingTo(null); setReplyText(''); }}>
+                  Cancel
+                </Button>
+              </Group>
+            </div>
+          )}
+
+          {/* Nested replies */}
+          {commentReplies.length > 0 && (
+            <div style={{ marginTop: '12px' }}>
+              {commentReplies.map((reply) => (
+                <CommentItem
+                  key={reply._id}
+                  comment={reply}
+                  isReply
+                  replies={replies}
+                  isLoggedIn={isLoggedIn}
+                  currentUser={currentUser}
+                  isAdmin={isAdmin}
+                  replyingTo={replyingTo}
+                  setReplyingTo={setReplyingTo}
+                  replyText={replyText}
+                  setReplyText={setReplyText}
+                  handleSubmitReply={handleSubmitReply}
+                  isPending={isPending}
+                  openReport={openReport}
+                  deleteCommentMutate={deleteCommentMutate}
+                  canDeleteComment={canDeleteComment}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </Flex>
+      <Space h="sm" />
+    </div>
+  );
+});
+
+const BlogDetails = ({ blog, currentUser }) => {
   const comments = blog.comments || [];
+  const replies = blog.replies || [];
   const isHtml = /<[a-z][\s\S]*>/i.test(blog.content || '');
   const sanitizedContent =
     isHtml && typeof window !== 'undefined'
@@ -38,8 +186,16 @@ const BlogDetails = ({ blog }) => {
     : [];
   const isLoggedIn = readLocalStorageValue({ key: 'isLoggedIn' });
   const [commentText, setCommentText] = useState('');
+  const [replyText, setReplyText] = useState('');
+  const [replyingTo, setReplyingTo] = useState(null);
   const [showAllFavUsers, setShowAllFavUsers] = useState(false);
+  const [reportModalOpened, { open: openReportModal, close: closeReportModal }] = useDisclosure(false);
+  const [reportingComment, setReportingComment] = useState(null);
+  const [reportReason, setReportReason] = useState('');
+  const [reportDescription, setReportDescription] = useState('');
   const queryClient = useQueryClient();
+
+  const isAdmin = currentUser?.isSuperUser === true;
 
   const { data: favUsers } = useQuery({
     queryKey: ['favoritedUsers', blog._id],
@@ -51,6 +207,8 @@ const BlogDetails = ({ blog }) => {
     mutationFn: createComment,
     onSuccess: () => {
       setCommentText('');
+      setReplyText('');
+      setReplyingTo(null);
       queryClient.invalidateQueries({ queryKey: ['blog', blog._id] });
       toast.success('Comment added!');
     },
@@ -59,9 +217,61 @@ const BlogDetails = ({ blog }) => {
     },
   });
 
+  const { mutate: deleteCommentMutate } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blog', blog._id] });
+      toast.success('Comment deleted');
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || 'Failed to delete comment');
+    },
+  });
+
+  const { mutate: reportMutate, isPending: isReporting } = useMutation({
+    mutationFn: reportComment,
+    onSuccess: () => {
+      closeReportModal();
+      setReportingComment(null);
+      setReportReason('');
+      setReportDescription('');
+      toast.success('Comment reported. Admin will review it.');
+    },
+    onError: (err) => {
+      toast.error(err?.response?.data?.message || 'Failed to report comment');
+    },
+  });
+
   const handleSubmitComment = () => {
     if (!commentText.trim()) return;
     addComment({ blogId: blog._id, text: commentText });
+  };
+
+  const handleSubmitReply = (parentId) => {
+    if (!replyText.trim()) return;
+    addComment({ blogId: blog._id, text: replyText, parentCommentId: parentId });
+  };
+
+  const handleReport = () => {
+    if (!reportReason) {
+      toast.error('Please select a reason');
+      return;
+    }
+    reportMutate({
+      commentId: reportingComment._id,
+      reason: reportReason,
+      description: reportDescription,
+    });
+  };
+
+  const openReport = (comment) => {
+    setReportingComment(comment);
+    openReportModal();
+  };
+
+  const canDeleteComment = (comment) => {
+    if (!currentUser) return false;
+    return isAdmin || comment.createdBy?._id === currentUser._id;
   };
 
   const displayedFavUsers = showAllFavUsers ? favUsers : favUsers?.slice(0, 5);
@@ -76,12 +286,12 @@ const BlogDetails = ({ blog }) => {
           radius="md"
         />
       </AspectRatio>
-      <Space h={'xs'} />
+      <Space h="xs" />
       <FavoriteButton blogId={blog._id} size={22} />
 
       {favUsers && favUsers.length > 0 && (
         <>
-          <Space h={'xs'} />
+          <Space h="xs" />
           <Text fw={500} fz="sm" c="dimmed">
             Favorited by:
           </Text>
@@ -117,7 +327,7 @@ const BlogDetails = ({ blog }) => {
         </>
       )}
 
-      <Space h={'sm'} />
+      <Space h="sm" />
 
       {isHtml ? (
         <div
@@ -128,56 +338,45 @@ const BlogDetails = ({ blog }) => {
         plainParagraphs.map((item, i) => (
           <div key={i}>
             <Text className="!text-[14px]">{item}</Text>
-            <Space h={'sm'} />
+            <Space h="sm" />
           </div>
         ))
       )}
 
-      <Space h={'md'} />
+      <Space h="md" />
       <Text className="!text-xl" fw={600}>
         {comments.length} Comment{comments.length !== 1 ? 's' : ''} on &quot;
         {blog.title}&quot;
       </Text>
-      <Space h={'md'} />
+      <Space h="md" />
 
       {comments.map((comment) => (
-        <div key={comment._id}>
-          <Flex justify={'space-between'} align={'center'}>
-            <Group>
-              <Avatar
-                radius={'xl'}
-                size={'md'}
-                alt={comment.createdBy?.name || 'User'}
-                src={comment.createdBy?.avatar || null}
-              >
-                {comment.createdBy?.name?.charAt(0)?.toUpperCase()}
-              </Avatar>
-              <div>
-                <Text fw={500} className="!text-[14px]">
-                  {comment.createdBy?.name || 'User'}
-                </Text>
-                <Text fw={400} size="xs" c="dimmed">
-                  {comment.createdAt
-                    ? dayjs(comment.createdAt).format('D MMM YYYY')
-                    : ''}
-                </Text>
-              </div>
-            </Group>
-            <Card withBorder className="glass-card">
-              <Text size="sm">{comment.text}</Text>
-            </Card>
-          </Flex>
-          <Space h={'sm'} />
-        </div>
+        <CommentItem
+          key={comment._id}
+          comment={comment}
+          replies={replies}
+          isLoggedIn={isLoggedIn}
+          currentUser={currentUser}
+          isAdmin={isAdmin}
+          replyingTo={replyingTo}
+          setReplyingTo={setReplyingTo}
+          replyText={replyText}
+          setReplyText={setReplyText}
+          handleSubmitReply={handleSubmitReply}
+          isPending={isPending}
+          openReport={openReport}
+          deleteCommentMutate={deleteCommentMutate}
+          canDeleteComment={canDeleteComment}
+        />
       ))}
 
-      <Space h={'md'} />
-      <Divider size={'sm'} />
-      <Space h={'md'} />
+      <Space h="md" />
+      <Divider size="sm" />
+      <Space h="md" />
       <Text fw={600} className="!text-xl">
         Leave a comment
       </Text>
-      <Space h={'xs'} />
+      <Space h="xs" />
 
       {isLoggedIn ? (
         <>
@@ -188,7 +387,7 @@ const BlogDetails = ({ blog }) => {
             minRows={3}
             radius="md"
           />
-          <Space h={'sm'} />
+          <Space h="sm" />
           <Button
             variant="gradient"
             onClick={handleSubmitComment}
@@ -200,12 +399,49 @@ const BlogDetails = ({ blog }) => {
       ) : (
         <Text size="sm">
           You must be{' '}
-          <Text component={Link} href={'/login'} c="cyan" span>
+          <Text component={Link} href="/login" c="cyan" span>
             logged in
           </Text>{' '}
           to post a comment.
         </Text>
       )}
+
+      {/* Report Modal */}
+      <Modal opened={reportModalOpened} onClose={closeReportModal} title="Report Comment" centered>
+        <Text size="sm" mb="md">
+          Why are you reporting this comment?
+        </Text>
+        <Select
+          label="Reason"
+          placeholder="Select a reason"
+          data={[
+            { value: 'spam', label: 'Spam' },
+            { value: 'harassment', label: 'Harassment or bullying' },
+            { value: 'inappropriate', label: 'Inappropriate content' },
+            { value: 'misinformation', label: 'Misinformation' },
+            { value: 'other', label: 'Other' },
+          ]}
+          value={reportReason}
+          onChange={setReportReason}
+          mb="md"
+        />
+        <Textarea
+          label="Additional details (optional)"
+          placeholder="Provide more context..."
+          value={reportDescription}
+          onChange={(e) => setReportDescription(e.target.value)}
+          minRows={2}
+          mb="md"
+        />
+        <Group justify="flex-end">
+          <Button variant="subtle" onClick={closeReportModal}>
+            Cancel
+          </Button>
+          <Button variant="filled" color="red" onClick={handleReport} loading={isReporting}>
+            Submit Report
+          </Button>
+        </Group>
+      </Modal>
     </>
   );
 };
