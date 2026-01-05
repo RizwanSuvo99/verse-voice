@@ -5,9 +5,9 @@ import {
   getUnreadCount,
 } from '@/api/notifications.mjs';
 import { useMarkNotificationRead, useMarkAllNotificationsRead } from '@/hooks/mutations';
+import { OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
-  Avatar,
   Badge,
   Box,
   Button,
@@ -143,13 +143,11 @@ const NotificationBell = () => {
                 className="hover:bg-[var(--bg-hover)]"
               >
                 <Group gap="sm" wrap="nowrap">
-                  <Avatar
+                  <OptimizedAvatar
                     src={notification.actionBy?.avatar}
-                    radius="xl"
-                    size="sm"
-                  >
-                    {notification.actionBy?.name?.charAt(0)?.toUpperCase()}
-                  </Avatar>
+                    name={notification.actionBy?.name}
+                    preset="sm"
+                  />
                   <Box style={{ flex: 1, minWidth: 0 }}>
                     <Group gap={4} mb={2}>
                       {getNotificationIcon(notification.type)}

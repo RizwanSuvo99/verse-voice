@@ -1,6 +1,7 @@
 'use client';
 
-import { Flex, Group, Image, Text } from '@mantine/core';
+import { OptimizedLogo } from '@/components/ui';
+import { Flex, Group, Text } from '@mantine/core';
 import {
   IconAddressBook,
   IconArticle,
@@ -83,10 +84,11 @@ const AdminNavbar = ({ onNavClick }) => {
       <div className={classes.navbar}>
         <div className={classes.navbarMain}>
           <Group className={classes.header} justify="space-between">
-            <Image
-              alt="site-logo"
+            <OptimizedLogo
               src={siteSettings?.siteLogo || (colorScheme === 'dark' ? '/assets/logo-white.svg' : '/assets/logo.svg')}
-              h={36}
+              alt="site-logo"
+              width={36}
+              height={36}
             />
             <Text fw={600} c="var(--text-primary)">
               Admin Panel

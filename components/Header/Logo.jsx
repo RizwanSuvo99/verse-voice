@@ -1,21 +1,19 @@
-import { AspectRatio, Group, Image, Text, Title } from '@mantine/core';
+import { OptimizedLogo } from '@/components/ui';
+import { Group, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 
 const Logo = ({ siteTitle = 'Class Room Writers', siteLogo = '/assets/logo.svg' }) => {
   return (
     <Link href={'/'} className="!no-underline">
       <Group className="!gap-2">
-        <AspectRatio ratio={1}>
-          <Image
-            alt="site-logo"
-            src={siteLogo}
-            fit="contain"
-            fallbackSrc="https://placehold.co/36x36?text=Logo"
-            width={36}
-            height={36}
-            className="!w-[32px] sm:!w-[40px]"
-          />
-        </AspectRatio>
+        <OptimizedLogo
+          src={siteLogo}
+          alt="site-logo"
+          width={40}
+          height={40}
+          fallbackSrc="https://placehold.co/36x36?text=Logo"
+          className="!w-[32px] sm:!w-[40px]"
+        />
 
         <Text
           variant="gradient"

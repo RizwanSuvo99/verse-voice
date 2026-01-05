@@ -4,8 +4,8 @@ import { getCurrentUser } from '@/api/users.mjs';
 import { useUpdateProfile } from '@/hooks/mutations';
 import RequireAuth from '@/components/RequireAuth';
 import ProfileSkeleton from '@/components/Skeletons/ProfileSkeleton';
+import { OptimizedAvatar } from '@/components/ui';
 import {
-  Avatar,
   Button,
   Center,
   Container,
@@ -81,14 +81,12 @@ const Profile = () => {
         </Text>
 
         <Center>
-          <Avatar
-            src={user?.avatar || null}
+          <OptimizedAvatar
+            src={user?.avatar}
+            name={user?.name}
             size={90}
-            radius="xl"
             alt={user?.name}
-          >
-            {user?.name?.charAt(0)?.toUpperCase()}
-          </Avatar>
+          />
         </Center>
 
         <Space h="sm" />
