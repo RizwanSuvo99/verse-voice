@@ -20,6 +20,7 @@ import {
   MantineProvider,
   Text,
 } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { Toaster } from 'sonner';
 import NextTopLoader from 'nextjs-toploader';
 import '../../(user)/globals.css';
@@ -334,14 +335,16 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
-          <QueryClientProvider client={queryClient}>
-            <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
-            <Toaster position="top-center" richColors theme="dark" />
-            <AdminGuard>{children}</AdminGuard>
-            {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-          </QueryClientProvider>
+          <ModalsProvider>
+            <QueryClientProvider client={queryClient}>
+              <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
+              <Toaster position="top-center" richColors theme="dark" />
+              <AdminGuard>{children}</AdminGuard>
+              {process.env.NODE_ENV === 'development' && (
+                <ReactQueryDevtools initialIsOpen={false} />
+              )}
+            </QueryClientProvider>
+          </ModalsProvider>
         </MantineProvider>
       </body>
     </html>

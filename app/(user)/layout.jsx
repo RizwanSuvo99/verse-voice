@@ -16,6 +16,7 @@ import Footer from '@/components/Footer/Footer';
 import Navbar from '@/components/Header/Navbar';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
 import { Toaster } from 'sonner';
 import NextTopLoader from 'nextjs-toploader';
 
@@ -379,17 +380,19 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
-          <QueryClientProvider client={queryClient}>
-            <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
-            <Toaster position="top-center" richColors theme="dark" />
-            <ScrollToTopButton />
-            <Navbar />
-            {children}
-            <Footer />
-            {process.env.NODE_ENV === 'development' && (
-              <ReactQueryDevtools initialIsOpen={false} />
-            )}
-          </QueryClientProvider>
+          <ModalsProvider>
+            <QueryClientProvider client={queryClient}>
+              <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
+              <Toaster position="top-center" richColors theme="dark" />
+              <ScrollToTopButton />
+              <Navbar />
+              {children}
+              <Footer />
+              {process.env.NODE_ENV === 'development' && (
+                <ReactQueryDevtools initialIsOpen={false} />
+              )}
+            </QueryClientProvider>
+          </ModalsProvider>
         </MantineProvider>
       </body>
     </html>
