@@ -10,7 +10,8 @@ export { useUpdateProfile } from './useProfileMutation';
 
 // Admin mutations
 export { useDeleteBlog, useToggleFeatured } from './useBlogAdminMutation';
-export { useApproveRequest, useRejectRequest, useDeleteRequest } from './useRequestMutation';
+export { useApproveRequest, useRejectRequest, useDeleteRequest, useClearAllRequests } from './useRequestMutation';
 export { useAddCategory, useUpdateCategory, useDeleteCategory } from './useCategoryMutation';
 export { useMarkContactRead, useDeleteContact } from './useContactMutation';
 export { useUpdateReportStatus, useDeleteReport, useDeleteReportedComment } from './useReportMutation';
+export { useDeleteSubscriber } from './useNewsletterMutation';
