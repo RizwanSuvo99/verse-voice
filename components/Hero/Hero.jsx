@@ -1,14 +1,9 @@
 'use client';
-import { getSettings } from '@/api/siteSettings.mjs';
+import { useSiteSettings } from '@/hooks/queries';
 import { Center, Container, Stack, Text, Title } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
 
 const Hero = () => {
-  const { data: settings } = useQuery({
-    queryKey: ['siteSettings'],
-    queryFn: getSettings,
-  });
+  const { data: settings } = useSiteSettings();
 
   const heroTitle = settings?.heroTitle || 'Thoughts Meet Words';
   const heroSubtitle =
@@ -23,11 +18,7 @@ const Hero = () => {
         className="h-[200px] md:h-[280px] lg:h-[360px]"
       >
         <Center>
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
+          <div className="animate-fade-in-up">
             <Text
               variant="gradient"
               component={Title}
@@ -35,22 +26,18 @@ const Hero = () => {
             >
               {heroTitle}
             </Text>
-          </motion.div>
+          </div>
         </Center>
 
         <Center>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
-          >
+          <div className="animate-fade-in-scale">
             <Text
               c="dimmed"
               className="!mb-2 !px-2 !text-center !text-[14px] md:!px-8 md:!text-[16px] lg:!px-12 lg:!text-[18px]"
             >
               {heroSubtitle}
             </Text>
-          </motion.div>
+          </div>
         </Center>
       </Stack>
     </Container>

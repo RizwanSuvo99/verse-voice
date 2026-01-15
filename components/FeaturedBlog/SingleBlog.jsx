@@ -12,33 +12,29 @@ import {
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
 import dayjs from 'dayjs';
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const SingleBlog = memo(({ blog }) => {
+const SingleBlog = memo(({ blog, priority = false }) => {
   const { _id, blogPicUrl, title, category, createdBy, publishDate, timeRead } =
     blog;
 
   return (
-    <motion.div whileHover="hover">
-      <Card shadow="sm" radius="md" withBorder className="glass-card !h-full">
-        <AspectRatio ratio={4 / 3}>
-          <motion.div
-            variants={{
-              hover: { scale: 1.03 },
-            }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            style={{ borderRadius: '0.5rem', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}
-          >
-            <OptimizedImage
-              src={blogPicUrl}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              style={{ borderRadius: 'var(--mantine-radius-md)' }}
-            />
-          </motion.div>
-        </AspectRatio>
+    <Card shadow="sm" radius="md" withBorder className="glass-card !h-full">
+      <AspectRatio ratio={4 / 3}>
+        <div
+          className="hover-scale"
+          style={{ borderRadius: '0.5rem', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}
+        >
+          <OptimizedImage
+            src={blogPicUrl}
+            alt={title}
+            fill
+            priority={priority}
+            sizes="(max-width: 768px) 100vw, 33vw"
+            style={{ borderRadius: 'var(--mantine-radius-md)' }}
+          />
+        </div>
+      </AspectRatio>
 
         <Space h={'sm'} />
         <Group justify="space-between">
@@ -77,7 +73,6 @@ const SingleBlog = memo(({ blog }) => {
           </Button>
         </Group>
       </Card>
-    </motion.div>
   );
 });
 

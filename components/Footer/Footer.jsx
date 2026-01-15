@@ -1,7 +1,7 @@
 'use client';
 
-import { getSettings } from '@/api/siteSettings.mjs';
 import { subscribe } from '@/api/newsletter.mjs';
+import { useSiteSettings } from '@/hooks/queries';
 import {
   Button,
   Container,
@@ -24,18 +24,15 @@ import {
   IconMail,
   IconUser,
 } from '@tabler/icons-react';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { toast } from 'sonner';
 import Logo from '../Header/Logo';
 
 const Footer = () => {
-  const { data: settings } = useQuery({
-    queryKey: ['siteSettings'],
-    queryFn: getSettings,
-  });
+  const { data: settings } = useSiteSettings();
+  const footerRef = useRef(null);
 
   const categories = settings?.categories?.map((c) => c.name) || [];
   const footerText = settings?.footerText || '';
@@ -61,37 +58,27 @@ const Footer = () => {
     subscribeMutate({ name: newsletterName, email: newsletterEmail });
   };
 
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleScroll = () => {
-    const footer = document.getElementById('footer');
-    if (footer) {
-      const rect = footer.getBoundingClientRect();
-      const windowHeight =
-        window.innerHeight || document.documentElement.clientHeight;
-      if (rect.top <= windowHeight && rect.bottom >= 0) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    }
-  };
-
   useEffect(() => {
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { rootMargin: '50px' }
+    );
+
+    if (footerRef.current) {
+      observer.observe(footerRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <footer id="footer" className="glass-footer">
+    <footer ref={footerRef} id="footer" className="glass-footer">
       <Container size={1500} className="!mt-[32px] !py-3">
         <Paper
           className="px-4 py-6 md:px-8 lg:px-24 lg:py-8"
@@ -100,25 +87,15 @@ const Footer = () => {
         >
           <Grid gutter={'md'} grow>
             <Grid.Col span={12} md={4}>
-              <motion.div
-                variants={fadeInUp}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 0.5 }}
-              >
+              <div className={`fade-on-scroll ${isVisible ? 'visible' : ''}`}>
                 <Logo />
                 <Space h={'md'} />
                 <Text c="dimmed" className="!text-sm sm:!text-base">{footerText}</Text>
-              </motion.div>
+              </div>
             </Grid.Col>
 
             <Grid.Col span={12} md={4}>
-              <motion.div
-                variants={fadeInUp}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
+              <div className={`fade-on-scroll ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.1s' }}>
                 <Title order={4} className="!mb-4">
                   Categories
                 </Title>
@@ -138,16 +115,11 @@ const Footer = () => {
                     ))}
                   </div>
                 </Flex>
-              </motion.div>
+              </div>
             </Grid.Col>
 
             <Grid.Col span={12} md={4}>
-              <motion.div
-                variants={fadeInUp}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
+              <div className={`fade-on-scroll ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '0.2s' }}>
                 <Stack>
                   <Title order={4} className="!mb-1">
                     Newsletter
@@ -181,7 +153,7 @@ const Footer = () => {
                     </Button>
                   </div>
                 </Stack>
-              </motion.div>
+              </div>
             </Grid.Col>
           </Grid>
 
