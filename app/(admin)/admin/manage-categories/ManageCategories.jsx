@@ -1,11 +1,7 @@
 'use client';
 
-import {
-  getSettings,
-  addCategory,
-  updateCategory,
-  deleteCategory,
-} from '@/api/siteSettings.mjs';
+import { getSettings } from '@/api/siteSettings.mjs';
+import { useAddCategory, useUpdateCategory, useDeleteCategory } from '@/hooks/mutations';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   ActionIcon,
@@ -22,11 +18,10 @@ import {
 } from '@mantine/core';
 import { toast } from 'sonner';
 import { IconEdit, IconFileCv, IconTrash } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 const ManageCategories = () => {
-  const queryClient = useQueryClient();
   const [newName, setNewName] = useState('');
   const [newImage, setNewImage] = useState(null);
   const [editingCat, setEditingCat] = useState(null);
@@ -38,42 +33,22 @@ const ManageCategories = () => {
     queryFn: getSettings,
   });
 
-  const { mutate: addMutate, isPending } = useMutation({
-    mutationFn: addCategory,
+  // Use optimistic mutation hooks
+  const { mutate: addMutate, isPending } = useAddCategory({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      toast.success('Category added!');
       setNewName('');
       setNewImage(null);
     },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to add');
-    },
   });
 
-  const { mutate: updateMutate, isPending: isUpdating } = useMutation({
-    mutationFn: updateCategory,
+  const { mutate: updateMutate, isPending: isUpdating } = useUpdateCategory({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      toast.success('Category updated!');
       setEditingCat(null);
       setEditImage(null);
     },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to update');
-    },
   });
 
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deleteCategory,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      toast.info('Category deleted');
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to delete');
-    },
-  });
+  const { mutate: deleteMutate } = useDeleteCategory();
 
   const handleAdd = () => {
     if (!newName.trim()) {
@@ -183,6 +158,7 @@ const ManageCategories = () => {
             key={cat.name}
             size="xl"
             variant="outline"
+            style={{ opacity: cat._isOptimistic ? 0.7 : 1 }}
             leftSection={
               cat.image ? (
                 <Image

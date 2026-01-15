@@ -1,8 +1,8 @@
 'use client';
 
 import { getBlogs } from '@/api/blogs.mjs';
-import { deleteBlog, toggleFeatured } from '@/api/adminBlogs.mjs';
 import { getAllFavoriteCounts } from '@/api/favorites.mjs';
+import { useDeleteBlog, useToggleFeatured } from '@/hooks/mutations';
 import {
   ActionIcon,
   Anchor,
@@ -18,8 +18,7 @@ import {
 } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { IconEdit, IconSearch, IconTrash } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -29,7 +28,6 @@ const LIMIT = 10;
 
 const AllBlogs = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchCategory, setSearchCategory] = useState('');
@@ -67,23 +65,16 @@ const AllBlogs = () => {
     queryFn: getAllFavoriteCounts,
   });
 
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deleteBlog,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['adminBlogs'] });
-      toast.success('Blog deleted');
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to delete blog');
-    },
-  });
+  // Use optimistic mutation hooks with current query params
+  const queryParams = {
+    page,
+    title: debouncedTitle,
+    category: debouncedCategory,
+    author: debouncedAuthor,
+  };
 
-  const { mutate: toggleFeat } = useMutation({
-    mutationFn: toggleFeatured,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['adminBlogs'] });
-    },
-  });
+  const { mutate: deleteMutate } = useDeleteBlog(queryParams);
+  const { mutate: toggleFeat } = useToggleFeatured(queryParams);
 
   if (isLoading) {
     return <TableSkeleton rows={5} columns={7} />;

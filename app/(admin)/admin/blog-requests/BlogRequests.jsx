@@ -1,11 +1,7 @@
 'use client';
 
-import {
-  getAllRequests,
-  approveRequest,
-  rejectRequest,
-  deleteRequest,
-} from '@/api/blogRequests.mjs';
+import { getAllRequests } from '@/api/blogRequests.mjs';
+import { useApproveRequest, useRejectRequest, useDeleteRequest } from '@/hooks/mutations';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
@@ -18,8 +14,7 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -28,7 +23,6 @@ const statusColors = { pending: 'yellow', approved: 'green', rejected: 'red' };
 
 const BlogRequests = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [rejectNote, setRejectNote] = useState({});
 
   const { data: requests, isLoading } = useQuery({
@@ -36,29 +30,10 @@ const BlogRequests = () => {
     queryFn: getAllRequests,
   });
 
-  const { mutate: approve } = useMutation({
-    mutationFn: approveRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      toast.success('Request approved & blog published!');
-    },
-  });
-
-  const { mutate: reject } = useMutation({
-    mutationFn: rejectRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      toast.error('Request rejected');
-    },
-  });
-
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deleteRequest,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      toast.info('Request deleted');
-    },
-  });
+  // Use optimistic mutation hooks
+  const { mutate: approve } = useApproveRequest();
+  const { mutate: reject } = useRejectRequest();
+  const { mutate: deleteMutate } = useDeleteRequest();
 
   if (isLoading) {
     return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
@@ -75,7 +50,13 @@ const BlogRequests = () => {
       ) : (
         <SimpleGrid cols={{ base: 1, md: 2 }}>
           {requests.map((req) => (
-            <Card key={req._id} withBorder padding="lg" radius="md">
+            <Card
+              key={req._id}
+              withBorder
+              padding="lg"
+              radius="md"
+              style={{ opacity: req._isOptimistic ? 0.7 : 1 }}
+            >
               <Group justify="space-between" mb="sm">
                 <Badge color={statusColors[req.status]} variant="filled">
                   {req.status}
