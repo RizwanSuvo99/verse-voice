@@ -1,11 +1,7 @@
 'use client';
 
-import {
-  getAllReports,
-  updateReportStatus,
-  deleteReport,
-  deleteReportedComment,
-} from '@/api/comments.mjs';
+import { getAllReports } from '@/api/comments.mjs';
+import { useUpdateReportStatus, useDeleteReport, useDeleteReportedComment } from '@/hooks/mutations';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
@@ -13,12 +9,10 @@ import {
   Card,
   Group,
   SimpleGrid,
-  Space,
   Text,
   Title,
 } from '@mantine/core';
-import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
@@ -32,45 +26,15 @@ const reasonLabels = {
 };
 
 const CommentReports = () => {
-  const queryClient = useQueryClient();
-
   const { data: reports, isLoading } = useQuery({
     queryKey: ['commentReports'],
     queryFn: getAllReports,
   });
 
-  const { mutate: updateStatus } = useMutation({
-    mutationFn: updateReportStatus,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['commentReports'] });
-      toast.success('Report status updated');
-    },
-    onError: () => {
-      toast.error('Failed to update status');
-    },
-  });
-
-  const { mutate: deleteReportMutate } = useMutation({
-    mutationFn: deleteReport,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['commentReports'] });
-      toast.success('Report dismissed');
-    },
-    onError: () => {
-      toast.error('Failed to delete report');
-    },
-  });
-
-  const { mutate: deleteCommentMutate } = useMutation({
-    mutationFn: deleteReportedComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['commentReports'] });
-      toast.success('Comment and reports deleted');
-    },
-    onError: () => {
-      toast.error('Failed to delete comment');
-    },
-  });
+  // Use optimistic mutation hooks
+  const { mutate: updateStatus } = useUpdateReportStatus();
+  const { mutate: deleteReportMutate } = useDeleteReport();
+  const { mutate: deleteCommentMutate } = useDeleteReportedComment();
 
   if (isLoading) {
     return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
@@ -87,7 +51,13 @@ const CommentReports = () => {
       ) : (
         <SimpleGrid cols={{ base: 1, md: 2 }}>
           {reports.map((report) => (
-            <Card key={report._id} withBorder padding="lg" radius="md">
+            <Card
+              key={report._id}
+              withBorder
+              padding="lg"
+              radius="md"
+              style={{ opacity: report._isOptimistic ? 0.7 : 1 }}
+            >
               <Group justify="space-between" mb="sm">
                 <Badge color={statusColors[report.status]} variant="filled">
                   {report.status}

@@ -1,6 +1,7 @@
 'use client';
 
-import { getAllContacts, markAsRead, deleteContact } from '@/api/contact.mjs';
+import { getAllContacts } from '@/api/contact.mjs';
+import { useMarkContactRead, useDeleteContact } from '@/hooks/mutations';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
@@ -12,36 +13,18 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
 const ContactMessages = () => {
-  const queryClient = useQueryClient();
-
   const { data: contacts, isLoading } = useQuery({
     queryKey: ['contacts'],
     queryFn: getAllContacts,
   });
 
-  const { mutate: markRead } = useMutation({
-    mutationFn: markAsRead,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['contacts'] });
-      toast.success('Marked as read');
-    },
-  });
-
-  const { mutate: deleteMutate } = useMutation({
-    mutationFn: deleteContact,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['contacts'] });
-      toast.success('Message deleted');
-    },
-    onError: () => {
-      toast.error('Failed to delete message');
-    },
-  });
+  // Use optimistic mutation hooks
+  const { mutate: markRead } = useMarkContactRead();
+  const { mutate: deleteMutate } = useDeleteContact();
 
   if (isLoading) {
     return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
