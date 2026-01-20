@@ -1,15 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { updatePassword } from '@/api/updatePassword.mjs';
-import { Button, Group, TextInput } from '@mantine/core';
+import { Button, Group, PasswordInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useLocalStorage } from '@mantine/hooks';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const UpdatePassword = ({ otpVerificationObj }) => {
+  const router = useRouter();
+
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -27,7 +28,7 @@ const UpdatePassword = ({ otpVerificationObj }) => {
     },
   });
 
-  const { mutate, data } = useMutation({
+  const { mutate, data, isPending } = useMutation({
     mutationFn: updatePassword,
   });
 
@@ -39,24 +40,24 @@ const UpdatePassword = ({ otpVerificationObj }) => {
     });
   };
 
-  const [token, setToken] = useLocalStorage({
+  const [, setToken] = useLocalStorage({
     key: 'token',
     defaultValue: null,
   });
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+  const [, setIsLoggedIn] = useLocalStorage({
     key: 'isLoggedIn',
     defaultValue: false,
   });
 
   useEffect(() => {
     if (data?.status === 'success') {
-      setToken(data.accessToken);
+      setToken(data.data?.accessToken || data.accessToken);
       setIsLoggedIn(true);
-      toast('Password changed successfully');
-      redirect('/');
+      toast.success('Password changed successfully');
+      router.push('/');
     }
     if (data?.status === 'fail') {
-      toast('Password updating failed');
+      toast.error(data.data || 'Password updating failed');
       setIsLoggedIn(false);
       setToken(null);
     }
@@ -65,20 +66,20 @@ const UpdatePassword = ({ otpVerificationObj }) => {
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Group justify="center" className="!flex-col">
-        <TextInput
+        <PasswordInput
           placeholder="Enter New Password"
           className="!min-w-[400px] !max-w-[400px]"
           key={form.key('password')}
           {...form.getInputProps('password')}
         />
-        <TextInput
+        <PasswordInput
           placeholder="Confirm New Password"
           className="!min-w-[400px] !max-w-[400px]"
           key={form.key('confirmPassword')}
           mt="md"
           {...form.getInputProps('confirmPassword')}
         />
-        <Button type="submit" variant="gradient" size="sm">
+        <Button type="submit" variant="gradient" size="sm" loading={isPending}>
           Update Your Password
         </Button>
       </Group>
