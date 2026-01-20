@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { BackgroundImage, Card, Text } from '@mantine/core';
+import { OptimizedImage } from '@/components/ui';
+import { Card, Text } from '@mantine/core';
 import Link from 'next/link';
 
 const CarouselItem = memo(({ backUrl, categoryName, categorySize }) => {
@@ -15,10 +16,17 @@ const CarouselItem = memo(({ backUrl, categoryName, categorySize }) => {
         withBorder
         className="category-card !p-0"
       >
-        <BackgroundImage
-          src={backUrl}
+        <div
           className="!relative !flex !h-[220px] flex-col !items-center !justify-center"
+          style={{ position: 'relative', overflow: 'hidden' }}
         >
+          <OptimizedImage
+            src={backUrl}
+            alt={categoryName}
+            fill
+            sizes="(max-width: 768px) 100vw, 25vw"
+            style={{ objectFit: 'cover' }}
+          />
           <div
             style={{
               position: 'absolute',
@@ -37,7 +45,7 @@ const CarouselItem = memo(({ backUrl, categoryName, categorySize }) => {
           <Text className="!text-lg !text-white" style={{ zIndex: 2 }}>
             {categorySize}
           </Text>
-        </BackgroundImage>
+        </div>
       </Card>
     </Link>
   );

@@ -3,6 +3,7 @@
 import { getFavoritedUsers } from '@/api/favorites.mjs';
 import FavoriteButton from '@/components/FavoriteButton';
 import { useAddComment, useDeleteComment, useReportComment } from '@/hooks/mutations';
+import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
   AspectRatio,
@@ -12,7 +13,6 @@ import {
   Divider,
   Flex,
   Group,
-  Image,
   Modal,
   Select,
   Space,
@@ -56,14 +56,12 @@ const CommentItem = memo(function CommentItem({
   return (
     <div style={{ marginLeft: isReply ? '32px' : 0, opacity: isOptimistic ? 0.7 : 1 }}>
       <Flex gap="sm" align="flex-start">
-        <Avatar
-          radius="xl"
-          size={isReply ? 'sm' : 'md'}
+        <OptimizedAvatar
+          src={comment.createdBy?.avatar}
+          name={comment.createdBy?.name || 'User'}
+          preset={isReply ? 'sm' : 'md'}
           alt={comment.createdBy?.name || 'User'}
-          src={comment.createdBy?.avatar || null}
-        >
-          {comment.createdBy?.name?.charAt(0)?.toUpperCase()}
-        </Avatar>
+        />
         <div style={{ flex: 1 }}>
           <Group justify="space-between" wrap="nowrap">
             <div>
@@ -266,12 +264,16 @@ const BlogDetails = ({ blog, currentUser }) => {
   return (
     <>
       <AspectRatio ratio={1}>
-        <Image
-          src={blog.blogPicUrl}
-          height={400}
-          alt={blog.title}
-          radius="md"
-        />
+        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+          <OptimizedImage
+            src={blog.blogPicUrl}
+            alt={blog.title}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            priority
+            style={{ borderRadius: 'var(--mantine-radius-md)' }}
+          />
+        </div>
       </AspectRatio>
       <Space h="xs" />
       <FavoriteButton blogId={blog._id} size={22} />

@@ -3,13 +3,13 @@
 import { getSettings } from '@/api/siteSettings.mjs';
 import { useAddCategory, useUpdateCategory, useDeleteCategory } from '@/hooks/mutations';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
+import { OptimizedImage } from '@/components/ui';
 import {
   ActionIcon,
   Badge,
   Button,
   FileInput,
   Group,
-  Image,
   Space,
   Text,
   TextInput,
@@ -162,13 +162,12 @@ const ManageCategories = () => {
             style={{ opacity: cat._isOptimistic ? 0.7 : 1 }}
             leftSection={
               cat.image ? (
-                <Image
+                <OptimizedImage
                   src={cat.image}
                   alt={cat.name}
-                  w={20}
-                  h={20}
-                  radius="sm"
-                  style={{ objectFit: 'cover' }}
+                  width={20}
+                  height={20}
+                  style={{ objectFit: 'cover', borderRadius: 'var(--mantine-radius-sm)' }}
                 />
               ) : null
             }

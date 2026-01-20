@@ -2,6 +2,7 @@
 
 import { getSettings } from '@/api/siteSettings.mjs';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
+import { OptimizedImage } from '@/components/ui';
 import {
   ActionIcon,
   AspectRatio,
@@ -11,7 +12,6 @@ import {
   Container,
   Grid,
   Group,
-  Image,
   SimpleGrid,
   Space,
   Text,
@@ -79,14 +79,16 @@ const About = () => {
           className="!p-[24px] md:!p-[32px]"
         >
           <AspectRatio ratio={1}>
-            <Image
-              alt="logo-img"
-              src={aboutImage}
-              fit="contain"
-              fallbackSrc="https://placehold.co/70x70?text=admin-img"
-              shadow="xl"
-              className="!h-[220px] sm:!h-[260px]"
-            />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <OptimizedImage
+                src={aboutImage}
+                alt="about-image"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                fallbackSrc="https://placehold.co/70x70?text=admin-img"
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
           </AspectRatio>
           <Center>
             <Text

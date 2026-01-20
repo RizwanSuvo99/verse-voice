@@ -2,9 +2,9 @@
 
 import { getAllUsers } from '@/api/adminUsers.mjs';
 import { useDeleteUser, useToggleBan } from '@/hooks/mutations';
+import { OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
-  Avatar,
   Badge,
   Group,
   Pagination,
@@ -51,7 +51,7 @@ const ManageUsers = () => {
     <Table.Tr key={user._id}>
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={40} src={user.avatar} radius="xl" />
+          <OptimizedAvatar size={40} src={user.avatar} name={user.name} />
           <Text fz="sm" fw={500}>
             {user.name}
           </Text>

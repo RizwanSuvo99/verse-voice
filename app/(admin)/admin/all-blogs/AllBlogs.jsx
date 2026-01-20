@@ -3,10 +3,10 @@
 import { getBlogs } from '@/api/blogs.mjs';
 import { getAllFavoriteCounts } from '@/api/favorites.mjs';
 import { useDeleteBlog, useToggleFeatured } from '@/hooks/mutations';
+import { OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
   Anchor,
-  Avatar,
   Badge,
   Group,
   Pagination,
@@ -87,7 +87,7 @@ const AllBlogs = () => {
     <Table.Tr key={item._id} className="!text-center">
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={44} src={item.blogPicUrl} radius={'lg'} />
+          <OptimizedAvatar size={44} src={item.blogPicUrl} name={item.title} />
           <Text fz="sm" fw={500} lineClamp={1} className="!max-w-[300px]">
             {item.title}
           </Text>
