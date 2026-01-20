@@ -1,19 +1,14 @@
 'use client';
 
-import {
-  addFavorite,
-  checkFavorite,
-  getFavoriteCount,
-  removeFavorite,
-} from '@/api/favorites.mjs';
+import { checkFavorite, getFavoriteCount } from '@/api/favorites.mjs';
+import { useToggleFavorite } from '@/hooks/mutations';
 import { ActionIcon, Group, Text, Tooltip, rem } from '@mantine/core';
 import { toast } from 'sonner';
 import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 const FavoriteButton = ({ blogId, size = 20 }) => {
-  const queryClient = useQueryClient();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -49,16 +44,7 @@ const FavoriteButton = ({ blogId, size = 20 }) => {
   const isFavorited = checkData?.isFavorited || false;
   const count = countData?.count || 0;
 
-  const { mutate: toggleFavorite, isPending } = useMutation({
-    mutationFn: () =>
-      isFavorited ? removeFavorite(blogId) : addFavorite(blogId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['favoriteCheck', blogId] });
-      queryClient.invalidateQueries({ queryKey: ['favoriteCount', blogId] });
-      queryClient.invalidateQueries({ queryKey: ['favorites'] });
-      toast.info(isFavorited ? 'Removed from favorites' : 'Added to favorites');
-    },
-  });
+  const { mutate: toggleFavorite, isPending } = useToggleFavorite(blogId, isFavorited);
 
   const handleClick = (e) => {
     e.preventDefault();

@@ -1,8 +1,8 @@
 'use client';
 
-import { createComment, deleteComment, reportComment } from '@/api/comments.mjs';
 import { getFavoritedUsers } from '@/api/favorites.mjs';
 import FavoriteButton from '@/components/FavoriteButton';
+import { useAddComment, useDeleteComment, useReportComment } from '@/hooks/mutations';
 import {
   ActionIcon,
   AspectRatio,
@@ -23,7 +23,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconCornerDownRight, IconFlag, IconTrash } from '@tabler/icons-react';
 import { toast } from 'sonner';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { readLocalStorageValue } from '@mantine/hooks';
 import dayjs from 'dayjs';
 import DOMPurify from 'dompurify';
@@ -50,9 +50,10 @@ const CommentItem = memo(function CommentItem({
   canDeleteComment,
 }) {
   const commentReplies = replies.filter((r) => r.parentComment === comment._id);
+  const isOptimistic = comment._isOptimistic;
 
   return (
-    <div style={{ marginLeft: isReply ? '32px' : 0 }}>
+    <div style={{ marginLeft: isReply ? '32px' : 0, opacity: isOptimistic ? 0.7 : 1 }}>
       <Flex gap="sm" align="flex-start">
         <Avatar
           radius="xl"
@@ -70,9 +71,10 @@ const CommentItem = memo(function CommentItem({
               </Text>
               <Text fz="xs" c="dimmed">
                 {comment.createdAt ? dayjs(comment.createdAt).format('D MMM YYYY HH:mm') : ''}
+                {isOptimistic && ' (sending...)'}
               </Text>
             </div>
-            {isLoggedIn && (
+            {isLoggedIn && !isOptimistic && (
               <Group gap={4}>
                 {!isReply && (
                   <Tooltip label="Reply">
@@ -193,7 +195,6 @@ const BlogDetails = ({ blog, currentUser }) => {
   const [reportingComment, setReportingComment] = useState(null);
   const [reportReason, setReportReason] = useState('');
   const [reportDescription, setReportDescription] = useState('');
-  const queryClient = useQueryClient();
 
   const isAdmin = currentUser?.isSuperUser === true;
 
@@ -203,42 +204,23 @@ const BlogDetails = ({ blog, currentUser }) => {
     enabled: !!blog._id,
   });
 
-  const { mutate: addComment, isPending } = useMutation({
-    mutationFn: createComment,
+  // Use optimistic mutation hooks
+  const { mutate: addComment, isPending } = useAddComment(blog._id, currentUser, {
     onSuccess: () => {
       setCommentText('');
       setReplyText('');
       setReplyingTo(null);
-      queryClient.invalidateQueries({ queryKey: ['blog', blog._id] });
-      toast.success('Comment added!');
-    },
-    onError: () => {
-      toast.error('Failed to add comment');
     },
   });
 
-  const { mutate: deleteCommentMutate } = useMutation({
-    mutationFn: deleteComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['blog', blog._id] });
-      toast.success('Comment deleted');
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to delete comment');
-    },
-  });
+  const { mutate: deleteCommentMutate } = useDeleteComment(blog._id);
 
-  const { mutate: reportMutate, isPending: isReporting } = useMutation({
-    mutationFn: reportComment,
+  const { mutate: reportMutate, isPending: isReporting } = useReportComment({
     onSuccess: () => {
       closeReportModal();
       setReportingComment(null);
       setReportReason('');
       setReportDescription('');
-      toast.success('Comment reported. Admin will review it.');
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to report comment');
     },
   });
 

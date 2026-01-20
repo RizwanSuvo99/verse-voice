@@ -3,9 +3,8 @@
 import {
   getNotifications,
   getUnreadCount,
-  markAsRead,
-  markAllAsRead,
 } from '@/api/notifications.mjs';
+import { useMarkNotificationRead, useMarkAllNotificationsRead } from '@/hooks/mutations';
 import {
   ActionIcon,
   Avatar,
@@ -19,7 +18,7 @@ import {
   Text,
 } from '@mantine/core';
 import { IconBell, IconHeart, IconMessage } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -28,7 +27,6 @@ dayjs.extend(relativeTime);
 
 const NotificationBell = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const { data: unreadData } = useQuery({
     queryKey: ['unreadCount'],
@@ -41,26 +39,14 @@ const NotificationBell = () => {
     queryFn: getNotifications,
   });
 
-  const { mutate: markRead } = useMutation({
-    mutationFn: markAsRead,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['unreadCount'] });
-      queryClient.invalidateQueries({ queryKey: ['notifications'] });
-    },
-  });
-
-  const { mutate: markAllRead } = useMutation({
-    mutationFn: markAllAsRead,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['unreadCount'] });
-      queryClient.invalidateQueries({ queryKey: ['notifications'] });
-    },
-  });
+  // Use optimistic mutation hooks
+  const { mutate: markRead } = useMarkNotificationRead();
+  const { mutate: markAllRead } = useMarkAllNotificationsRead();
 
   const unreadCount = unreadData?.count || 0;
 
   const handleNotificationClick = (notification) => {
-    if (!notification.read) {
+    if (!notification.read && !notification.isRead) {
       markRead(notification._id);
     }
     if (notification.blog?._id) {
@@ -100,6 +86,9 @@ const NotificationBell = () => {
     }
     return null;
   };
+
+  // Check if notification is read (handle both 'read' and 'isRead' field names)
+  const isNotificationRead = (notification) => notification.read || notification.isRead;
 
   return (
     <Menu shadow="md" width={360} position="bottom-end" offset={8}>
@@ -147,7 +136,7 @@ const NotificationBell = () => {
                 onClick={() => handleNotificationClick(notification)}
                 style={{
                   cursor: 'pointer',
-                  backgroundColor: notification.read ? 'transparent' : 'var(--accent-glow)',
+                  backgroundColor: isNotificationRead(notification) ? 'transparent' : 'var(--accent-glow)',
                   borderBottom: '1px solid var(--border-subtle)',
                   transition: 'background-color 0.2s ease',
                 }}
@@ -172,7 +161,7 @@ const NotificationBell = () => {
                       {dayjs(notification.createdAt).fromNow()}
                     </Text>
                   </Box>
-                  {!notification.read && (
+                  {!isNotificationRead(notification) && (
                     <Badge size="xs" color="cyan" variant="filled" circle>
 
                     </Badge>

@@ -1,6 +1,7 @@
 'use client';
 
-import { getCurrentUser, updateProfile } from '@/api/users.mjs';
+import { getCurrentUser } from '@/api/users.mjs';
+import { useUpdateProfile } from '@/hooks/mutations';
 import RequireAuth from '@/components/RequireAuth';
 import ProfileSkeleton from '@/components/Skeletons/ProfileSkeleton';
 import {
@@ -17,11 +18,10 @@ import {
 } from '@mantine/core';
 import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
 
 const Profile = () => {
-  const queryClient = useQueryClient();
   const [name, setName] = useState('');
   const [avatarFile, setAvatarFile] = useState(null);
 
@@ -36,15 +36,10 @@ const Profile = () => {
     }
   }, [user]);
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: updateProfile,
+  // Use optimistic mutation hook
+  const { mutate, isPending } = useUpdateProfile({
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
-      toast.success('Profile updated!');
       setAvatarFile(null);
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to update profile');
     },
   });
 
@@ -55,7 +50,7 @@ const Profile = () => {
       return;
     }
     const formData = new FormData();
-    formData.append('name', name);
+    formData.append('fullName', name);
     if (avatarFile) {
       formData.append('avatar', avatarFile);
     }
