@@ -1,6 +1,6 @@
 'use client';
 
-import { createBlog } from '@/api/adminBlogs.mjs';
+import { updateBlog } from '@/api/adminBlogs.mjs';
 import { getSettings } from '@/api/siteSettings.mjs';
 import {
   Button,
@@ -21,11 +21,13 @@ import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
-const CreateBlog = () => {
+const EditBlog = ({ blog, setActiveView }) => {
   const queryClient = useQueryClient();
   const [blogImage, setBlogImage] = useState(null);
   const [authorImage, setAuthorImage] = useState(null);
-  const [publishDate, setPublishDate] = useState(null);
+  const [publishDate, setPublishDate] = useState(
+    blog?.publishDate ? new Date(blog.publishDate) : null
+  );
 
   const { data: settings } = useQuery({
     queryKey: ['siteSettings'],
@@ -36,13 +38,13 @@ const CreateBlog = () => {
 
   const form = useForm({
     initialValues: {
-      title: '',
-      category: '',
-      content: '',
-      authorName: '',
-      authorDetails: '',
-      timeRead: '',
-      isFeatured: false,
+      title: blog?.title || '',
+      category: blog?.category || '',
+      content: blog?.content || '',
+      authorName: blog?.createdBy?.name || '',
+      authorDetails: blog?.authorDetails || '',
+      timeRead: blog?.timeRead || '',
+      isFeatured: blog?.isFeatured || false,
     },
     validate: {
       title: (value) => (value.trim().length < 2 ? 'Title required' : null),
@@ -56,19 +58,17 @@ const CreateBlog = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: createBlog,
+    mutationFn: updateBlog,
     onSuccess: () => {
-      notifications.show({ title: 'Blog created!', color: 'green' });
-      form.reset();
-      setBlogImage(null);
-      setAuthorImage(null);
-      setPublishDate(null);
+      notifications.show({ title: 'Blog updated!', color: 'green' });
+      queryClient.invalidateQueries({ queryKey: ['adminBlogs'] });
       queryClient.invalidateQueries({ queryKey: ['blogs'] });
       queryClient.invalidateQueries({ queryKey: ['featuredBlogs'] });
       queryClient.invalidateQueries({ queryKey: ['popularBlogs'] });
+      setActiveView('All Blogs');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to create blog', color: 'red' });
+      notifications.show({ title: 'Failed to update blog', color: 'red' });
     },
   });
 
@@ -84,7 +84,7 @@ const CreateBlog = () => {
     if (publishDate) formData.append('publishDate', publishDate.toISOString());
     if (blogImage) formData.append('blogImage', blogImage);
     if (authorImage) formData.append('authorImage', authorImage);
-    mutate(formData);
+    mutate({ id: blog._id, data: formData });
   };
 
   const icon = (
@@ -110,7 +110,7 @@ const CreateBlog = () => {
         />
         <FileInput
           leftSection={icon}
-          placeholder="Blog Image"
+          placeholder="Blog Image (leave empty to keep current)"
           radius={'lg'}
           classNames={{ input: '!h-[50px]' }}
           clearable
@@ -136,7 +136,7 @@ const CreateBlog = () => {
         />
         <FileInput
           leftSection={icon}
-          placeholder="Author Image"
+          placeholder="Author Image (leave empty to keep current)"
           radius={'lg'}
           classNames={{ input: '!h-[50px]' }}
           clearable
@@ -162,6 +162,7 @@ const CreateBlog = () => {
           placeholder="Featured?"
           radius={'lg'}
           data={['No', 'Yes']}
+          value={form.values.isFeatured ? 'Yes' : 'No'}
           classNames={{ input: '!h-[50px]' }}
           onChange={(val) => form.setFieldValue('isFeatured', val === 'Yes')}
         />
@@ -176,15 +177,16 @@ const CreateBlog = () => {
         classNames={{ input: '!h-[350px] !p-6' }}
       />
 
-      <Group justify="center" mt="xl">
-        <Center>
-          <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
-            Create New Blog
-          </Button>
-        </Center>
+      <Group justify="center" mt="xl" gap="md">
+        <Button variant="default" size={'xl'} onClick={() => setActiveView('All Blogs')}>
+          Cancel
+        </Button>
+        <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
+          Update Blog
+        </Button>
       </Group>
     </form>
   );
 };
 
-export default CreateBlog;
+export default EditBlog;

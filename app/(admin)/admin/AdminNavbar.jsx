@@ -1,37 +1,58 @@
 'use client';
 
 import { Flex, Group, Image, Text } from '@mantine/core';
-
 import {
+  IconAddressBook,
   IconArticle,
   IconCategoryPlus,
   IconEdit,
+  IconFileText,
+  IconInfoCircle,
   IconLogout,
+  IconMail,
+  IconNews,
   IconPencilPlus,
 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useLocalStorage } from '@mantine/hooks';
 import classes from './NavbarSimpleColored.module.css';
 
 const data = [
-  { link: '', label: 'Create Blog', icon: IconPencilPlus },
-  { link: '', label: 'Customize Hero', icon: IconEdit },
-  { link: '', label: 'Customize Footer', icon: IconEdit },
-  { link: '', label: 'Create Categories', icon: IconCategoryPlus },
-  { link: '', label: 'All Blogs', icon: IconArticle },
+  { label: 'Create Blog', icon: IconPencilPlus },
+  { label: 'All Blogs', icon: IconArticle },
+  { label: 'Blog Requests', icon: IconFileText },
+  { label: 'Customize Hero', icon: IconEdit },
+  { label: 'Customize Footer', icon: IconEdit },
+  { label: 'Customize About', icon: IconInfoCircle },
+  { label: 'Customize Contact', icon: IconAddressBook },
+  { label: 'Manage Categories', icon: IconCategoryPlus },
+  { label: 'Contact Messages', icon: IconMail },
+  { label: 'Newsletter', icon: IconNews },
 ];
 
-const AdminNavbar = () => {
-  const [active, setActive] = useState('Billing');
+const AdminNavbar = ({ activeView, setActiveView }) => {
+  const router = useRouter();
+  const [, setToken] = useLocalStorage({ key: 'token', defaultValue: null });
+  const [, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
+
+  const handleLogout = () => {
+    setToken(null);
+    setIsLoggedIn(false);
+    router.push('/');
+  };
 
   const links = data.map((item) => (
     <a
       className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
+      data-active={item.label === activeView || undefined}
+      href="#"
       key={item.label}
       onClick={(event) => {
         event.preventDefault();
-        setActive(item.label);
+        setActiveView(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
@@ -50,7 +71,7 @@ const AdminNavbar = () => {
               h={60}
             />
             <Text fw={600} c={'white'}>
-              Class Room Writers
+              Admin Panel
             </Text>
           </Group>
           {links}
@@ -60,14 +81,16 @@ const AdminNavbar = () => {
           <a
             href="#"
             className={classes.link}
-            onClick={(event) => event.preventDefault()}
+            onClick={(event) => {
+              event.preventDefault();
+              handleLogout();
+            }}
           >
             <IconLogout className={classes.linkIcon} stroke={1.5} />
             <span>Logout</span>
           </a>
         </div>
       </div>
-      <div></div>
     </Flex>
   );
 };
