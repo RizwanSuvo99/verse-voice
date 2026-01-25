@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
+import NotificationBell from './NotificationBell';
 import { useMutation } from '@tanstack/react-query';
 import { logOut } from '@/api/logOut.mjs';
 
@@ -110,14 +111,17 @@ const Navbar = () => {
                 </Group>
               )}
               {loggedIn && (
-                <Button
-                  variant="subtle"
-                  color="red"
-                  size="compact-sm"
-                  onClick={handleLogOut}
-                >
-                  Log out
-                </Button>
+                <>
+                  <NotificationBell />
+                  <Button
+                    variant="subtle"
+                    color="red"
+                    size="compact-sm"
+                    onClick={handleLogOut}
+                  >
+                    Log out
+                  </Button>
+                </>
               )}
             </>
           )}
@@ -188,6 +192,7 @@ const Navbar = () => {
           )}
 
           <div className={classes.mobileThemeToggle}>
+            {loggedIn && <NotificationBell />}
             <ThemeToggle />
           </div>
         </div>
