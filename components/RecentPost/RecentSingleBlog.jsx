@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
 import { stripHtml } from '@/utils/stripHtml';
 import {
@@ -15,7 +16,7 @@ import { IconClock } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
-const RecentSingleBlog = ({ blog }) => {
+const RecentSingleBlog = memo(({ blog }) => {
   const {
     _id,
     blogPicUrl,
@@ -78,6 +79,6 @@ const RecentSingleBlog = ({ blog }) => {
       </div>
     </Flex>
   );
-};
+});
 
 export default RecentSingleBlog;

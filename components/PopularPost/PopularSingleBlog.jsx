@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import { AspectRatio, Divider, Flex, Image, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const PopularSingleBlog = ({ blog, divider }) => {
+const PopularSingleBlog = memo(({ blog, divider }) => {
   const { _id, blogPicUrl, title, publishDate, createdBy } = blog;
 
   return (
@@ -36,6 +37,6 @@ const PopularSingleBlog = ({ blog, divider }) => {
       {divider && <Divider mt="sm" />}
     </Link>
   );
-};
+});
 
 export default PopularSingleBlog;

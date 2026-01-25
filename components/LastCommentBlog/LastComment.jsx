@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import { Avatar, Divider, Flex, Text } from '@mantine/core';
 
-const LastComment = ({ blog, divider }) => {
+const LastComment = memo(({ blog, divider }) => {
   const { title, publishDate, authorAvatar } = blog;
 
   return (
@@ -22,6 +23,6 @@ const LastComment = ({ blog, divider }) => {
       {divider && <Divider mt="md" />}
     </>
   );
-};
+});
 
 export default LastComment;

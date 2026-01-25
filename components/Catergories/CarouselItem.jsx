@@ -1,7 +1,8 @@
+import { memo } from 'react';
 import { BackgroundImage, Card, Text } from '@mantine/core';
 import Link from 'next/link';
 
-const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
+const CarouselItem = memo(({ backUrl, categoryName, categorySize }) => {
   return (
     <Link
       href={`/category/${categoryName.toLowerCase()}`}
@@ -40,6 +41,6 @@ const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
       </Card>
     </Link>
   );
-};
+});
 
 export default CarouselItem;

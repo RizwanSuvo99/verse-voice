@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import FavoriteButton from '@/components/FavoriteButton';
 import {
   AspectRatio,
@@ -15,7 +16,7 @@ import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const SingleBlog = ({ blog }) => {
+const SingleBlog = memo(({ blog }) => {
   const { _id, blogPicUrl, title, category, createdBy, publishDate, timeRead } =
     blog;
 
@@ -79,6 +80,6 @@ const SingleBlog = ({ blog }) => {
       </Card>
     </motion.div>
   );
-};
+});
 
 export default SingleBlog;
