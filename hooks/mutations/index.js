@@ -15,3 +15,4 @@ export { useAddCategory, useUpdateCategory, useDeleteCategory } from './useCateg
 export { useMarkContactRead, useDeleteContact } from './useContactMutation';
 export { useUpdateReportStatus, useDeleteReport, useDeleteReportedComment } from './useReportMutation';
 export { useDeleteSubscriber } from './useNewsletterMutation';
+export { useToggleBan, useDeleteUser } from './useUserAdminMutation';
