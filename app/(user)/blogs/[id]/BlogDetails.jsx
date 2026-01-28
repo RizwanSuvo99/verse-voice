@@ -31,6 +31,7 @@ import DOMPurify from 'dompurify';
 import Link from 'next/link';
 import { useState, memo } from 'react';
 import '@/components/Editor/editor.css';
+import VirtualizedCommentList from '@/components/VirtualizedCommentList';
 
 // CommentItem component moved outside to prevent re-creation on parent re-render
 const CommentItem = memo(function CommentItem({
@@ -339,25 +340,30 @@ const BlogDetails = ({ blog, currentUser }) => {
       </Text>
       <Space h="md" />
 
-      {comments.map((comment) => (
-        <CommentItem
-          key={comment._id}
-          comment={comment}
-          replies={replies}
-          isLoggedIn={isLoggedIn}
-          currentUser={currentUser}
-          isAdmin={isAdmin}
-          replyingTo={replyingTo}
-          setReplyingTo={setReplyingTo}
-          replyText={replyText}
-          setReplyText={setReplyText}
-          handleSubmitReply={handleSubmitReply}
-          isPending={isPending}
-          openReport={openReport}
-          deleteCommentMutate={deleteCommentMutate}
-          canDeleteComment={canDeleteComment}
-        />
-      ))}
+      <VirtualizedCommentList
+        comments={comments}
+        replies={replies}
+        estimateSize={150}
+        renderComment={(comment) => (
+          <CommentItem
+            key={comment._id}
+            comment={comment}
+            replies={replies}
+            isLoggedIn={isLoggedIn}
+            currentUser={currentUser}
+            isAdmin={isAdmin}
+            replyingTo={replyingTo}
+            setReplyingTo={setReplyingTo}
+            replyText={replyText}
+            setReplyText={setReplyText}
+            handleSubmitReply={handleSubmitReply}
+            isPending={isPending}
+            openReport={openReport}
+            deleteCommentMutate={deleteCommentMutate}
+            canDeleteComment={canDeleteComment}
+          />
+        )}
+      />
 
       <Space h="md" />
       <Divider size="sm" />
