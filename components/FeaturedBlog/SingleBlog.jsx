@@ -1,3 +1,4 @@
+import FavoriteButton from '@/components/FavoriteButton';
 import {
   AspectRatio,
   Avatar,
@@ -10,57 +11,54 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
+import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-// CSS styles for the gradient button using the provided colors
 const gradientButtonStyles = {
-  background: 'linear-gradient(45deg, #0ea5ea, #0bd1d1)', // Use the specified gradient
-  backgroundSize: '200% 100%', // Double the size for the hover effect
-  backgroundPosition: '100% 0', // Start position for the gradient
-  transition: 'background-position 0.4s ease', // Transition for smooth background movement
-  color: '#fff', // Button text color
-  padding: '10px 20px', // Padding for the button
-  border: 'none', // Remove default border
-  borderRadius: '5px', // Round corners
-  cursor: 'pointer', // Pointer on hover
+  background: 'linear-gradient(45deg, #0ea5ea, #0bd1d1)',
+  backgroundSize: '200% 100%',
+  backgroundPosition: '100% 0',
+  transition: 'background-position 0.4s ease',
+  color: '#fff',
+  padding: '10px 20px',
+  border: 'none',
+  borderRadius: '5px',
+  cursor: 'pointer',
 };
 
-// CSS styles for hover effect
 const hoverStyles = {
-  backgroundPosition: '0 0', // Move gradient to left on hover
+  backgroundPosition: '0 0',
 };
 
 const SingleBlog = ({ blog }) => {
   const {
-    id,
-    imgUrl,
+    _id,
+    blogPicUrl,
     title,
     category,
-    authorName,
-    authorAvatar,
+    createdBy,
     publishDate,
     timeRead,
   } = blog;
 
   return (
     <motion.div whileHover="hover">
-      {/* Trigger the animation on hover */}
-      <Card shadow="sm" radius="md" withBorder className="!h-full">
+      <Card shadow="sm" radius="md" withBorder className="!h-full glass-card">
         <AspectRatio ratio={4 / 3}>
           <motion.div
             variants={{
-              hover: { scale: 1.05 }, // Smoothly scale the image slightly larger on hover
+              hover: { scale: 1.05 },
             }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }} // Smooth and slow transition
+            transition={{ duration: 0.2, ease: 'easeInOut' }}
             style={{ borderRadius: '0.75rem', overflow: 'hidden' }}
           >
             <Image
-              src={imgUrl}
+              src={blogPicUrl}
               height={300}
               alt={title}
               radius="md"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Image stays 100% width and height
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </motion.div>
         </AspectRatio>
@@ -69,8 +67,9 @@ const SingleBlog = ({ blog }) => {
         <Group justify="space-between">
           <Badge>{category}</Badge>
           <Group className="!gap-2">
+            <FavoriteButton blogId={_id} size={18} />
             <IconClock size={18} />
-            <Text>{timeRead}</Text>
+            <Text>{timeRead || '3 mins read'}</Text>
           </Group>
         </Group>
 
@@ -81,24 +80,26 @@ const SingleBlog = ({ blog }) => {
 
         <Group justify="space-between" mt="md" mb="xs">
           <Group className="!items-center">
-            <Avatar src={authorAvatar} alt="author-img" />
+            <Avatar src={createdBy?.avatar} alt="author-img" />
             <div>
-              <Text className="!text-md !font-bold">{authorName}</Text>
-              <Text className="!text-sm">{publishDate}</Text>
+              <Text className="!text-md !font-bold">{createdBy?.name}</Text>
+              <Text className="!text-sm">
+                {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
+              </Text>
             </div>
           </Group>
 
           <Button
             variant="transparent"
-            style={gradientButtonStyles} // Apply gradient styles
+            style={gradientButtonStyles}
             onMouseOver={(e) => {
-              Object.assign(e.currentTarget.style, hoverStyles); // Change gradient direction on hover
+              Object.assign(e.currentTarget.style, hoverStyles);
             }}
             onMouseOut={(e) => {
-              Object.assign(e.currentTarget.style, gradientButtonStyles); // Reset to initial gradient
+              Object.assign(e.currentTarget.style, gradientButtonStyles);
             }}
           >
-            <Link href={`/blogs/${id}`} className="!text-white !no-underline">
+            <Link href={`/blogs/${_id}`} className="!text-white !no-underline">
               Read More
             </Link>
           </Button>

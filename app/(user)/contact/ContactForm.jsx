@@ -1,4 +1,5 @@
 'use client';
+import { submitContact } from '@/api/contact.mjs';
 import {
   Button,
   Center,
@@ -8,25 +9,50 @@ import {
   Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { useMutation } from '@tanstack/react-query';
 
 const ContactForm = () => {
   const form = useForm({
     initialValues: {
       name: '',
       email: '',
-      phoneNumber: '',
+      phone: '',
       subject: '',
       message: '',
     },
     validate: {
-      name: (value) => value.trim().length < 2,
-      email: (value) => !/^\S+@\S+$/.test(value),
-      subject: (value) => value.trim().length === 0,
+      name: (value) => (value.trim().length < 2 ? 'Name is required' : null),
+      email: (value) => (!/^\S+@\S+$/.test(value) ? 'Invalid email' : null),
+      subject: (value) =>
+        value.trim().length === 0 ? 'Subject is required' : null,
+      message: (value) =>
+        value.trim().length === 0 ? 'Message is required' : null,
+    },
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: submitContact,
+    onSuccess: () => {
+      notifications.show({
+        title: 'Message sent successfully!',
+        color: 'green',
+      });
+      form.reset();
+    },
+    onError: () => {
+      notifications.show({
+        title: 'Failed to send message',
+        color: 'red',
+      });
     },
   });
 
   return (
-    <form onSubmit={form.onSubmit(() => {})} className="!w-full">
+    <form
+      onSubmit={form.onSubmit((values) => mutate(values))}
+      className="!w-full"
+    >
       <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
         <TextInput
           placeholder="Your name"
@@ -53,10 +79,10 @@ const ContactForm = () => {
       <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
         <TextInput
           placeholder="Phone Number"
-          name="phoneNumber"
+          name="phone"
           radius={'lg'}
           variant="filled"
-          {...form.getInputProps('phoneNumber')}
+          {...form.getInputProps('phone')}
           classNames={{
             input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
           }}
@@ -88,7 +114,7 @@ const ContactForm = () => {
 
       <Group justify="center" mt="xl">
         <Center>
-          <Button variant="gradient" size={'xl'} type="submit">
+          <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
             Send Message
           </Button>
         </Center>

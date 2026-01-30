@@ -1,5 +1,3 @@
-// components/ScrollToTopButton.jsx
-
 import { ActionIcon } from '@mantine/core';
 import { IconArrowUp } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
@@ -24,8 +22,6 @@ const ScrollToTopButton = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', toggleVisibility);
-
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('scroll', toggleVisibility);
     };
@@ -33,21 +29,21 @@ const ScrollToTopButton = () => {
 
   return (
     <ActionIcon
-      variant="filled"
-      aria-label="Settings"
+      variant="gradient"
+      aria-label="Scroll to top"
       onClick={scrollToTop}
-      size={'xl'}
-      radius={'xl'}
+      size="xl"
+      radius="xl"
+      className="scroll-top-btn"
       style={{
         position: 'fixed',
-        bottom: '50px',
+        bottom: '40px',
         right: '40px',
-        display: visible ? 'block' : 'none',
-        borderWidth: '2px',
-        zIndex: '999',
+        display: visible ? 'flex' : 'none',
+        zIndex: 999,
       }}
     >
-      <IconArrowUp />
+      <IconArrowUp size={20} />
     </ActionIcon>
   );
 };

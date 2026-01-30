@@ -7,7 +7,7 @@ const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
       href={`/category/${categoryName.toLowerCase()}`}
       className="!no-underline"
     >
-      <Card shadow="sm" padding="lg" radius="md" withBorder className="!p-0">
+      <Card shadow="sm" padding="lg" radius="md" withBorder className="!p-0 category-card">
         <BackgroundImage
           src={backUrl}
           className="!relative !flex !h-[300px] flex-col !items-center !justify-center"

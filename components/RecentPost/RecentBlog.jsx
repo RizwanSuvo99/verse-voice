@@ -1,26 +1,28 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
-import { Container, Grid, Pagination, Space, Text, Title } from '@mantine/core';
-import { chunk } from 'lodash';
+import { getBlogs } from '@/api/blogs.mjs';
+import { Container, Grid, Loader, Center, Pagination, Space, Text, Title } from '@mantine/core';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import RecentSingleBlog from './RecentSingleBlog';
 
 const RecentBlog = () => {
-  const recentBlogs = allBlogs.slice().sort((a, b) => {
-    const dateA = new Date(a.publishDate);
-    const dateB = new Date(b.publishDate);
-    return dateB - dateA;
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['recentBlogs', page],
+    queryFn: () => getBlogs({ page, limit: 5, sort: 'publishDate', order: 'desc' }),
   });
 
-  const data = chunk(recentBlogs, 5);
-
-  const [activePage, setPage] = useState(1);
-  const items = data[activePage - 1].map((blog, i) => (
-    <Grid.Col span={12} key={i}>
-      <RecentSingleBlog blog={blog} />
-    </Grid.Col>
-  ));
+  if (isLoading) {
+    return (
+      <Container size={1350}>
+        <Center py="xl">
+          <Loader />
+        </Center>
+      </Container>
+    );
+  }
 
   return (
     <Container size={1350} className="">
@@ -35,10 +37,14 @@ const RecentBlog = () => {
         Don&apos;t miss the latest trends
       </Text>
       <Grid grow gutter="xl">
-        {items}
+        {data?.blogs?.map((blog) => (
+          <Grid.Col span={12} key={blog._id}>
+            <RecentSingleBlog blog={blog} />
+          </Grid.Col>
+        ))}
       </Grid>
       <Space h={'md'} />
-      <Pagination total={data.length} value={activePage} onChange={setPage} />
+      <Pagination total={data?.totalPages || 1} value={page} onChange={setPage} className="glass-pagination" />
     </Container>
   );
 };

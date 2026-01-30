@@ -5,11 +5,11 @@ import PopularBlog from '@/components/PopularPost/PopularBlog';
 import { Flex, Grid } from '@mantine/core';
 import BlogDetails from './BlogDetails';
 
-const BlogPageInner = ({ singleBlogData }) => {
+const BlogPageInner = ({ blog }) => {
   return (
     <Grid>
       <Grid.Col span={{ base: 12, md: 8 }}>
-        <BlogDetails singleBlogData={singleBlogData} />
+        <BlogDetails blog={blog} />
       </Grid.Col>
       <Grid.Col span={{ base: 12, md: 4 }}>
         <Flex
@@ -17,7 +17,6 @@ const BlogPageInner = ({ singleBlogData }) => {
           gap={'sm'}
         >
           <PopularBlog />
-          {/* <LastCommentBlog /> */}
           <PopularCategories />
         </Flex>
       </Grid.Col>

@@ -1,6 +1,7 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
+import { getSettings } from '@/api/siteSettings.mjs';
+import { subscribe } from '@/api/newsletter.mjs';
 import {
   Button,
   Container,
@@ -23,32 +24,61 @@ import {
   IconMail,
   IconUser,
 } from '@tabler/icons-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { notifications } from '@mantine/notifications';
 import Logo from '../Header/Logo';
 
 const Footer = () => {
-  const categories = [...new Set(allBlogs.map((item) => item.category))];
+  const { data: settings } = useQuery({
+    queryKey: ['siteSettings'],
+    queryFn: getSettings,
+  });
 
-  // Define animation variants with stronger upward motion
+  const categories = settings?.categories?.map((c) => c.name) || [];
+  const footerText = settings?.footerText || '';
+
+  const [newsletterName, setNewsletterName] = useState('');
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+
+  const { mutate: subscribeMutate, isPending } = useMutation({
+    mutationFn: subscribe,
+    onSuccess: () => {
+      notifications.show({ title: 'Subscribed successfully!', color: 'green' });
+      setNewsletterName('');
+      setNewsletterEmail('');
+    },
+    onError: (err) => {
+      notifications.show({
+        title: err?.response?.data?.message || 'Subscription failed',
+        color: 'red',
+      });
+    },
+  });
+
+  const handleSubscribe = () => {
+    if (!newsletterName || !newsletterEmail) {
+      notifications.show({ title: 'Please fill in all fields', color: 'red' });
+      return;
+    }
+    subscribeMutate({ name: newsletterName, email: newsletterEmail });
+  };
+
   const fadeInUp = {
-    hidden: { opacity: 0, y: 50 }, // Changed y value to 50 for a more dramatic effect
+    hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0 },
   };
 
-  // State to track if the footer is in view
   const [isVisible, setIsVisible] = useState(false);
 
-  // Function to check if the footer is in the viewport
   const handleScroll = () => {
     const footer = document.getElementById('footer');
     if (footer) {
       const rect = footer.getBoundingClientRect();
       const windowHeight =
         window.innerHeight || document.documentElement.clientHeight;
-
-      // Check if the footer is fully in the viewport
       if (rect.top <= windowHeight && rect.bottom >= 0) {
         setIsVisible(true);
       } else {
@@ -57,64 +87,41 @@ const Footer = () => {
     }
   };
 
-  // Add scroll event listener
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
-    // Cleanup event listener on component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <footer id="footer">
+    <footer id="footer" className="glass-footer">
       <Container size={1150} className="!mt-[100px] !px-6 !py-4">
         <Paper
-          className="px-6 py-10 md:px-12 lg:px-36 lg:py-20"
+          className="glass-card px-6 py-10 md:px-12 lg:px-36 lg:py-20"
           radius="lg"
           withBorder
         >
           <Grid gutter={'xl'} grow>
-            {/* First column with logo and address */}
             <Grid.Col span={12} md={4}>
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1 }} // Duration for slower animation
+                transition={{ duration: 1 }}
               >
                 <Logo />
                 <Space h={'lg'} />
-                <Text className="!text-md sm:!text-xl">
-                  In Bangladesh, students often memorize answers for exams
-                  without really engaging with writing as a craft. Sadly, they
-                  lack the motivation or platforms to express themselves freely
-                  in writing. That’s where this site comes in! We’re offering a
-                  space where you can write about anything—no topic is
-                  off-limits. Whether you’re interested in fiction, social
-                  issues, or personal experiences, you can explore your voice
-                  and ideas with full freedom.
-                </Text>
-                <Space h={'lg'} />
-                <Text className="!text-md sm:!text-xl">
-                  Writing is more than just a subject for exams; it’s a life
-                  skill. It helps you think critically, express your thoughts
-                  clearly, and solve problems creatively. Plus, the more you
-                  practice, the better your results will be—without memorizing
-                  answers! Writing here will help you improve not just for your
-                  exams, but for life.
-                </Text>
+                <Text className="!text-md sm:!text-xl">{footerText}</Text>
               </motion.div>
             </Grid.Col>
 
-            {/* Second column with categories */}
             <Grid.Col span={12} md={4}>
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1, delay: 0.2 }} // Increased duration
+                transition={{ duration: 1, delay: 0.2 }}
               >
                 <Title order={4} className="!mb-8">
                   Categories
@@ -140,13 +147,12 @@ const Footer = () => {
               </motion.div>
             </Grid.Col>
 
-            {/* Third column with newsletter subscription */}
             <Grid.Col span={12} md={4}>
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1, delay: 0.4 }} // Increased duration
+                transition={{ duration: 1, delay: 0.4 }}
               >
                 <Stack>
                   <Title order={4} className="!mb-2">
@@ -160,6 +166,8 @@ const Footer = () => {
                     leftSection={<IconUser stroke={2} />}
                     variant="unstyled"
                     placeholder="Your Name"
+                    value={newsletterName}
+                    onChange={(e) => setNewsletterName(e.target.value)}
                     classNames={{
                       input:
                         '!border-0 !border-b-2 !border-[#94A9C9] !rounded-none',
@@ -169,6 +177,8 @@ const Footer = () => {
                     leftSection={<IconMail stroke={2} />}
                     variant="unstyled"
                     placeholder="Your Email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
                     classNames={{
                       input:
                         '!border-0 !border-b-2 !border-[#94A9C9] !rounded-none',
@@ -178,6 +188,8 @@ const Footer = () => {
                     <Button
                       variant="gradient"
                       rightSection={<IconArrowRight stroke={2} size={18} />}
+                      onClick={handleSubscribe}
+                      loading={isPending}
                     >
                       Subscribe
                     </Button>
@@ -189,10 +201,9 @@ const Footer = () => {
 
           <Divider className="!my-10" />
 
-          {/* Footer Bottom Section */}
           <Group className="flex-col md:flex-row" justify="space-between">
             <Text className="text-center md:text-left">
-              © 2024 Created by{' '}
+              &copy; 2024 Created by{' '}
               <Text
                 component={Link}
                 variant="gradient"
@@ -212,19 +223,31 @@ const Footer = () => {
                 Ekram
               </Text>
             </Text>
-            <Group gap="sm" className="flex-col md:flex-row">
-              <Group gap={'sm'}>
-                <IconBrandTwitter stroke={2} />
-                <Text>Twitter</Text>
-              </Group>
-              <Group gap={'sm'}>
-                <IconBrandLinkedin stroke={2} />
-                <Text>LinkedIn</Text>
-              </Group>
-              <Group gap={'sm'}>
-                <IconBrandInstagram stroke={2} />
-                <Text>Instagram</Text>
-              </Group>
+            <Group gap="md" className="flex-col md:flex-row">
+              {settings?.socialLinks?.twitter && (
+                <a href={settings.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                  <Group gap="xs">
+                    <IconBrandTwitter stroke={2} />
+                    <Text>Twitter</Text>
+                  </Group>
+                </a>
+              )}
+              {settings?.socialLinks?.linkedin && (
+                <a href={settings.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                  <Group gap="xs">
+                    <IconBrandLinkedin stroke={2} />
+                    <Text>LinkedIn</Text>
+                  </Group>
+                </a>
+              )}
+              {settings?.socialLinks?.instagram && (
+                <a href={settings.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                  <Group gap="xs">
+                    <IconBrandInstagram stroke={2} />
+                    <Text>Instagram</Text>
+                  </Group>
+                </a>
+              )}
             </Group>
           </Group>
         </Paper>

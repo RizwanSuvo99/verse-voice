@@ -8,19 +8,37 @@ import {
   Overlay,
   Paper,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
+import { useMutation } from '@tanstack/react-query';
+import { logOut } from '@/api/logOut.mjs';
 
 const Navbar = () => {
   const pathname = usePathname();
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(pathname);
-  // const value = readLocalStorageValue({ key: 'isLoggedIn' });
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const [token, setToken] = useLocalStorage({
+    key: 'token',
+    defaultValue: null,
+  });
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
+    key: 'isLoggedIn',
+    defaultValue: false,
+  });
+
+  // Only use the logged-in value after hydration to avoid SSR mismatch
+  const loggedIn = hydrated && isLoggedIn && !!token;
 
   const defaultLinks = [
     { link: '/', label: 'Home' },
@@ -29,16 +47,16 @@ const Navbar = () => {
     { link: '/contact', label: 'Contact' },
   ];
 
-  // const [links, setLinks] = useState(defaultLinks);
+  const loggedInLinks = [
+    ...defaultLinks,
+    { link: '/favourites', label: 'Favourites' },
+    { link: '/my-blogs', label: 'My Blogs' },
+    { link: '/request-blog', label: 'Request Blog' },
+    { link: '/my-requests', label: 'My Requests' },
+    { link: '/profile', label: 'Profile' },
+  ];
 
-  /*   const [token, setToken] = useLocalStorage({
-    key: 'token',
-    defaultValue: null,
-  });
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage({
-    key: 'isLoggedIn',
-    defaultValue: false,
-  });
+  const navLinks = loggedIn ? loggedInLinks : defaultLinks;
 
   const { mutate } = useMutation({
     mutationFn: logOut,
@@ -50,87 +68,74 @@ const Navbar = () => {
     setIsLoggedIn(false);
   };
 
-  useEffect(() => {
-    if (value) {
-      setLinks((prev) => {
-        return [
-          ...prev,
-          {
-            link: '/favourites',
-            label: 'Favourites',
-          },
-        ];
-      });
-    } else {
-      setLinks(defaultLinks);
-    }
-  }, [value]); */
-
   return (
-    <header className={classes.header}>
+    <header className={`${classes.header} glass-navbar`}>
       <Container size={1350} className={`${classes.inner} !p-0 !px-6`}>
         <Logo setActive={setActive} />
 
         {/* Desktop Navigation */}
         <Group gap={5} visibleFrom="sm">
-          {defaultLinks.map((link) => (
+          {navLinks.map((link) => (
             <Button
               variant={active === link.link ? 'filled' : 'outline'}
               component={Link}
               key={link.label}
               href={link.link}
               onClick={() => setActive(link.link)}
+              size="xs"
             >
               {link.label}
             </Button>
           ))}
 
-          {/* Place for additional login/logout buttons */}
-          {/*           <Group justify="center" grow px="md">
-            <Button
-              variant="default"
-              component={Link}
-              href={'/login'}
-              className={`${value ? 'hidden' : 'block'}`}
-            >
-              Log in
-            </Button>
-            <Button
-              component={Link}
-              href={'/register'}
-              className={`${value ? 'hidden' : 'block'}`}
-            >
-              Register
-            </Button>
-          </Group>
-          <Button
-            variant="filled"
-            color="red"
-            className={`${!value ? 'hidden' : 'block'}`}
-            onClick={handleLogOut}
-          >
-            Log out
-          </Button> */}
+          {hydrated && (
+            <>
+              <Group justify="center" grow px="md">
+                <Button
+                  variant="default"
+                  component={Link}
+                  href={'/login'}
+                  className={`${loggedIn ? 'hidden' : 'block'}`}
+                >
+                  Log in
+                </Button>
+                <Button
+                  component={Link}
+                  href={'/register'}
+                  className={`${loggedIn ? 'hidden' : 'block'}`}
+                >
+                  Register
+                </Button>
+              </Group>
+              <Button
+                variant="filled"
+                color="red"
+                className={`${!loggedIn ? 'hidden' : 'block'}`}
+                onClick={handleLogOut}
+              >
+                Log out
+              </Button>
+            </>
+          )}
 
-          {/* Theme toggle button for both desktop and mobile */}
           <ThemeToggle />
         </Group>
 
         {/* Burger Menu for Mobile */}
         <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
 
-        {/* Overlay to darken the rest of the page when menu is open */}
+        {/* Overlay */}
         {opened && (
           <Overlay opacity={0.5} className={classes.overlay} onClick={close} />
         )}
 
-        {/* Mobile Menu - slides from the left */}
+        {/* Mobile Menu */}
         <Paper
           className={`${classes.mobileMenu} ${opened ? classes.menuOpened : ''}`}
           withBorder
           hiddenFrom="md"
         >
-          {defaultLinks.map((link) => (
+          {navLinks.map((link) => (
             <Button
               variant={active === link.link ? 'filled' : 'outline'}
               component={Link}
@@ -138,7 +143,7 @@ const Navbar = () => {
               href={link.link}
               onClick={() => {
                 setActive(link.link);
-                close(); // Close the menu when a link is clicked
+                close();
               }}
               fullWidth
               className="!mb-4"
@@ -146,7 +151,6 @@ const Navbar = () => {
               {link.label}
             </Button>
           ))}
-          {/* Theme toggle button inside the mobile menu */}
           <ThemeToggle />
         </Paper>
       </Container>

@@ -30,6 +30,39 @@ const theme = createTheme({
     to: '#0bd1d1',
     deg: 45,
   },
+  defaultRadius: 'md',
+  components: {
+    Card: {
+      defaultProps: {
+        radius: 'lg',
+      },
+    },
+    Paper: {
+      defaultProps: {
+        radius: 'lg',
+      },
+    },
+    Button: {
+      defaultProps: {
+        radius: 'md',
+      },
+    },
+    TextInput: {
+      defaultProps: {
+        radius: 'md',
+      },
+    },
+    Textarea: {
+      defaultProps: {
+        radius: 'md',
+      },
+    },
+    PasswordInput: {
+      defaultProps: {
+        radius: 'md',
+      },
+    },
+  },
 });
 
 // Create a client

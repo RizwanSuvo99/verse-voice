@@ -1,12 +1,10 @@
 .header {
-  height: rem(100px);
-  background-color: var(--mantine-color-body);
-  border-bottom: rem(1px) solid
-    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+  height: rem(80px);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .inner {
-  height: rem(100px);
+  height: rem(80px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,16 +17,28 @@
   left: 0;
   height: 100vh;
   width: 80%;
-  background-color: #1a1a1a; /* Dark background */
-  color: white; /* Text color for better contrast */
   z-index: 1000;
   padding: 1rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(-100%);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Center items vertically */
-  align-items: center; /* Center items horizontally */
+  justify-content: center;
+  align-items: center;
+}
+
+[data-mantine-color-scheme='light'] .mobileMenu {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #1a1f36;
+}
+
+[data-mantine-color-scheme='dark'] .mobileMenu {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #e2e8f0;
 }
 
 .menuOpened {
@@ -42,37 +52,15 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Light dark background */
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 900;
 }
 
-/* Center the ThemeToggle icon and ensure equal spacing */
 .mobileMenu .mantine-Button-root {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem; /* Add horizontal gap between items */
+  gap: 1rem;
 }
-
-/* .link {
-  display: block;
-  line-height: 1;
-  padding: rem(8px) rem(12px);
-  border-radius: var(--mantine-radius-sm);
-  text-decoration: none;
-  color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
-  font-size: var(--mantine-font-size-sm);
-  font-weight: 500;
-
-  @mixin hover {
-    background-color: light-dark(
-      var(--mantine-color-gray-0),
-      var(--mantine-color-dark-6)
-    );
-  }
-
-  [data-mantine-color-scheme] &[data-active] {
-    background-color: var(--mantine-color-blue-filled);
-    color: var(--mantine-color-white);
-  }
-} */

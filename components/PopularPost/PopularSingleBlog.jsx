@@ -1,20 +1,21 @@
 import { AspectRatio, Divider, Flex, Image, Text } from '@mantine/core';
+import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 const PopularSingleBlog = ({ blog, divider }) => {
-  const { id, imgUrl, title, publishDate, authorName } = blog;
+  const { _id, blogPicUrl, title, publishDate, createdBy } = blog;
 
   return (
-    <Link href={`/blogs/${id}`} className="!no-underline">
+    <Link href={`/blogs/${_id}`} className="!no-underline">
       <Flex className="!max-h-[100px] !cursor-pointer !gap-4">
         <div className="!flex-1" style={{ overflow: 'hidden' }}>
           <AspectRatio ratio={1}>
             <motion.div
-              whileHover={{ scale: 1.05 }} // Scaling effect on hover
-              transition={{ duration: 0.3 }} // Smooth transition
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
-              <Image src={imgUrl} height={100} alt="Norway" radius="md" />
+              <Image src={blogPicUrl} height={100} alt={title} radius="md" />
             </motion.div>
           </AspectRatio>
         </div>
@@ -24,10 +25,10 @@ const PopularSingleBlog = ({ blog, divider }) => {
           </Text>
           <div>
             <Text fw={400} className="!text-sm">
-              {authorName}
+              {createdBy?.name}
             </Text>
             <Text fw={400} className="!text-sm">
-              {publishDate}
+              {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
             </Text>
           </div>
         </div>

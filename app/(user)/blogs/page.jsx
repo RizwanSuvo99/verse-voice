@@ -1,25 +1,37 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
+import { getBlogs } from '@/api/blogs.mjs';
 import {
   Container,
+  Loader,
+  Center,
   Pagination,
   SimpleGrid,
   Space,
   Text,
   Title,
 } from '@mantine/core';
-import { chunk } from 'lodash';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import SingleBlog from './SingleBlog';
 
 const Blogs = () => {
-  const data = chunk(allBlogs, 6);
-
   const [activePage, setPage] = useState(1);
-  const items = data[activePage - 1].map((blog, i) => (
-    <SingleBlog blog={blog} key={i} />
-  ));
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['blogs', activePage],
+    queryFn: () => getBlogs({ page: activePage, limit: 6 }),
+  });
+
+  if (isLoading) {
+    return (
+      <Container size={1300} className="!pt-[50px]">
+        <Center py="xl">
+          <Loader />
+        </Center>
+      </Container>
+    );
+  }
 
   return (
     <Container size={1300} className="!pt-[50px]">
@@ -33,9 +45,18 @@ const Blogs = () => {
       <Text className="!mb-6 !mt-2 !text-center !text-[16px] md:!text-[20px] lg:!text-2xl">
         All the latest blogs
       </Text>
-      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>{items}</SimpleGrid>
+      <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>
+        {data?.blogs?.map((blog) => (
+          <SingleBlog blog={blog} key={blog._id} />
+        ))}
+      </SimpleGrid>
       <Space h={'xl'} />
-      <Pagination total={data.length} value={activePage} onChange={setPage} />
+      <Pagination
+        total={data?.totalPages || 1}
+        value={activePage}
+        onChange={setPage}
+        className="glass-pagination"
+      />
     </Container>
   );
 };

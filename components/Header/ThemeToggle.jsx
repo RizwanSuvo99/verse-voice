@@ -1,12 +1,10 @@
 'use client';
 import {
-  rem,
-  Switch,
+  ActionIcon,
   useComputedColorScheme,
   useMantineColorScheme,
-  useMantineTheme,
 } from '@mantine/core';
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { IconMoon, IconSun } from '@tabler/icons-react';
 
 const ThemeToggle = () => {
   const { setColorScheme } = useMantineColorScheme();
@@ -14,34 +12,23 @@ const ThemeToggle = () => {
     getInitialValueInEffect: true,
   });
 
-  const theme = useMantineTheme();
-
-  const sunIcon = (
-    <IconSun
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.yellow[4]}
-    />
-  );
-
-  const moonIcon = (
-    <IconMoonStars
-      style={{ width: rem(16), height: rem(16) }}
-      stroke={2.5}
-      color={theme.colors.blue[6]}
-    />
-  );
+  const isDark = computedColorScheme === 'dark';
 
   return (
-    <Switch
+    <ActionIcon
+      variant="subtle"
       size="lg"
-      color="dark.4"
-      onLabel={sunIcon}
-      offLabel={moonIcon}
-      onChange={() =>
-        setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')
-      }
-    />
+      radius="xl"
+      onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
+      aria-label="Toggle color scheme"
+      className="theme-toggle-wrapper"
+    >
+      {isDark ? (
+        <IconSun size={20} stroke={1.8} className="theme-toggle-icon" color="#fbbf24" />
+      ) : (
+        <IconMoon size={20} stroke={1.8} className="theme-toggle-icon" color="#6366f1" />
+      )}
+    </ActionIcon>
   );
 };
 

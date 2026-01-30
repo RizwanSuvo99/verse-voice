@@ -1,21 +1,38 @@
 'use client';
 
-import allBlogs from '@/data/allBlogs';
+import { getFeaturedBlogs } from '@/api/blogs.mjs';
 import {
   Button,
   Center,
   Container,
   Grid,
+  Loader,
   Space,
   Text,
   Title,
 } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import SingleBlog from './SingleBlog';
 
 const FeaturedBlog = () => {
-  const featuredBlogs = allBlogs.filter((item) => item.isFeatured);
+  const { data: featuredBlogs, isLoading } = useQuery({
+    queryKey: ['featuredBlogs'],
+    queryFn: getFeaturedBlogs,
+  });
+
+  if (isLoading) {
+    return (
+      <Container size={1350} className="!mt-[40px] !px-6 !py-4">
+        <Center py="xl">
+          <Loader />
+        </Center>
+      </Container>
+    );
+  }
+
+  if (!featuredBlogs || featuredBlogs.length === 0) return null;
 
   return (
     <Container
@@ -40,7 +57,7 @@ const FeaturedBlog = () => {
         {featuredBlogs.map((blog, i) => (
           <Grid.Col
             span={{ base: 12, sm: 6, md: i === 0 || i === 1 ? 6 : 4 }}
-            key={i}
+            key={blog._id}
           >
             <SingleBlog blog={blog} />
           </Grid.Col>

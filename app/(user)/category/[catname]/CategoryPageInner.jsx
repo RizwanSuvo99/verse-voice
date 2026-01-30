@@ -9,8 +9,11 @@ const CategoryPageInner = ({ foundBlogs }) => {
   const data = chunk(foundBlogs, 6);
 
   const [activePage, setPage] = useState(1);
-  const items = data[activePage - 1].map((blog, i) => (
-    <SingleBlog key={i} blog={blog} />
+
+  if (!data.length) return null;
+
+  const items = data[activePage - 1]?.map((blog) => (
+    <SingleBlog key={blog._id} blog={blog} />
   ));
 
   return (

@@ -1,3 +1,4 @@
+import FavoriteButton from '@/components/FavoriteButton';
 import {
   AspectRatio,
   Avatar,
@@ -10,17 +11,17 @@ import {
   Text,
 } from '@mantine/core';
 import { IconClock } from '@tabler/icons-react';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 
 const RecentSingleBlog = ({ blog }) => {
   const {
-    id,
-    imgUrl,
+    _id,
+    blogPicUrl,
     title,
-    description,
+    content,
     category,
-    authorName,
-    authorAvatar,
+    createdBy,
     publishDate,
     timeRead,
   } = blog;
@@ -32,16 +33,17 @@ const RecentSingleBlog = ({ blog }) => {
     >
       <div className="!flex-1">
         <AspectRatio ratio={1}>
-          <Image src={imgUrl} height={270} alt="Blog Image" radius="md" />
+          <Image src={blogPicUrl} height={270} alt="Blog Image" radius="md" />
         </AspectRatio>
       </div>
       <div className="!flex-1">
         <Group justify="space-between">
           <Badge>{category}</Badge>
           <Group className="!gap-2">
+            <FavoriteButton blogId={_id} size={16} />
             <IconClock size={15} />
             <Text fw={400} className="!text-sm">
-              {timeRead}
+              {timeRead || '3 mins read'}
             </Text>
           </Group>
         </Group>
@@ -50,29 +52,29 @@ const RecentSingleBlog = ({ blog }) => {
           {title}
         </Text>
         <Text fw={400} className="!mt-3 !text-sm" lineClamp={4}>
-          {description}
+          {content}
         </Text>
         <Group justify="space-between" mt="md" mb="xs">
           <Group className="!items-center">
-            <Avatar src={authorAvatar} alt="author-img" />
+            <Avatar src={createdBy?.avatar} alt="author-img" />
             <div>
-              <Text className="!text-md !font-500">{authorName}</Text>
+              <Text className="!text-md !font-500">{createdBy?.name}</Text>
               <Text fw={400} className="!text-sm">
-                {publishDate}
+                {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
               </Text>
             </div>
           </Group>
           <Button
-            variant="outline" // Use the outline variant for a bordered button
+            variant="outline"
             style={{
-              backgroundColor: 'transparent', // Transparent background
-              border: '2px solid transparent', // Initial transparent border
-              borderImage: 'linear-gradient(45deg, #0ea5ea, #0bd1d1) 1', // Gradient border
-              color: '#0ea5ea', // Text color
-              borderRadius: '5px', // Optional: round corners
+              backgroundColor: 'transparent',
+              border: '2px solid transparent',
+              borderImage: 'linear-gradient(45deg, #0ea5ea, #0bd1d1) 1',
+              color: '#0ea5ea',
+              borderRadius: '5px',
             }}
           >
-            <Link href={`/blogs/${id}`} className="!no-underline">
+            <Link href={`/blogs/${_id}`} className="!no-underline">
               Read More
             </Link>
           </Button>

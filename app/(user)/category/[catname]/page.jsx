@@ -1,12 +1,32 @@
-import allBlogs from '@/data/allBlogs';
-import { Badge, Container, Flex, Space, Text, Title } from '@mantine/core';
+'use client';
+
+import { getBlogsByCategory } from '@/api/blogs.mjs';
+import { Badge, Container, Flex, Loader, Center, Space, Text, Title } from '@mantine/core';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 import CategoryPageInner from './CategoryPageInner';
 
-const Category = ({ params }) => {
-  const { catname } = params;
-  const categoryName = catname.charAt(0).toUpperCase() + catname.substring(1);
+const Category = () => {
+  const { catname } = useParams();
+  const categoryName = catname
+    ? catname.charAt(0).toUpperCase() + catname.substring(1)
+    : '';
 
-  const foundBlogs = allBlogs.filter((blog) => blog.category === categoryName);
+  const { data: blogs, isLoading } = useQuery({
+    queryKey: ['blogsByCategory', catname],
+    queryFn: () => getBlogsByCategory(catname),
+    enabled: !!catname,
+  });
+
+  if (isLoading) {
+    return (
+      <Container size={1300} className="!pt-[50px]">
+        <Center py="xl">
+          <Loader />
+        </Center>
+      </Container>
+    );
+  }
 
   return (
     <Container size={1300} className="!pt-[50px]">
@@ -18,33 +38,12 @@ const Category = ({ params }) => {
         >
           {categoryName}
         </Text>
-        <Badge>{`${foundBlogs.length} article`}</Badge>
+        <Badge>{`${blogs?.length || 0} article${blogs?.length !== 1 ? 's' : ''}`}</Badge>
       </Flex>
       <Space h={'xl'} />
-      {/*       <Flex align={'center'} justify={'space-between'}>
-        <Text className="!mb-6 !mt-2 !text-[18px]">All the latest blogs</Text>
-        <Flex gap={'sm'}>
-          <IconHomeFilled color={'#0ea5ea'} />
-          <Text>Home</Text>
-          <IconChevronRight />
-          <Text>Blogs</Text>
-          <IconChevronRight />
-          <Text>Design</Text>
-        </Flex>
-      </Flex> */}
-      <CategoryPageInner foundBlogs={foundBlogs} />
+      <CategoryPageInner foundBlogs={blogs || []} />
     </Container>
   );
 };
 
 export default Category;
-
-export async function generateStaticParams() {
-  const categories = [
-    ...new Set(allBlogs.map((item) => item.category.toLowerCase())),
-  ];
-
-  return categories.map((catname) => ({
-    catname,
-  }));
-}
