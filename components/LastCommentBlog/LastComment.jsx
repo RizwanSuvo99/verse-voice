@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { Avatar, Divider, Flex, Text } from '@mantine/core';
+import { Divider, Flex, Text } from '@mantine/core';
+import { OptimizedAvatar } from '@/components/ui';
 
 const LastComment = memo(({ blog, divider }) => {
   const { title, publishDate, authorAvatar } = blog;
@@ -8,7 +9,7 @@ const LastComment = memo(({ blog, divider }) => {
     <>
       <Flex align={'center'} className="!gap-4">
         <div>
-          <Avatar src={authorAvatar} alt="author-img" size={'lg'} />
+          <OptimizedAvatar src={authorAvatar} name={title} preset="lg" />
         </div>
         <div>
           <Text fw={500} className="!text-md" lineClamp={3}>

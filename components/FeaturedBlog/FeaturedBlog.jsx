@@ -1,6 +1,6 @@
 'use client';
 
-import { getFeaturedBlogs } from '@/api/blogs.mjs';
+import { useFeaturedBlogs } from '@/hooks/queries';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Button,
@@ -12,15 +12,11 @@ import {
   Title,
 } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import SingleBlog from './SingleBlog';
 
 const FeaturedBlog = () => {
-  const { data: featuredBlogs, isLoading } = useQuery({
-    queryKey: ['featuredBlogs'],
-    queryFn: getFeaturedBlogs,
-  });
+  const { data: featuredBlogs, isLoading } = useFeaturedBlogs();
 
   if (isLoading) {
     return (
@@ -60,7 +56,7 @@ const FeaturedBlog = () => {
             span={{ base: 12, sm: 6, md: i === 0 || i === 1 ? 6 : 4 }}
             key={blog._id}
           >
-            <SingleBlog blog={blog} />
+            <SingleBlog blog={blog} priority={i < 2} />
           </Grid.Col>
         ))}
       </Grid>
