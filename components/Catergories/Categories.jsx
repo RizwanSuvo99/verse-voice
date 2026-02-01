@@ -7,7 +7,7 @@ import CategorySkeleton from '@/components/Skeletons/CategorySkeleton';
 import { Container } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import CarouselItem from './CarouselItem';
 
 const Categories = () => {
@@ -23,7 +23,7 @@ const Categories = () => {
     queryFn: () => getBlogs({ limit: 100 }),
   });
 
-  const allCategories = (() => {
+  const allCategories = useMemo(() => {
     if (settings?.categories?.length > 0) {
       const blogCounts = {};
       blogsData?.blogs?.forEach((blog) => {
@@ -52,7 +52,7 @@ const Categories = () => {
       }
       return acc;
     }, []);
-  })();
+  }, [settings?.categories, blogsData?.blogs]);
 
   if (allCategories.length === 0) {
     return (
