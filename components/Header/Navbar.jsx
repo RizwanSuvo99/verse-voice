@@ -15,8 +15,10 @@ import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 import NotificationBell from './NotificationBell';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { logOut } from '@/api/logOut.mjs';
+import { getMe } from '@/api/user.mjs';
+import { IconSettings } from '@tabler/icons-react';
 
 const Navbar = () => {
   const router = useRouter();
@@ -38,6 +40,15 @@ const Navbar = () => {
   });
 
   const loggedIn = hydrated && isLoggedIn && !!token;
+
+  // Fetch current user to check admin status
+  const { data: currentUser } = useQuery({
+    queryKey: ['currentUser'],
+    queryFn: getMe,
+    enabled: loggedIn,
+  });
+
+  const isAdmin = currentUser?.isSuperUser === true;
 
   const defaultLinks = [
     { link: '/', label: 'Home' },
@@ -112,6 +123,18 @@ const Navbar = () => {
               )}
               {loggedIn && (
                 <>
+                  {isAdmin && (
+                    <Button
+                      variant="light"
+                      color="violet"
+                      component={Link}
+                      href="/admin"
+                      size="compact-sm"
+                      leftSection={<IconSettings size={16} />}
+                    >
+                      Admin Panel
+                    </Button>
+                  )}
                   <NotificationBell />
                   <Button
                     variant="subtle"
@@ -179,14 +202,29 @@ const Navbar = () => {
                 </>
               )}
               {loggedIn && (
-                <Button
-                  variant="subtle"
-                  color="red"
-                  onClick={() => { handleLogOut(); close(); }}
-                  fullWidth
-                >
-                  Log out
-                </Button>
+                <>
+                  {isAdmin && (
+                    <Button
+                      variant="light"
+                      color="violet"
+                      component={Link}
+                      href="/admin"
+                      onClick={close}
+                      fullWidth
+                      leftSection={<IconSettings size={16} />}
+                    >
+                      Admin Panel
+                    </Button>
+                  )}
+                  <Button
+                    variant="subtle"
+                    color="red"
+                    onClick={() => { handleLogOut(); close(); }}
+                    fullWidth
+                  >
+                    Log out
+                  </Button>
+                </>
               )}
             </>
           )}

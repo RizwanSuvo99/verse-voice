@@ -8,6 +8,7 @@ import {
   IconEdit,
   IconFileText,
   IconFlag,
+  IconHome,
   IconInfoCircle,
   IconLogout,
   IconMail,
@@ -90,6 +91,10 @@ const AdminNavbar = ({ onNavClick }) => {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
             <ThemeToggle />
           </div>
+          <Link href="/" className={classes.link} onClick={onNavClick}>
+            <IconHome className={classes.linkIcon} stroke={1.5} />
+            <span>Go to Main Site</span>
+          </Link>
           <a
             href="#"
             className={classes.link}
