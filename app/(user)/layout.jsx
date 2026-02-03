@@ -5,13 +5,19 @@ import { Inter, Yesteryear } from 'next/font/google';
 import './globals.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import dynamic from 'next/dynamic';
+
+const ReactQueryDevtools = dynamic(
+  () => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
+  { ssr: false }
+);
 
 import Footer from '@/components/Footer/Footer';
 import Navbar from '@/components/Header/Navbar';
 import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { ColorSchemeScript, createTheme, MantineProvider } from '@mantine/core';
 import { Toaster } from 'sonner';
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -351,8 +357,17 @@ const theme = createTheme({
   },
 });
 
-// Create a client
-const queryClient = new QueryClient();
+// Create a client with optimized caching for faster navigation
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes - data is fresh for 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes - keep in cache for 30 minutes
+      refetchOnWindowFocus: false, // Don't refetch when window regains focus
+      retry: 1, // Only retry once on failure
+    },
+  },
+});
 
 export default function RootLayout({ children }) {
   return (
@@ -365,12 +380,15 @@ export default function RootLayout({ children }) {
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
           <QueryClientProvider client={queryClient}>
+            <NextTopLoader color="#00e5ff" showSpinner={false} height={3} />
             <Toaster position="top-center" richColors theme="dark" />
             <ScrollToTopButton />
             <Navbar />
             {children}
             <Footer />
-            <ReactQueryDevtools initialIsOpen={false} />
+            {process.env.NODE_ENV === 'development' && (
+              <ReactQueryDevtools initialIsOpen={false} />
+            )}
           </QueryClientProvider>
         </MantineProvider>
       </body>

@@ -11,12 +11,21 @@ import {
   Group,
   Select,
   SimpleGrid,
+  Skeleton,
   Text,
   TextInput,
   Title,
   rem,
 } from '@mantine/core';
-import RichTextEditor from '@/components/Editor/RichTextEditor';
+import dynamic from 'next/dynamic';
+
+const RichTextEditor = dynamic(
+  () => import('@/components/Editor/RichTextEditor'),
+  {
+    ssr: false,
+    loading: () => <Skeleton height={300} />,
+  }
+);
 import { useForm } from '@mantine/form';
 import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
