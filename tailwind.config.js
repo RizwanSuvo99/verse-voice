@@ -7,10 +7,20 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        base: 'var(--bg-base)',
+        raised: 'var(--bg-raised)',
+        surface: 'var(--bg-surface)',
+        elevated: 'var(--bg-elevated)',
+        hover: 'var(--bg-hover)',
+        accent: 'var(--accent)',
+        'accent-2': 'var(--accent-2)',
+        'text-primary': 'var(--text-primary)',
+        'text-secondary': 'var(--text-secondary)',
+        'text-tertiary': 'var(--text-tertiary)',
+      },
+      fontFamily: {
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
     },
   },
