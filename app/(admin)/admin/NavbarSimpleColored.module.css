@@ -1,11 +1,14 @@
 .navbar {
   height: 90vh;
-  width: rem(300px);
+  width: rem(260px);
   padding: var(--mantine-spacing-md);
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
 }
 
 .navbarMain {
@@ -15,13 +18,13 @@
 .header {
   padding-bottom: var(--mantine-spacing-md);
   margin-bottom: calc(var(--mantine-spacing-md) * 1.5);
-  border-bottom: rem(1px) solid rgba(255, 255, 255, 0.1);
+  border-bottom: rem(1px) solid var(--border-default);
 }
 
 .footer {
   padding-top: var(--mantine-spacing-md);
   margin-top: var(--mantine-spacing-md);
-  border-top: rem(1px) solid rgba(255, 255, 255, 0.1);
+  border-top: rem(1px) solid var(--border-default);
 }
 
 .link {
@@ -29,28 +32,28 @@
   align-items: center;
   text-decoration: none;
   font-size: var(--mantine-font-size-sm);
-  color: rgba(226, 232, 240, 0.8);
+  color: var(--text-secondary);
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
   border-radius: var(--mantine-radius-md);
   font-weight: 500;
   margin-bottom: 4px;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: all 0.3s ease;
 
   @mixin hover {
-    background-color: rgba(255, 255, 255, 0.06);
-    color: #ffffff;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 
     .linkIcon {
-      color: #ffffff;
+      color: var(--text-primary);
     }
   }
 
   &[data-active] {
     &,
     &:hover {
-      background: linear-gradient(135deg, #0ea5ea, #0bd1d1);
+      background: linear-gradient(135deg, #00e5ff, #a855f7);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(14, 165, 234, 0.3);
+      box-shadow: 0 0 20px var(--accent-glow);
 
       .linkIcon {
         color: #ffffff;
@@ -60,9 +63,21 @@
 }
 
 .linkIcon {
-  color: rgba(148, 163, 184, 0.8);
+  color: var(--text-tertiary);
   margin-right: var(--mantine-spacing-sm);
-  width: rem(22px);
-  height: rem(22px);
-  transition: color 0.2s ease;
+  width: rem(20px);
+  height: rem(20px);
+  transition: color 0.3s ease;
+}
+
+/* Scrollbar styling */
+.navbar::-webkit-scrollbar {
+  width: 4px;
+}
+.navbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.navbar::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 4px;
 }

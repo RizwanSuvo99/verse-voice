@@ -1,10 +1,10 @@
 .header {
-  height: rem(80px);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  height: rem(64px);
+  transition: all 0.3s ease;
 }
 
 .inner {
-  height: rem(80px);
+  height: rem(64px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -25,20 +25,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-[data-mantine-color-scheme='light'] .mobileMenu {
-  background: rgba(255, 255, 255, 0.92);
+  background: var(--bg-surface);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  color: #1a1f36;
-}
-
-[data-mantine-color-scheme='dark'] .mobileMenu {
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  color: #e2e8f0;
+  color: var(--text-primary);
+  border-right: 1px solid var(--border-subtle);
 }
 
 .menuOpened {
@@ -52,7 +43,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 900;

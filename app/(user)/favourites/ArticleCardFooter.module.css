@@ -1,16 +1,27 @@
 .card {
-  background-color: var(--mantine-color-body);
+  background-color: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0 24px var(--accent-glow);
+  border-color: rgba(0,229,255,0.2);
 }
 
 .title {
-  font-family:
-    Greycliff CF,
-    var(--mantine-font-family);
+  font-family: Inter, var(--mantine-font-family);
+}
+
+.title:hover {
+  background: linear-gradient(135deg, #00e5ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .footer {
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-lg);
   margin-top: var(--mantine-spacing-md);
-  border-top: rem(1px) solid
-    light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  border-top: rem(1px) solid var(--border-subtle);
 }
