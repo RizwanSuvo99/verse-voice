@@ -14,6 +14,7 @@ import {
   IconMail,
   IconNews,
   IconPencilPlus,
+  IconUsers,
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -33,6 +34,7 @@ const data = [
   { label: 'Customize Footer', href: '/admin/customize-footer', icon: IconEdit },
   { label: 'Customize About', href: '/admin/customize-about', icon: IconInfoCircle },
   { label: 'Customize Contact', href: '/admin/customize-contact', icon: IconAddressBook },
+  { label: 'Manage Users', href: '/admin/manage-users', icon: IconUsers },
   { label: 'Manage Categories', href: '/admin/manage-categories', icon: IconCategoryPlus },
   { label: 'Contact Messages', href: '/admin/contact-messages', icon: IconMail },
   { label: 'Newsletter', href: '/admin/newsletter', icon: IconNews },
