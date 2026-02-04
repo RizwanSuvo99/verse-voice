@@ -1,4 +1,4 @@
-import { BackgroundImage, Card, Overlay, Text } from '@mantine/core';
+import { BackgroundImage, Card, Text } from '@mantine/core';
 import Link from 'next/link';
 
 const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
@@ -7,22 +7,33 @@ const CarouselItem = ({ backUrl, categoryName, categorySize }) => {
       href={`/category/${categoryName.toLowerCase()}`}
       className="!no-underline"
     >
-      <Card shadow="sm" padding="lg" radius="md" withBorder className="!p-0 category-card">
+      <Card
+        shadow="sm"
+        padding="lg"
+        radius="md"
+        withBorder
+        className="category-card !p-0"
+      >
         <BackgroundImage
           src={backUrl}
-          className="!relative !flex !h-[300px] flex-col !items-center !justify-center"
+          className="!relative !flex !h-[220px] flex-col !items-center !justify-center"
         >
-          {/* Overlay with opacity */}
-          <Overlay opacity={0.6} color="#000" zIndex={1} />
-
-          {/* Text content */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 1,
+              backdropFilter: 'blur(2px)',
+              backgroundColor: 'rgba(0, 0, 0, 0.45)',
+            }}
+          />
           <Text
-            className="!mb-2 !text-3xl !font-bold !text-white"
+            className="!mb-1 !text-xl !font-bold !text-white"
             style={{ zIndex: 2 }}
           >
             {categoryName}
           </Text>
-          <Text className="!text-2xl !text-white" style={{ zIndex: 2 }}>
+          <Text className="!text-lg !text-white" style={{ zIndex: 2 }}>
             {categorySize}
           </Text>
         </BackgroundImage>

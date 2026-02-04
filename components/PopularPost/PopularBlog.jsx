@@ -1,7 +1,8 @@
 'use client';
 
 import { getPopularBlogs } from '@/api/blogs.mjs';
-import { Card, Container, Divider, Grid, Loader, Center, Text, Title } from '@mantine/core';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
+import { Card, Container, Divider, Grid, Text, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import PopularSingleBlog from './PopularSingleBlog';
 
@@ -13,10 +14,8 @@ const PopularBlog = () => {
 
   if (isLoading) {
     return (
-      <Container size={1350} className="!mt-[10px]">
-        <Center py="xl">
-          <Loader size="sm" />
-        </Center>
+      <Container size={1500} className="!mt-[8px]">
+        <BlogGridSkeleton count={3} cols={{ base: 1 }} />
       </Container>
     );
   }
@@ -24,13 +23,13 @@ const PopularBlog = () => {
   if (!popularBlogs || popularBlogs.length === 0) return null;
 
   return (
-    <Container size={1350} className="!mt-[10px]">
-      <Card shadow="sm" padding="md" radius="md" withBorder className="!h-full glass-card">
-        <Text component={Title} variant="gradient" className="!text-2xl">
+    <Container size={1500} className="!mt-[8px]">
+      <Card shadow="sm" padding="md" radius="md" withBorder className="!h-full">
+        <Text component={Title} variant="gradient" className="!text-lg">
           Popular Blogs
         </Text>
-        <Divider size="xl" mt={'5px'} mb={'1.5rem'} className="!w-[50%]" />
-        <Grid grow className="!gap-8">
+        <Divider size="xl" mt={'4px'} mb={'1rem'} className="!w-[50%]" />
+        <Grid grow className="!gap-4">
           {popularBlogs.map((blog, i) => (
             <Grid.Col span={12} key={blog._id}>
               <PopularSingleBlog

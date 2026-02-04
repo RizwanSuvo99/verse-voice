@@ -1,4 +1,5 @@
 import FavoriteButton from '@/components/FavoriteButton';
+import { stripHtml } from '@/utils/stripHtml';
 import {
   AspectRatio,
   Avatar,
@@ -28,55 +29,50 @@ const RecentSingleBlog = ({ blog }) => {
 
   return (
     <Flex
-      className="!min-h-[280px] !gap-4"
+      className="!min-h-[220px] !gap-3"
       direction={{ base: 'column', sm: 'row' }}
     >
       <div className="!flex-1">
         <AspectRatio ratio={1}>
-          <Image src={blogPicUrl} height={270} alt="Blog Image" radius="md" />
+          <Image src={blogPicUrl} height={200} alt="Blog Image" radius="md" />
         </AspectRatio>
       </div>
       <div className="!flex-1">
         <Group justify="space-between">
           <Badge>{category}</Badge>
           <Group className="!gap-2">
-            <FavoriteButton blogId={_id} size={16} />
-            <IconClock size={15} />
-            <Text fw={400} className="!text-sm">
+            <FavoriteButton blogId={_id} size={14} />
+            <IconClock size={14} />
+            <Text fw={400} size="xs">
               {timeRead || '3 mins read'}
             </Text>
           </Group>
         </Group>
-        <Space h={'lg'} />
-        <Text fw={500} className="!text-[24px]" lineClamp={2}>
+        <Space h={'xs'} />
+        <Text fw={500} className="!text-[18px]" lineClamp={2}>
           {title}
         </Text>
-        <Text fw={400} className="!mt-3 !text-sm" lineClamp={4}>
-          {content}
+        <Text fw={400} className="!mt-2 !text-xs" c="dimmed" lineClamp={3}>
+          {stripHtml(content)}
         </Text>
-        <Group justify="space-between" mt="md" mb="xs">
+        <Group justify="space-between" mt="xs" mb="xs">
           <Group className="!items-center">
-            <Avatar src={createdBy?.avatar} alt="author-img" />
+            <Avatar src={createdBy?.avatar} alt="author-img" size="sm" />
             <div>
-              <Text className="!text-md !font-500">{createdBy?.name}</Text>
-              <Text fw={400} className="!text-sm">
+              <Text className="!text-sm !font-medium">{createdBy?.name}</Text>
+              <Text fw={400} size="xs" c="dimmed">
                 {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
               </Text>
             </div>
           </Group>
           <Button
-            variant="outline"
-            style={{
-              backgroundColor: 'transparent',
-              border: '2px solid transparent',
-              borderImage: 'linear-gradient(45deg, #0ea5ea, #0bd1d1) 1',
-              color: '#0ea5ea',
-              borderRadius: '5px',
-            }}
+            variant="subtle"
+            color="cyan"
+            component={Link}
+            href={`/blogs/${_id}`}
+            size="compact-sm"
           >
-            <Link href={`/blogs/${_id}`} className="!no-underline">
-              Read More
-            </Link>
+            Read More
           </Button>
         </Group>
       </div>

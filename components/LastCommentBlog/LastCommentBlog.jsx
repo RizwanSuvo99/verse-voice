@@ -44,7 +44,7 @@ const LastCommentBlog = () => {
     },
   ];
   return (
-    <Container size={1350}>
+    <Container fluid px="xl">
       <Card shadow="sm" padding="md" radius="md" withBorder className="!h-full">
         <Text component={Title} variant="gradient" className="!text-2xl">
           Last Comments

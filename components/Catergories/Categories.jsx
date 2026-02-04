@@ -3,7 +3,8 @@ import { getSettings } from '@/api/siteSettings.mjs';
 import { getBlogs } from '@/api/blogs.mjs';
 import { Carousel } from '@mantine/carousel';
 import '@mantine/carousel/styles.css';
-import { Container, Loader, Center } from '@mantine/core';
+import CategorySkeleton from '@/components/Skeletons/CategorySkeleton';
+import { Container } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import Autoplay from 'embla-carousel-autoplay';
 import { useRef } from 'react';
@@ -22,10 +23,8 @@ const Categories = () => {
     queryFn: () => getBlogs({ limit: 100 }),
   });
 
-  // Build categories from settings or derive from blogs
   const allCategories = (() => {
     if (settings?.categories?.length > 0) {
-      // Count blogs per category
       const blogCounts = {};
       blogsData?.blogs?.forEach((blog) => {
         blogCounts[blog.category] = (blogCounts[blog.category] || 0) + 1;
@@ -57,26 +56,24 @@ const Categories = () => {
 
   if (allCategories.length === 0) {
     return (
-      <Container size={1350} className="!px-6 py-4">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={1500} className="!px-6 py-4">
+        <CategorySkeleton count={6} />
       </Container>
     );
   }
 
   return (
-    <Container size={1350} className="!px-6 py-4">
+    <Container size={1500} className="!px-6 py-4">
       <Carousel
         dragFree
         slideSize={{ base: '100%', sm: '50%', md: '33.333%', lg: '25%' }}
-        slideGap={{ base: 'xs', sm: 'md', md: 'lg' }}
+        slideGap={{ base: 'xs', sm: 'sm', md: 'md' }}
         loop
         align="start"
         plugins={[autoplay.current]}
         onMouseEnter={autoplay.current.stop}
         onMouseLeave={autoplay.current.reset}
-        controlSize={40}
+        controlSize={36}
       >
         {allCategories.map((category) => (
           <Carousel.Slide key={category.categoryName}>

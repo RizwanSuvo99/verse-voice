@@ -8,32 +8,32 @@ const PopularSingleBlog = ({ blog, divider }) => {
 
   return (
     <Link href={`/blogs/${_id}`} className="!no-underline">
-      <Flex className="!max-h-[100px] !cursor-pointer !gap-4">
+      <Flex className="!max-h-[80px] !cursor-pointer !gap-3">
         <div className="!flex-1" style={{ overflow: 'hidden' }}>
           <AspectRatio ratio={1}>
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.2 }}
             >
-              <Image src={blogPicUrl} height={100} alt={title} radius="md" />
+              <Image src={blogPicUrl} height={80} alt={title} radius="lg" />
             </motion.div>
           </AspectRatio>
         </div>
         <div className="!flex-1">
-          <Text fw={500} className="!text-md !mb-2" lineClamp={3}>
+          <Text fw={500} size="sm" lineClamp={2}>
             {title}
           </Text>
           <div>
-            <Text fw={400} className="!text-sm">
+            <Text fw={400} size="xs" c="dimmed">
               {createdBy?.name}
             </Text>
-            <Text fw={400} className="!text-sm">
+            <Text fw={400} size="xs" c="dimmed">
               {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
             </Text>
           </div>
         </div>
       </Flex>
-      {divider && <Divider mt="md" />}
+      {divider && <Divider mt="sm" />}
     </Link>
   );
 };

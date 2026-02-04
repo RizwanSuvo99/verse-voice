@@ -1,14 +1,13 @@
 'use client';
 
 import { getSettings } from '@/api/siteSettings.mjs';
+import CategorySkeleton from '@/components/Skeletons/CategorySkeleton';
 import {
   Button,
   Card,
   Container,
   Divider,
   Flex,
-  Loader,
-  Center,
   Text,
   Title,
 } from '@mantine/core';
@@ -25,24 +24,22 @@ const PopularCategories = () => {
 
   if (isLoading) {
     return (
-      <Container size={1350} className="!m-0">
-        <Center py="xl">
-          <Loader size="sm" />
-        </Center>
+      <Container size={1500} className="!m-0">
+        <CategorySkeleton count={6} />
       </Container>
     );
   }
 
   return (
-    <Container size={1350} className="!m-0">
-      <Card shadow="sm" radius="md" withBorder className="!h-full glass-card">
-        <Text component={Title} variant="gradient" className="!text-2xl">
+    <Container size={1500} className="!m-0">
+      <Card shadow="sm" radius="md" withBorder className="!h-full">
+        <Text component={Title} variant="gradient" className="!text-lg">
           Categories
         </Text>
-        <Divider size="xl" mt={'5px'} mb={'1.5rem'} className="!w-[70%]" />
+        <Divider size="xl" mt={'4px'} mb={'1rem'} className="!w-[70%]" />
         <Flex
           wrap={'wrap'}
-          gap={'md'}
+          gap={'sm'}
           direction={{ base: 'column', sm: 'row' }}
         >
           {categories?.map((category, i) => (
@@ -50,7 +47,7 @@ const PopularCategories = () => {
               key={i}
               component={Link}
               href={`/category/${category.toLowerCase()}`}
-              size="xl"
+              size="sm"
               variant="outline"
             >
               {category}

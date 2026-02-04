@@ -15,43 +15,20 @@ import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const gradientButtonStyles = {
-  background: 'linear-gradient(45deg, #0ea5ea, #0bd1d1)',
-  backgroundSize: '200% 100%',
-  backgroundPosition: '100% 0',
-  transition: 'background-position 0.4s ease',
-  color: '#fff',
-  padding: '10px 20px',
-  border: 'none',
-  borderRadius: '5px',
-  cursor: 'pointer',
-};
-
-const hoverStyles = {
-  backgroundPosition: '0 0',
-};
-
 const SingleBlog = ({ blog }) => {
-  const {
-    _id,
-    blogPicUrl,
-    title,
-    category,
-    createdBy,
-    publishDate,
-    timeRead,
-  } = blog;
+  const { _id, blogPicUrl, title, category, createdBy, publishDate, timeRead } =
+    blog;
 
   return (
     <motion.div whileHover="hover">
-      <Card shadow="sm" radius="md" withBorder className="!h-full glass-card">
+      <Card shadow="sm" radius="md" withBorder className="glass-card !h-full">
         <AspectRatio ratio={4 / 3}>
           <motion.div
             variants={{
-              hover: { scale: 1.05 },
+              hover: { scale: 1.03 },
             }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            style={{ borderRadius: '0.75rem', overflow: 'hidden' }}
+            style={{ borderRadius: '0.5rem', overflow: 'hidden' }}
           >
             <Image
               src={blogPicUrl}
@@ -63,45 +40,40 @@ const SingleBlog = ({ blog }) => {
           </motion.div>
         </AspectRatio>
 
-        <Space h={'xl'} />
+        <Space h={'sm'} />
         <Group justify="space-between">
           <Badge>{category}</Badge>
           <Group className="!gap-2">
-            <FavoriteButton blogId={_id} size={18} />
-            <IconClock size={18} />
-            <Text>{timeRead || '3 mins read'}</Text>
+            <FavoriteButton blogId={_id} size={16} />
+            <IconClock size={16} />
+            <Text size="sm">{timeRead || '3 mins read'}</Text>
           </Group>
         </Group>
 
-        <Space h={'lg'} />
-        <Text fw={500} className="!text-2xl" lineClamp={2}>
+        <Space h={'xs'} />
+        <Text fw={500} className="!text-lg" lineClamp={2}>
           {title}
         </Text>
 
-        <Group justify="space-between" mt="md" mb="xs">
+        <Group justify="space-between" mt="xs" mb="xs">
           <Group className="!items-center">
-            <Avatar src={createdBy?.avatar} alt="author-img" />
+            <Avatar src={createdBy?.avatar} alt="author-img" size="sm" />
             <div>
-              <Text className="!text-md !font-bold">{createdBy?.name}</Text>
-              <Text className="!text-sm">
+              <Text className="!text-sm !font-medium">{createdBy?.name}</Text>
+              <Text size="xs" c="dimmed">
                 {publishDate ? dayjs(publishDate).format('D MMM YYYY') : ''}
               </Text>
             </div>
           </Group>
 
           <Button
-            variant="transparent"
-            style={gradientButtonStyles}
-            onMouseOver={(e) => {
-              Object.assign(e.currentTarget.style, hoverStyles);
-            }}
-            onMouseOut={(e) => {
-              Object.assign(e.currentTarget.style, gradientButtonStyles);
-            }}
+            variant="subtle"
+            color="cyan"
+            component={Link}
+            href={`/blogs/${_id}`}
+            size="compact-sm"
           >
-            <Link href={`/blogs/${_id}`} className="!text-white !no-underline">
-              Read More
-            </Link>
+            Read More
           </Button>
         </Group>
       </Card>
