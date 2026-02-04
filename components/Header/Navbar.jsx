@@ -10,8 +10,8 @@ import {
 } from '@mantine/core';
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import classes from './HeaderSimple.module.css';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
@@ -19,9 +19,9 @@ import { useMutation } from '@tanstack/react-query';
 import { logOut } from '@/api/logOut.mjs';
 
 const Navbar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(pathname);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,6 @@ const Navbar = () => {
     defaultValue: false,
   });
 
-  // Only use the logged-in value after hydration to avoid SSR mismatch
   const loggedIn = hydrated && isLoggedIn && !!token;
 
   const defaultLinks = [
@@ -66,23 +65,23 @@ const Navbar = () => {
     mutate();
     setToken(null);
     setIsLoggedIn(false);
+    router.push('/');
   };
 
   return (
     <header className={`${classes.header} glass-navbar`}>
-      <Container size={1350} className={`${classes.inner} !p-0 !px-6`}>
-        <Logo setActive={setActive} />
+      <Container size={1500} className={classes.inner}>
+        <Logo />
 
         {/* Desktop Navigation */}
-        <Group gap={5} visibleFrom="sm">
+        <Group gap={2} visibleFrom="sm">
           {navLinks.map((link) => (
             <Button
-              variant={active === link.link ? 'filled' : 'outline'}
+              variant={pathname === link.link ? 'light' : 'subtle'}
               component={Link}
               key={link.label}
               href={link.link}
-              onClick={() => setActive(link.link)}
-              size="xs"
+              size="compact-md"
             >
               {link.label}
             </Button>
@@ -90,31 +89,37 @@ const Navbar = () => {
 
           {hydrated && (
             <>
-              <Group justify="center" grow px="md">
+              {!loggedIn && (
+                <Group gap={4} px="xs">
+                  <Button
+                    variant="subtle"
+                    component={Link}
+                    href={'/login'}
+                    size="compact-sm"
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    variant="gradient"
+                    className="glow-btn"
+                    component={Link}
+                    href={'/register'}
+                    size="compact-sm"
+                  >
+                    Register
+                  </Button>
+                </Group>
+              )}
+              {loggedIn && (
                 <Button
-                  variant="default"
-                  component={Link}
-                  href={'/login'}
-                  className={`${loggedIn ? 'hidden' : 'block'}`}
+                  variant="subtle"
+                  color="red"
+                  size="compact-sm"
+                  onClick={handleLogOut}
                 >
-                  Log in
+                  Log out
                 </Button>
-                <Button
-                  component={Link}
-                  href={'/register'}
-                  className={`${loggedIn ? 'hidden' : 'block'}`}
-                >
-                  Register
-                </Button>
-              </Group>
-              <Button
-                variant="filled"
-                color="red"
-                className={`${!loggedIn ? 'hidden' : 'block'}`}
-                onClick={handleLogOut}
-              >
-                Log out
-              </Button>
+              )}
             </>
           )}
 
@@ -137,16 +142,13 @@ const Navbar = () => {
         >
           {navLinks.map((link) => (
             <Button
-              variant={active === link.link ? 'filled' : 'outline'}
+              variant={pathname === link.link ? 'light' : 'subtle'}
               component={Link}
               key={link.label}
               href={link.link}
-              onClick={() => {
-                setActive(link.link);
-                close();
-              }}
+              onClick={close}
               fullWidth
-              className="!mb-4"
+              className="!mb-2"
             >
               {link.label}
             </Button>

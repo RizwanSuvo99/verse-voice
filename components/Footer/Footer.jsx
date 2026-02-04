@@ -28,7 +28,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import Logo from '../Header/Logo';
 
 const Footer = () => {
@@ -46,28 +46,25 @@ const Footer = () => {
   const { mutate: subscribeMutate, isPending } = useMutation({
     mutationFn: subscribe,
     onSuccess: () => {
-      notifications.show({ title: 'Subscribed successfully!', color: 'green' });
+      toast.success('Subscribed successfully!');
       setNewsletterName('');
       setNewsletterEmail('');
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Subscription failed',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Subscription failed');
     },
   });
 
   const handleSubscribe = () => {
     if (!newsletterName || !newsletterEmail) {
-      notifications.show({ title: 'Please fill in all fields', color: 'red' });
+      toast.error('Please fill in all fields');
       return;
     }
     subscribeMutate({ name: newsletterName, email: newsletterEmail });
   };
 
   const fadeInUp = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };
 
@@ -88,6 +85,7 @@ const Footer = () => {
   };
 
   useEffect(() => {
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -96,23 +94,23 @@ const Footer = () => {
 
   return (
     <footer id="footer" className="glass-footer">
-      <Container size={1150} className="!mt-[100px] !px-6 !py-4">
+      <Container size={1500} className="!mt-[32px] !py-3">
         <Paper
-          className="glass-card px-6 py-10 md:px-12 lg:px-36 lg:py-20"
+          className="px-4 py-6 md:px-8 lg:px-24 lg:py-8"
           radius="lg"
           withBorder
         >
-          <Grid gutter={'xl'} grow>
+          <Grid gutter={'md'} grow>
             <Grid.Col span={12} md={4}>
               <motion.div
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1 }}
+                transition={{ duration: 0.5 }}
               >
                 <Logo />
-                <Space h={'lg'} />
-                <Text className="!text-md sm:!text-xl">{footerText}</Text>
+                <Space h={'md'} />
+                <Text c="dimmed" className="!text-sm sm:!text-base">{footerText}</Text>
               </motion.div>
             </Grid.Col>
 
@@ -121,25 +119,23 @@ const Footer = () => {
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1, delay: 0.2 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <Title order={4} className="!mb-8">
+                <Title order={4} className="!mb-4">
                   Categories
                 </Title>
                 <Flex>
                   <div className="!flex !flex-wrap !gap-2">
                     {categories.map((cat) => (
                       <Button
-                        className="!border-[2px] !border-[#1971c2]"
-                        variant="transparent"
+                        variant="subtle"
+                        color="cyan"
                         key={cat}
+                        component={Link}
+                        href={`/category/${cat.toLowerCase()}`}
+                        size="compact-sm"
                       >
-                        <Link
-                          href={`/category/${cat.toLowerCase()}`}
-                          className="!text-[#1971c2] !no-underline"
-                        >
-                          {cat}
-                        </Link>
+                        {cat}
                       </Button>
                     ))}
                   </div>
@@ -152,44 +148,36 @@ const Footer = () => {
                 variants={fadeInUp}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
-                transition={{ duration: 1, delay: 0.4 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <Stack>
-                  <Title order={4} className="!mb-2">
+                  <Title order={4} className="!mb-1">
                     Newsletter
                   </Title>
-                  <Text>
+                  <Text c="dimmed" size="sm">
                     Sign up to be first to receive the latest stories inspiring
                     us, case studies, and industry news.
                   </Text>
                   <TextInput
-                    leftSection={<IconUser stroke={2} />}
-                    variant="unstyled"
+                    leftSection={<IconUser stroke={2} size={16} />}
                     placeholder="Your Name"
                     value={newsletterName}
                     onChange={(e) => setNewsletterName(e.target.value)}
-                    classNames={{
-                      input:
-                        '!border-0 !border-b-2 !border-[#94A9C9] !rounded-none',
-                    }}
                   />
                   <TextInput
-                    leftSection={<IconMail stroke={2} />}
-                    variant="unstyled"
+                    leftSection={<IconMail stroke={2} size={16} />}
                     placeholder="Your Email"
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    classNames={{
-                      input:
-                        '!border-0 !border-b-2 !border-[#94A9C9] !rounded-none',
-                    }}
                   />
                   <div>
                     <Button
                       variant="gradient"
-                      rightSection={<IconArrowRight stroke={2} size={18} />}
+                      className="glow-btn"
+                      rightSection={<IconArrowRight stroke={2} size={16} />}
                       onClick={handleSubscribe}
                       loading={isPending}
+                      size="sm"
                     >
                       Subscribe
                     </Button>
@@ -199,18 +187,18 @@ const Footer = () => {
             </Grid.Col>
           </Grid>
 
-          <Divider className="!my-10" />
+          <Divider className="!my-5" />
 
           <Group className="flex-col md:flex-row" justify="space-between">
-            <Text className="text-center md:text-left">
+            <Text size="sm" c="dimmed" className="text-center md:text-left">
               &copy; 2024 Created by{' '}
               <Text
                 component={Link}
                 variant="gradient"
                 href="https://www.facebook.com/rizwansuvo1"
-                className="!text-[20px] !font-bold"
+                className="!text-sm !font-bold"
+                span
               >
-                {' '}
                 Rizwan
               </Text>{' '}
               & &nbsp;
@@ -218,33 +206,49 @@ const Footer = () => {
                 component={Link}
                 variant="gradient"
                 href="https://www.facebook.com/ekramullah70"
-                className="!text-[20px] !font-bold"
+                className="!text-sm !font-bold"
+                span
               >
                 Ekram
               </Text>
             </Text>
             <Group gap="md" className="flex-col md:flex-row">
               {settings?.socialLinks?.twitter && (
-                <a href={settings.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                <a
+                  href={settings.socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
                   <Group gap="xs">
-                    <IconBrandTwitter stroke={2} />
-                    <Text>Twitter</Text>
+                    <IconBrandTwitter stroke={1.5} size={18} />
+                    <Text size="sm" c="dimmed">Twitter</Text>
                   </Group>
                 </a>
               )}
               {settings?.socialLinks?.linkedin && (
-                <a href={settings.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                <a
+                  href={settings.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
                   <Group gap="xs">
-                    <IconBrandLinkedin stroke={2} />
-                    <Text>LinkedIn</Text>
+                    <IconBrandLinkedin stroke={1.5} size={18} />
+                    <Text size="sm" c="dimmed">LinkedIn</Text>
                   </Group>
                 </a>
               )}
               {settings?.socialLinks?.instagram && (
-                <a href={settings.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="!no-underline">
+                <a
+                  href={settings.socialLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
                   <Group gap="xs">
-                    <IconBrandInstagram stroke={2} />
-                    <Text>Instagram</Text>
+                    <IconBrandInstagram stroke={1.5} size={18} />
+                    <Text size="sm" c="dimmed">Instagram</Text>
                   </Group>
                 </a>
               )}

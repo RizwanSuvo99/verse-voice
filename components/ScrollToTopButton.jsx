@@ -30,20 +30,20 @@ const ScrollToTopButton = () => {
   return (
     <ActionIcon
       variant="gradient"
+      className="glow-btn"
       aria-label="Scroll to top"
       onClick={scrollToTop}
-      size="xl"
+      size="lg"
       radius="xl"
-      className="scroll-top-btn"
       style={{
         position: 'fixed',
-        bottom: '40px',
-        right: '40px',
+        bottom: '24px',
+        right: '24px',
         display: visible ? 'flex' : 'none',
         zIndex: 999,
       }}
     >
-      <IconArrowUp size={20} />
+      <IconArrowUp size={18} />
     </ActionIcon>
   );
 };

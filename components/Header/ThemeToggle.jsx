@@ -8,7 +8,7 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 
 const ThemeToggle = () => {
   const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light', {
+  const computedColorScheme = useComputedColorScheme('dark', {
     getInitialValueInEffect: true,
   });
 
@@ -17,16 +17,26 @@ const ThemeToggle = () => {
   return (
     <ActionIcon
       variant="subtle"
-      size="lg"
+      size="md"
       radius="xl"
       onClick={() => setColorScheme(isDark ? 'light' : 'dark')}
       aria-label="Toggle color scheme"
       className="theme-toggle-wrapper"
     >
       {isDark ? (
-        <IconSun size={20} stroke={1.8} className="theme-toggle-icon" color="#fbbf24" />
+        <IconSun
+          size={18}
+          stroke={1.8}
+          className="theme-toggle-icon"
+          color="#fbbf24"
+        />
       ) : (
-        <IconMoon size={20} stroke={1.8} className="theme-toggle-icon" color="#6366f1" />
+        <IconMoon
+          size={18}
+          stroke={1.8}
+          className="theme-toggle-icon"
+          color="#6366f1"
+        />
       )}
     </ActionIcon>
   );

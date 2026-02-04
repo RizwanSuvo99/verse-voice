@@ -16,22 +16,22 @@ const Hero = () => {
     'Explore authentic writings from students, sharing their feelings, experiences, and imaginative stories that inspire.';
 
   return (
-    <Container size={1350} className="hero-section !px-6 !py-4 !pt-[100px]">
+    <Container size={1500} className="hero-section !px-6 !py-4 !pt-[24px]">
       <Stack
         align="center"
         justify="center"
-        className="h-[350px] md:h-[450px] lg:h-[550px]"
+        className="h-[200px] md:h-[280px] lg:h-[360px]"
       >
         <Center>
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
+            initial={{ opacity: 0, y: -30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: 'easeOut' }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           >
             <Text
               variant="gradient"
               component={Title}
-              className="text1 !text-center !text-[70px] md:!text-[100px] lg:!text-[150px]"
+              className="text1 !text-center !text-[48px] md:!text-[64px] lg:!text-[80px]"
             >
               {heroTitle}
             </Text>
@@ -40,38 +40,15 @@ const Hero = () => {
 
         <Center>
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-          >
-            <Text
-              span
-              className="text1 !text-[70px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
-            >
-              &#10077;
-            </Text>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
-          >
-            <Text className="!mb-4 !px-2 !text-center !text-[20px] md:!px-8 md:!text-[30px] lg:!px-12 lg:!text-[45px]">
-              {heroSubtitle}
-            </Text>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
+            transition={{ duration: 0.4, delay: 0.2, ease: 'easeOut' }}
           >
             <Text
-              span
-              className="text1 !text-[70px] !leading-[50px] md:!text-[120px] md:!leading-[60px] lg:!text-[180px]"
+              c="dimmed"
+              className="!mb-2 !px-2 !text-center !text-[14px] md:!px-8 md:!text-[16px] lg:!px-12 lg:!text-[18px]"
             >
-              &#10078;
+              {heroSubtitle}
             </Text>
           </motion.div>
         </Center>
