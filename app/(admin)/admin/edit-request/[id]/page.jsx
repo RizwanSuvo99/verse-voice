@@ -1,8 +1,10 @@
 import EditRequestPage from './EditRequestPage';
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return [];
 }
+
+export const dynamicParams = true;
 
 export default function Page() {
   return <EditRequestPage />;
