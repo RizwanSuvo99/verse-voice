@@ -1,3 +1,9 @@
 {
-  "trailingSlash": true
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/blogs/:id/", "destination": "/blogs/[id].html" },
+    { "source": "/category/:catname/", "destination": "/category/[catname].html" },
+    { "source": "/admin/edit-blog/:id/", "destination": "/admin/edit-blog/[id].html" },
+    { "source": "/admin/edit-request/:id/", "destination": "/admin/edit-request/[id].html" }
+  ]
 }

@@ -2,10 +2,9 @@
 
 const nextConfig = {
   trailingSlash: true,
+  output: 'export',
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: '**' },
-    ],
+    unoptimized: true,
   },
 };
 
