@@ -82,4 +82,6 @@ const SingleBlog = memo(({ blog }) => {
   );
 });
 
+SingleBlog.displayName = 'SingleBlog';
+
 export default SingleBlog;

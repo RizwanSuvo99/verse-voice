@@ -25,4 +25,6 @@ const LastComment = memo(({ blog, divider }) => {
   );
 });
 
+LastComment.displayName = 'LastComment';
+
 export default LastComment;

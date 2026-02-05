@@ -81,4 +81,6 @@ const RecentSingleBlog = memo(({ blog }) => {
   );
 });
 
+RecentSingleBlog.displayName = 'RecentSingleBlog';
+
 export default RecentSingleBlog;

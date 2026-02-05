@@ -92,7 +92,7 @@ const VerifyOtp = ({
 
       <Group gap="xs">
         <Text size="sm" c="dimmed">
-          Didn't receive the code?
+          Didn&apos;t receive the code?
         </Text>
         <Button
           variant="subtle"

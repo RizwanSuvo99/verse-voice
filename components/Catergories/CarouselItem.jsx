@@ -43,4 +43,6 @@ const CarouselItem = memo(({ backUrl, categoryName, categorySize }) => {
   );
 });
 
+CarouselItem.displayName = 'CarouselItem';
+
 export default CarouselItem;

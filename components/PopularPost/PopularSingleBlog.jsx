@@ -39,4 +39,6 @@ const PopularSingleBlog = memo(({ blog, divider }) => {
   );
 });
 
+PopularSingleBlog.displayName = 'PopularSingleBlog';
+
 export default PopularSingleBlog;

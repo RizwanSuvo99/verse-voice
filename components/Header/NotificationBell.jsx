@@ -62,7 +62,7 @@ const NotificationBell = () => {
       return (
         <>
           <Text span fw={500}>{name}</Text> liked your post{' '}
-          <Text span fw={500} c="cyan">"{blogTitle.length > 30 ? blogTitle.slice(0, 30) + '...' : blogTitle}"</Text>
+          <Text span fw={500} c="cyan">&quot;{blogTitle.length > 30 ? blogTitle.slice(0, 30) + '...' : blogTitle}&quot;</Text>
         </>
       );
     }
@@ -70,7 +70,7 @@ const NotificationBell = () => {
       return (
         <>
           <Text span fw={500}>{name}</Text> commented on your post{' '}
-          <Text span fw={500} c="cyan">"{blogTitle.length > 30 ? blogTitle.slice(0, 30) + '...' : blogTitle}"</Text>
+          <Text span fw={500} c="cyan">&quot;{blogTitle.length > 30 ? blogTitle.slice(0, 30) + '...' : blogTitle}&quot;</Text>
         </>
       );
     }

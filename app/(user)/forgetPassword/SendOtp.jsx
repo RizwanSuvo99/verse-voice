@@ -47,7 +47,7 @@ const SendOtp = ({ handleChangeMode, setOtpVerificationObj }) => {
         Reset Password
       </Title>
       <Text size="sm" c="dimmed" ta="center">
-        Enter your email address and we'll send you an OTP to reset your password.
+        Enter your email address and we&apos;ll send you an OTP to reset your password.
       </Text>
 
       <form onSubmit={form.onSubmit(handleSubmit)} style={{ width: '100%' }}>
