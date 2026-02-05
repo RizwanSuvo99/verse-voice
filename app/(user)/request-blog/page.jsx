@@ -13,12 +13,12 @@ import {
   SimpleGrid,
   Text,
   TextInput,
-  Textarea,
   Title,
   rem,
 } from '@mantine/core';
+import RichTextEditor from '@/components/Editor/RichTextEditor';
 import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -56,20 +56,15 @@ const RequestBlog = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: submitBlogRequest,
     onSuccess: () => {
-      notifications.show({
-        title: 'Blog request submitted!',
-        message: 'Your request will be reviewed by an admin.',
-        color: 'green',
+      toast.success('Blog request submitted!', {
+        description: 'Your request will be reviewed by an admin.',
       });
       form.reset();
       setBlogImage(null);
       setAuthorImage(null);
     },
     onError: () => {
-      notifications.show({
-        title: 'Failed to submit request',
-        color: 'red',
-      });
+      toast.error('Failed to submit request');
     },
   });
 
@@ -91,96 +86,85 @@ const RequestBlog = () => {
 
   return (
     <RequireAuth>
-    <Container size={900} className="!pt-[50px]">
-      <Text
-        component={Title}
-        variant="gradient"
-        className="!mb-6 !text-center !text-[40px]"
-      >
-        Request a Blog
-      </Text>
-      <Text className="!mb-8 !text-center" c="dimmed">
-        Submit your writing for review. Once approved by an admin, it will be
-        published on the site.
-      </Text>
+      <Container size={900} className="!pt-[24px]">
+        <Text
+          component={Title}
+          variant="gradient"
+          className="!mb-4 !text-center !text-[24px]"
+        >
+          Request a Blog
+        </Text>
+        <Text className="!mb-6 !text-center" c="dimmed" size="sm">
+          Submit your writing for review. Once approved by an admin, it will be
+          published on the site.
+        </Text>
 
-      <form onSubmit={form.onSubmit(handleSubmit)} className="!w-full">
-        <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">
-          <TextInput
-            placeholder="Blog Title"
-            radius={'lg'}
-            {...form.getInputProps('title')}
-            classNames={{ input: '!h-[50px]' }}
-          />
-          <Select
-            placeholder="Select a Category"
-            radius={'lg'}
-            data={categoryOptions}
-            searchable
-            {...form.getInputProps('category')}
-            classNames={{ input: '!h-[50px]' }}
-          />
-        </SimpleGrid>
-
-        <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
-          <TextInput
-            placeholder="Author Name"
-            radius={'lg'}
-            {...form.getInputProps('authorName')}
-            classNames={{ input: '!h-[50px]' }}
-          />
-          <TextInput
-            placeholder="Author Details (e.g. Roll: 1234)"
-            radius={'lg'}
-            {...form.getInputProps('authorDetails')}
-            classNames={{ input: '!h-[50px]' }}
-          />
-        </SimpleGrid>
-
-        <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
-          <FileInput
-            leftSection={icon}
-            placeholder="Blog Image"
-            radius={'lg'}
-            classNames={{ input: '!h-[50px]' }}
-            clearable
-            value={blogImage}
-            onChange={setBlogImage}
-          />
-          <FileInput
-            leftSection={icon}
-            placeholder="Author Image"
-            radius={'lg'}
-            classNames={{ input: '!h-[50px]' }}
-            clearable
-            value={authorImage}
-            onChange={setAuthorImage}
-          />
-        </SimpleGrid>
-
-        <Textarea
-          mt="md"
-          placeholder="Blog Content"
-          minRows={5}
-          radius={'lg'}
-          {...form.getInputProps('content')}
-          classNames={{ input: '!h-[350px] !p-6' }}
-        />
-
-        <Group justify="center" mt="xl">
-          <Center>
-            <Button
-              variant="gradient"
-              size={'xl'}
-              type="submit"
-              loading={isPending}
-            >
-              Submit Request
-            </Button>
-          </Center>
-        </Group>
-      </form>
-    </Container>
+        <form onSubmit={form.onSubmit(handleSubmit)} className="!w-full">
+          <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+            <TextInput
+              placeholder="Blog Title"
+              {...form.getInputProps('title')}
+            />
+            <Select
+              placeholder="Select a Category"
+              data={categoryOptions}
+              searchable
+              {...form.getInputProps('category')}
+            />
+          </SimpleGrid>
+          <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+            <TextInput
+              placeholder="Author Name"
+              {...form.getInputProps('authorName')}
+            />
+            <TextInput
+              placeholder="Author Details (e.g. Roll: 1234)"
+              {...form.getInputProps('authorDetails')}
+            />
+          </SimpleGrid>
+          <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
+            <FileInput
+              leftSection={icon}
+              placeholder="Blog Image"
+              clearable
+              value={blogImage}
+              onChange={setBlogImage}
+            />
+            <FileInput
+              leftSection={icon}
+              placeholder="Author Image"
+              clearable
+              value={authorImage}
+              onChange={setAuthorImage}
+            />
+          </SimpleGrid>
+          <div style={{ marginTop: 'var(--mantine-spacing-md)' }}>
+            <RichTextEditor
+              content={form.values.content}
+              onChange={(html) => form.setFieldValue('content', html)}
+              placeholder="Blog Content"
+            />
+            {form.errors.content && (
+              <Text c="red" fz="sm" mt={4}>
+                {form.errors.content}
+              </Text>
+            )}
+          </div>
+          <Group justify="center" mt="xl">
+            <Center>
+              <Button
+                variant="gradient"
+                size={'md'}
+                type="submit"
+                loading={isPending}
+                className="glow-btn"
+              >
+                Submit Request
+              </Button>
+            </Center>
+          </Group>
+        </form>
+      </Container>
     </RequireAuth>
   );
 };

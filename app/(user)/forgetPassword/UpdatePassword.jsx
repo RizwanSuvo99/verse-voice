@@ -4,7 +4,7 @@ import { updatePassword } from '@/api/updatePassword.mjs';
 import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useLocalStorage } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
@@ -52,15 +52,11 @@ const UpdatePassword = ({ otpVerificationObj }) => {
     if (data?.status === 'success') {
       setToken(data.accessToken);
       setIsLoggedIn(true);
-      notifications.show({
-        title: 'Password changed successfully',
-      });
+      toast('Password changed successfully');
       redirect('/');
     }
     if (data?.status === 'fail') {
-      notifications.show({
-        title: 'Password updating failed',
-      });
+      toast('Password updating failed');
       setIsLoggedIn(false);
       setToken(null);
     }
@@ -71,24 +67,20 @@ const UpdatePassword = ({ otpVerificationObj }) => {
       <Group justify="center" className="!flex-col">
         <TextInput
           placeholder="Enter New Password"
-          radius={'xl'}
-          classNames={{
-            input: '!h-[40px] !p-4 !min-w-[400px] !max-w-[400px]',
-          }}
+          className="!min-w-[400px] !max-w-[400px]"
           key={form.key('password')}
           {...form.getInputProps('password')}
         />
         <TextInput
           placeholder="Confirm New Password"
-          radius={'xl'}
-          classNames={{
-            input: '!h-[40px] !p-4 !min-w-[400px] !max-w-[400px]',
-          }}
+          className="!min-w-[400px] !max-w-[400px]"
           key={form.key('confirmPassword')}
           mt="md"
           {...form.getInputProps('confirmPassword')}
         />
-        <Button type="submit">Update Your Password</Button>
+        <Button type="submit" variant="gradient" size="sm">
+          Update Your Password
+        </Button>
       </Group>
     </form>
   );

@@ -1,14 +1,13 @@
 'use client';
 
 import { getBlogById } from '@/api/blogs.mjs';
+import BlogDetailSkeleton from '@/components/Skeletons/BlogDetailSkeleton';
 import {
   Avatar,
   Badge,
   Container,
   Flex,
   Group,
-  Loader,
-  Center,
   Space,
   Text,
   Title,
@@ -29,51 +28,48 @@ const BlogSingle = () => {
 
   if (isLoading || !blog) {
     return (
-      <Container size={1350} className="!mt-[50px] !px-6">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={1500} className="!mt-[24px]">
+        <BlogDetailSkeleton />
       </Container>
     );
   }
 
   return (
-    <Container size={1350} className="!mt-[50px] !px-6">
+    <Container size={1500} className="!mt-[24px]">
       <Text
         component={Title}
         variant="gradient"
-        className="!my-4 !text-[30px] md:!text-[50px] lg:!text-5xl"
+        className="!my-2 !text-[22px] md:!text-[28px]"
       >
         {blog.title}
       </Text>
       <Badge>{blog.category}</Badge>
-      <Space h={'md'} />
+      <Space h={'sm'} />
       <Flex justify={'space-between'} align={'center'}>
         <Group>
           <Avatar
             radius={'xs'}
-            size={'xl'}
+            size={'lg'}
             src={blog.createdBy?.avatar}
             alt="author-img"
           />
           <div>
-            <Text fw={600} className="!text-xl">
+            <Text fw={600} className="!text-base">
               {blog.createdBy?.name}
             </Text>
-            <Text fw={400} className="!text-md">
+            <Text fw={400} size="sm" c="dimmed">
               {blog.publishDate
                 ? dayjs(blog.publishDate).format('D MMM YYYY')
                 : ''}
             </Text>
-            <Text fw={400} className="!text-md">
+            <Text fw={400} size="sm" c="dimmed">
               {blog.authorDetails}
             </Text>
           </div>
         </Group>
       </Flex>
-      <Space h={'md'} />
+      <Space h={'sm'} />
       <BlogPageInner blog={blog} />
-      
     </Container>
   );
 };

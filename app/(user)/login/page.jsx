@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useLocalStorage } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -29,12 +29,13 @@ const Login = () => {
     setHydrated(true);
   }, []);
 
-  // Redirect if already logged in (only after hydration)
   useEffect(() => {
     if (hydrated) {
       try {
         const token = JSON.parse(localStorage.getItem('token') || 'null');
-        const loggedIn = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+        const loggedIn = JSON.parse(
+          localStorage.getItem('isLoggedIn') || 'false',
+        );
         if (token && loggedIn) {
           router.replace('/');
         }
@@ -83,14 +84,8 @@ const Login = () => {
     if (data?.status === 'success') {
       setToken(data.data.accessToken);
       setIsLoggedIn(true);
-      notifications.show({
-        title: 'Login Successful',
-        color: 'green',
-      });
+      toast.success('Login Successful');
 
-      // Use window.location for admin redirect since /admin is a
-      // different root layout - router.push() doesn't work reliably
-      // for cross-layout navigation in Next.js
       if (data.data.user?.admin) {
         window.location.href = '/admin';
       } else {
@@ -98,16 +93,15 @@ const Login = () => {
       }
     }
     if (data?.status === 'fail') {
-      notifications.show({
-        title: 'Invalid password or user does not exist',
-        color: 'red',
-      });
+      toast.error('Invalid password or user does not exist');
     }
   }, [data?.status]);
 
   return (
     <Container size={420} my={40}>
-      <Title ta="center">Welcome back!</Title>
+      <Title ta="center" order={2}>
+        Welcome back!
+      </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Do not have an account yet?{' '}
         <Anchor size="sm" component={Link} href="/register">
@@ -115,7 +109,7 @@ const Login = () => {
         </Anchor>
       </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md" className="glass-card">
+      <Paper withBorder shadow="md" p={20} mt={24} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             label="Email"
@@ -130,7 +124,7 @@ const Login = () => {
             key={form.key('password')}
             {...form.getInputProps('password')}
           />
-          <Group justify="space-between" mt="lg">
+          <Group justify="space-between" mt="md">
             <Checkbox
               label="Remember me"
               key={form.key('rememberMe')}
@@ -138,7 +132,7 @@ const Login = () => {
             />
             <Button
               component={Link}
-              size="sm"
+              size="compact-sm"
               href={'/forgetPassword'}
               variant="transparent"
               className="!underline"
@@ -146,7 +140,7 @@ const Login = () => {
               Forgot password?
             </Button>
           </Group>
-          <Button fullWidth mt="xl" type="submit" variant="gradient">
+          <Button fullWidth mt="xl" type="submit" variant="gradient" className="glow-btn">
             Sign in
           </Button>
         </form>

@@ -17,16 +17,25 @@ import {
   Textarea,
   Tooltip,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { readLocalStorageValue } from '@mantine/hooks';
 import dayjs from 'dayjs';
+import DOMPurify from 'dompurify';
 import Link from 'next/link';
 import { useState } from 'react';
+import '@/components/Editor/editor.css';
 
 const BlogDetails = ({ blog }) => {
-  const data = blog.content?.trim().split('\n\n') || [];
   const comments = blog.comments || [];
+  const isHtml = /<[a-z][\s\S]*>/i.test(blog.content || '');
+  const sanitizedContent =
+    isHtml && typeof window !== 'undefined'
+      ? DOMPurify.sanitize(blog.content || '')
+      : blog.content || '';
+  const plainParagraphs = !isHtml
+    ? blog.content?.trim().split('\n\n') || []
+    : [];
   const isLoggedIn = readLocalStorageValue({ key: 'isLoggedIn' });
   const [commentText, setCommentText] = useState('');
   const [showAllFavUsers, setShowAllFavUsers] = useState(false);
@@ -43,10 +52,10 @@ const BlogDetails = ({ blog }) => {
     onSuccess: () => {
       setCommentText('');
       queryClient.invalidateQueries({ queryKey: ['blog', blog._id] });
-      notifications.show({ title: 'Comment added!', color: 'green' });
+      toast.success('Comment added!');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to add comment', color: 'red' });
+      toast.error('Failed to add comment');
     },
   });
 
@@ -62,18 +71,17 @@ const BlogDetails = ({ blog }) => {
       <AspectRatio ratio={1}>
         <Image
           src={blog.blogPicUrl}
-          height={500}
+          height={400}
           alt={blog.title}
           radius="md"
         />
       </AspectRatio>
-      <Space h={'sm'} />
-      <FavoriteButton blogId={blog._id} size={24} />
+      <Space h={'xs'} />
+      <FavoriteButton blogId={blog._id} size={22} />
 
-      {/* Who favorited this blog */}
       {favUsers && favUsers.length > 0 && (
         <>
-          <Space h={'sm'} />
+          <Space h={'xs'} />
           <Text fw={500} fz="sm" c="dimmed">
             Favorited by:
           </Text>
@@ -109,20 +117,28 @@ const BlogDetails = ({ blog }) => {
         </>
       )}
 
+      <Space h={'sm'} />
+
+      {isHtml ? (
+        <div
+          className="blog-content"
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
+      ) : (
+        plainParagraphs.map((item, i) => (
+          <div key={i}>
+            <Text className="!text-[14px]">{item}</Text>
+            <Space h={'sm'} />
+          </div>
+        ))
+      )}
+
       <Space h={'md'} />
-
-      {data.map((item, i) => (
-        <div key={i}>
-          <Text className="!text-[18px]">{item}</Text>
-          <Space h={'md'} />
-        </div>
-      ))}
-
-      <Space h={'xl'} />
-      <Text className="!text-3xl">
-        {comments.length} Comment{comments.length !== 1 ? 's' : ''} on &quot;{blog.title}&quot;
+      <Text className="!text-xl" fw={600}>
+        {comments.length} Comment{comments.length !== 1 ? 's' : ''} on &quot;
+        {blog.title}&quot;
       </Text>
-      <Space h={'xl'} />
+      <Space h={'md'} />
 
       {comments.map((comment) => (
         <div key={comment._id}>
@@ -130,38 +146,38 @@ const BlogDetails = ({ blog }) => {
             <Group>
               <Avatar
                 radius={'xl'}
-                size={'lg'}
+                size={'md'}
                 alt={comment.createdBy?.name || 'User'}
                 src={comment.createdBy?.avatar || null}
               >
                 {comment.createdBy?.name?.charAt(0)?.toUpperCase()}
               </Avatar>
               <div>
-                <Text fw={500} className="!text-[16px]">
+                <Text fw={500} className="!text-[14px]">
                   {comment.createdBy?.name || 'User'}
                 </Text>
-                <Text fw={400} className="!text-xs">
+                <Text fw={400} size="xs" c="dimmed">
                   {comment.createdAt
                     ? dayjs(comment.createdAt).format('D MMM YYYY')
                     : ''}
                 </Text>
               </div>
             </Group>
-            <Card className="glass-card-static">
-              <Text>{comment.text}</Text>
+            <Card withBorder className="glass-card">
+              <Text size="sm">{comment.text}</Text>
             </Card>
           </Flex>
-          <Space h={'md'} />
+          <Space h={'sm'} />
         </div>
       ))}
 
-      <Space h={'xl'} />
+      <Space h={'md'} />
       <Divider size={'sm'} />
-      <Space h={'xl'} />
-      <Text fw={500} className="!text-3xl">
+      <Space h={'md'} />
+      <Text fw={600} className="!text-xl">
         Leave a comment
       </Text>
-      <Space h={'sm'} />
+      <Space h={'xs'} />
 
       {isLoggedIn ? (
         <>
@@ -172,7 +188,7 @@ const BlogDetails = ({ blog }) => {
             minRows={3}
             radius="md"
           />
-          <Space h={'md'} />
+          <Space h={'sm'} />
           <Button
             variant="gradient"
             onClick={handleSubmitComment}
@@ -182,9 +198,9 @@ const BlogDetails = ({ blog }) => {
           </Button>
         </>
       ) : (
-        <Text>
+        <Text size="sm">
           You must be{' '}
-          <Text component={Link} href={'/login'} className="!text-blue-500">
+          <Text component={Link} href={'/login'} c="cyan" span>
             logged in
           </Text>{' '}
           to post a comment.

@@ -9,7 +9,7 @@ import {
   Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 
 const ContactForm = () => {
@@ -34,17 +34,11 @@ const ContactForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: submitContact,
     onSuccess: () => {
-      notifications.show({
-        title: 'Message sent successfully!',
-        color: 'green',
-      });
+      toast.success('Message sent successfully!');
       form.reset();
     },
     onError: () => {
-      notifications.show({
-        title: 'Failed to send message',
-        color: 'red',
-      });
+      toast.error('Failed to send message');
     },
   });
 
@@ -57,64 +51,47 @@ const ContactForm = () => {
         <TextInput
           placeholder="Your name"
           name="name"
-          radius={'lg'}
           variant="filled"
           {...form.getInputProps('name')}
-          classNames={{
-            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
-          }}
         />
         <TextInput
           placeholder="Your email"
           name="email"
-          radius={'lg'}
           variant="filled"
           {...form.getInputProps('email')}
-          classNames={{
-            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
-          }}
         />
       </SimpleGrid>
-
       <SimpleGrid cols={{ base: 1, sm: 2 }} mt="md">
         <TextInput
           placeholder="Phone Number"
           name="phone"
-          radius={'lg'}
           variant="filled"
           {...form.getInputProps('phone')}
-          classNames={{
-            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
-          }}
         />
         <TextInput
           placeholder="Subject"
           name="subject"
-          radius={'lg'}
           variant="filled"
           {...form.getInputProps('subject')}
-          classNames={{
-            input: '!h-[60px] md:!h-[70px] !p-4 md:!p-6',
-          }}
         />
       </SimpleGrid>
-
       <Textarea
         mt="md"
         placeholder="Your message"
-        minRows={5}
-        radius={'lg'}
+        minRows={4}
         name="message"
         variant="filled"
         {...form.getInputProps('message')}
-        classNames={{
-          input: '!h-[300px] md:!h-[350px] !p-4 md:!p-6',
-        }}
       />
-
       <Group justify="center" mt="xl">
         <Center>
-          <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
+          <Button
+            variant="gradient"
+            size={'md'}
+            type="submit"
+            loading={isPending}
+            className="glow-btn"
+          >
             Send Message
           </Button>
         </Center>

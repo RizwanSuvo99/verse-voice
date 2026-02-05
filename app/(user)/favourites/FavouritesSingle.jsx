@@ -23,14 +23,10 @@ const FavouritesSingle = ({ favorite, onRemove }) => {
   if (!blog) return null;
 
   return (
-    <Card withBorder padding="lg" radius="md" className={`${classes.card} glass-card`}>
+    <Card withBorder padding="lg" radius="md" className={classes.card}>
       <Card.Section mb="sm">
         <Link href={`/blogs/${blog._id}`}>
-          <Image
-            src={blog.blogPicUrl}
-            alt={blog.title}
-            height={180}
-          />
+          <Image src={blog.blogPicUrl} alt={blog.title} height={180} />
         </Link>
       </Card.Section>
 
@@ -44,13 +40,12 @@ const FavouritesSingle = ({ favorite, onRemove }) => {
         </Link>
       </Text>
 
-      <Group mt="lg">
-        <Avatar
-          src={blog.createdBy?.avatar}
-          radius="sm"
-        />
+      <Group mt="md">
+        <Avatar src={blog.createdBy?.avatar} radius="sm" size="sm" />
         <div>
-          <Text fw={500}>{blog.createdBy?.name}</Text>
+          <Text fw={500} size="sm">
+            {blog.createdBy?.name}
+          </Text>
           <Text fz="xs" c="dimmed">
             {blog.publishDate
               ? dayjs(blog.publishDate).format('D MMM YYYY')
@@ -67,7 +62,7 @@ const FavouritesSingle = ({ favorite, onRemove }) => {
           <Group gap={0}>
             <ActionIcon variant="subtle" color="gray" onClick={onRemove}>
               <IconHeartFilled
-                style={{ width: rem(20), height: rem(20) }}
+                style={{ width: rem(18), height: rem(18) }}
                 color={theme.colors.red[6]}
                 stroke={1.5}
               />

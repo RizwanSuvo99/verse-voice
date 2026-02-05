@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { readLocalStorageValue, useLocalStorage } from '@mantine/hooks';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,7 +36,6 @@ const Register = () => {
       password: '',
       confirmPassword: '',
     },
-
     validate: {
       name: (value) =>
         value.trim().length < 4
@@ -78,17 +77,11 @@ const Register = () => {
     if (data?.status === 'success') {
       setToken(data.data?.accessToken || data.accessToken);
       setIsLoggedIn(true);
-      notifications.show({
-        title: 'Account created successfully',
-        color: 'green',
-      });
+      toast.success('Account created successfully');
       router.push('/');
     }
     if (data?.status === 'fail') {
-      notifications.show({
-        title: 'Already have an account or failed',
-        color: 'red',
-      });
+      toast.error('Already have an account or failed');
       setIsLoggedIn(false);
       setToken(null);
     }
@@ -96,11 +89,13 @@ const Register = () => {
 
   return (
     <Container size={420} my={40}>
-      <Title ta="center">Create new account!</Title>
+      <Title ta="center" order={2}>
+        Create new account!
+      </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Already have an account?{' '}
         <Button
-          size="sm"
+          size="compact-sm"
           component={Link}
           href={'/login'}
           variant="transparent"
@@ -110,7 +105,7 @@ const Register = () => {
         </Button>
       </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md" className="glass-card">
+      <Paper withBorder shadow="md" p={20} mt={24} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
             label="Name"
@@ -139,8 +134,7 @@ const Register = () => {
             mt="md"
             {...form.getInputProps('confirmPassword')}
           />
-
-          <Button fullWidth mt="xl" type="submit" variant="gradient">
+          <Button fullWidth mt="xl" type="submit" variant="gradient" className="glow-btn">
             Register Now
           </Button>
         </form>

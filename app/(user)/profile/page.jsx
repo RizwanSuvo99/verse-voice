@@ -2,20 +2,20 @@
 
 import { getCurrentUser, updateProfile } from '@/api/users.mjs';
 import RequireAuth from '@/components/RequireAuth';
+import ProfileSkeleton from '@/components/Skeletons/ProfileSkeleton';
 import {
   Avatar,
   Button,
   Center,
   Container,
   FileInput,
-  Loader,
   Space,
   Text,
   TextInput,
   Title,
   rem,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useEffect } from 'react';
@@ -38,23 +38,20 @@ const Profile = () => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: updateProfile,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['currentUser'] });
-      notifications.show({ title: 'Profile updated!', color: 'green' });
+      toast.success('Profile updated!');
       setAvatarFile(null);
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Failed to update profile',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Failed to update profile');
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) {
-      notifications.show({ title: 'Name is required', color: 'red' });
+      toast.error('Name is required');
       return;
     }
     const formData = new FormData();
@@ -71,21 +68,19 @@ const Profile = () => {
 
   if (isLoading) {
     return (
-      <Container size={600} className="!px-6 !py-4 !pt-[100px]">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={600} className="!px-6 !py-4 !pt-[32px]">
+        <ProfileSkeleton />
       </Container>
     );
   }
 
   return (
     <RequireAuth>
-      <Container size={600} className="!px-6 !py-4 !pt-[100px]">
+      <Container size={600} className="!px-6 !py-4 !pt-[32px]">
         <Text
           component={Title}
           variant="gradient"
-          className="!mb-6 !text-center !text-[40px]"
+          className="!mb-4 !text-center !text-[24px]"
         >
           Profile Settings
         </Text>
@@ -93,7 +88,7 @@ const Profile = () => {
         <Center>
           <Avatar
             src={user?.avatar || null}
-            size={120}
+            size={90}
             radius="xl"
             alt={user?.name}
           >
@@ -101,13 +96,15 @@ const Profile = () => {
           </Avatar>
         </Center>
 
-        <Space h="md" />
+        <Space h="sm" />
 
         <Center>
-          <Text c="dimmed">{user?.email}</Text>
+          <Text c="dimmed" size="sm">
+            {user?.email}
+          </Text>
         </Center>
 
-        <Space h="xl" />
+        <Space h="md" />
 
         <form onSubmit={handleSubmit}>
           <TextInput
@@ -115,8 +112,6 @@ const Profile = () => {
             placeholder="Your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            radius="lg"
-            classNames={{ input: '!h-[50px]' }}
           />
           <Space h="md" />
           <FileInput
@@ -127,14 +122,12 @@ const Profile = () => {
             value={avatarFile}
             onChange={setAvatarFile}
             accept="image/png,image/jpeg,image/jpg"
-            radius="lg"
-            classNames={{ input: '!h-[50px]' }}
           />
-          <Space h="xl" />
+          <Space h="md" />
           <Center>
             <Button
               variant="gradient"
-              size="lg"
+              size="md"
               type="submit"
               loading={isPending}
             >

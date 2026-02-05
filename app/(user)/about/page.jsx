@@ -1,7 +1,9 @@
 'use client';
 
 import { getSettings } from '@/api/siteSettings.mjs';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
+  ActionIcon,
   AspectRatio,
   Button,
   Card,
@@ -10,7 +12,6 @@ import {
   Grid,
   Group,
   Image,
-  Loader,
   SimpleGrid,
   Space,
   Text,
@@ -30,8 +31,14 @@ const DEFAULT_ABOUT_TEXT =
 
 const DEFAULT_ROLES = [
   { title: 'Current Lecturer', organization: 'Comilla Govt. College, Comilla' },
-  { title: 'Former Lecturer', organization: 'Chauddagram Govt. College, Comilla' },
-  { title: 'Former Assistant Director', organization: 'Anti-Corruption Commission - Bangladesh' },
+  {
+    title: 'Former Lecturer',
+    organization: 'Chauddagram Govt. College, Comilla',
+  },
+  {
+    title: 'Former Assistant Director',
+    organization: 'Anti-Corruption Commission - Bangladesh',
+  },
 ];
 
 const About = () => {
@@ -41,11 +48,7 @@ const About = () => {
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl" className="pt-[100px]">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={6} />;
   }
 
   const about = settings?.aboutPage || {};
@@ -53,15 +56,17 @@ const About = () => {
   const aboutEmail = about.email || 'pintu.eng@gmail.com';
   const aboutImage = about.imageUrl || '/assets/admin.png';
   const aboutText = about.aboutText || DEFAULT_ABOUT_TEXT;
-  const roles = about.roles && about.roles.length > 0 ? about.roles : DEFAULT_ROLES;
+  const roles =
+    about.roles && about.roles.length > 0 ? about.roles : DEFAULT_ROLES;
   const social = about.socialLinks || {};
 
   const aboutParagraphs = aboutText.split('\n').filter((p) => p.trim());
 
-  const hasSocialLinks = social.linkedin || social.twitter || social.facebook || social.email;
+  const hasSocialLinks =
+    social.linkedin || social.twitter || social.facebook || social.email;
 
   return (
-    <Container size={1350} className="!px-0 pt-[100px]">
+    <Container size={1500} className="pt-[24px]">
       <SimpleGrid
         cols={{ base: 1, md: 2 }}
         spacing="md"
@@ -70,7 +75,8 @@ const About = () => {
         <Card
           shadow="sm"
           radius="md"
-          className="!bg-[#0ea5ea] !p-[30px] !text-[#fff] md:!p-[40px]"
+          withBorder
+          className="!p-[24px] md:!p-[32px]"
         >
           <AspectRatio ratio={1}>
             <Image
@@ -79,54 +85,50 @@ const About = () => {
               fit="contain"
               fallbackSrc="https://placehold.co/70x70?text=admin-img"
               shadow="xl"
-              className="!h-[260px] sm:!h-[300px]"
+              className="!h-[220px] sm:!h-[260px]"
             />
           </AspectRatio>
           <Center>
             <Text
-              className="!text-center !text-[28px] md:!text-[40px]"
+              className="!text-center !text-[22px] md:!text-[28px]"
               fw={600}
             >
               {aboutName}
             </Text>
           </Center>
-          <Center my={'0 1.5rem'}>
-            <Text>{aboutEmail}</Text>
+          <Center my={'0 1rem'}>
+            <Text c="dimmed" size="sm">
+              {aboutEmail}
+            </Text>
           </Center>
           <Center>
-            <Button variant="white">Download CV</Button>
+            <Button variant="gradient" size="sm">
+              Download CV
+            </Button>
           </Center>
         </Card>
 
         <Grid gutter="md">
           <Grid.Col>
-            <Card
-              radius="md"
-              shadow="sm"
-              padding="lg"
-              className="!bg-[#0ea5ea] !text-[#fff]"
-            >
-              <Text component={Title}>About Me</Text>
-              <Space h={'sm'} />
+            <Card radius="md" shadow="sm" padding="lg" withBorder>
+              <Text component={Title} order={3}>
+                About Me
+              </Text>
+              <Space h={'xs'} />
               {aboutParagraphs.map((paragraph, index) => (
                 <div key={index}>
-                  <Text>{paragraph}</Text>
-                  {index < aboutParagraphs.length - 1 && <Space h={'sm'} />}
+                  <Text size="sm">{paragraph}</Text>
+                  {index < aboutParagraphs.length - 1 && <Space h={'xs'} />}
                 </div>
               ))}
             </Card>
           </Grid.Col>
           <Grid.Col>
-            <Card
-              radius="md"
-              shadow="sm"
-              padding="lg"
-              className="!bg-[#0ea5ea] !text-[#fff]"
-            >
-              <Text fw={600} className="!text-2xl">
+            <Card radius="md" shadow="sm" padding="lg" withBorder>
+              <Text fw={600} className="!text-lg">
                 Latest Roles
               </Text>
-              <Space h={'sm'} />
+              <Space h={'xs'} />
               {roles.map((role, index) => (
                 <LatestRole
                   key={index}
@@ -134,92 +136,72 @@ const About = () => {
                   text_2={role.organization}
                 />
               ))}
-              <Space h={'sm'} />
-              <Text fw={600} className="!text-md">
+              <Space h={'xs'} />
+              <Text fw={600} size="sm">
                 Connect Me
               </Text>
-              <Space h={'5px'} />
+              <Space h={'4px'} />
               <Group>
                 {hasSocialLinks ? (
                   <>
                     {social.linkedin && (
-                      <Button
-                        fw={500}
-                        variant="white"
+                      <ActionIcon
+                        variant="subtle"
                         component="a"
                         href={social.linkedin}
                         target="_blank"
-                        className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
+                        size="lg"
                       >
-                        <IconBrandLinkedin />
-                      </Button>
+                        <IconBrandLinkedin size={18} />
+                      </ActionIcon>
                     )}
                     {social.twitter && (
-                      <Button
-                        fw={500}
-                        variant="white"
+                      <ActionIcon
+                        variant="subtle"
                         component="a"
                         href={social.twitter}
                         target="_blank"
-                        className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
+                        size="lg"
                       >
-                        <IconBrandX />
-                      </Button>
+                        <IconBrandX size={18} />
+                      </ActionIcon>
                     )}
                     {social.facebook && (
-                      <Button
-                        fw={500}
-                        variant="white"
+                      <ActionIcon
+                        variant="subtle"
                         component="a"
                         href={social.facebook}
                         target="_blank"
-                        className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
+                        size="lg"
                       >
-                        <IconBrandFacebook />
-                      </Button>
+                        <IconBrandFacebook size={18} />
+                      </ActionIcon>
                     )}
                     {social.email && (
-                      <Button
-                        fw={500}
-                        variant="white"
+                      <ActionIcon
+                        variant="subtle"
                         component="a"
                         href={`mailto:${social.email}`}
-                        className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
+                        size="lg"
                       >
-                        <IconMail />
-                      </Button>
+                        <IconMail size={18} />
+                      </ActionIcon>
                     )}
                   </>
                 ) : (
                   <>
-                    <Button
-                      fw={500}
-                      variant="white"
-                      className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
-                    >
-                      <IconBrandLinkedin />
-                    </Button>
-                    <Button
-                      fw={500}
-                      variant="white"
-                      className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
-                    >
-                      <IconBrandX />
-                    </Button>
-                    <Button
-                      fw={500}
-                      variant="white"
-                      className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
-                    >
-                      <IconBrandFacebook />
-                    </Button>
-                    <Button
-                      fw={500}
-                      variant="white"
-                      className="!flex !h-[35px] !w-[35px] !items-center !justify-center !rounded-full"
-                    >
-                      <IconMail />
-                    </Button>
+                    <ActionIcon variant="subtle" size="lg">
+                      <IconBrandLinkedin size={18} />
+                    </ActionIcon>
+                    <ActionIcon variant="subtle" size="lg">
+                      <IconBrandX size={18} />
+                    </ActionIcon>
+                    <ActionIcon variant="subtle" size="lg">
+                      <IconBrandFacebook size={18} />
+                    </ActionIcon>
+                    <ActionIcon variant="subtle" size="lg">
+                      <IconMail size={18} />
+                    </ActionIcon>
                   </>
                 )}
               </Group>

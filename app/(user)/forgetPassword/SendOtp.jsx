@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { validUser } from '@/api/validUser.mjs';
-import { Button, Center, Group, Loader, TextInput } from '@mantine/core';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
+import { Button, Group, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -40,30 +41,25 @@ const SendOtp = ({ handleChangeMode, setOtpVerificationObj }) => {
       handleChangeMode('verifyOtp');
     }
     if (data?.status === 'fail') {
-      notifications.show({
-        title: 'Email is not valid or not registered',
-      });
+      toast('Email is not valid or not registered');
     }
   }, [data?.status]);
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)}>
       {isPending ? (
-        <Center>
-          <Loader color="blue" />
-        </Center>
+        <FormSkeleton fields={1} />
       ) : (
         <Group justify="center" className="!flex-col">
           <TextInput
             placeholder="Please enter your email"
-            radius={'xl'}
-            classNames={{
-              input: '!h-[40px] !p-4 !min-w-[400px] !max-w-[400px]',
-            }}
+            className="!min-w-[400px] !max-w-[400px]"
             key={form.key('email')}
             {...form.getInputProps('email')}
           />
-          <Button type="submit">Sent OTP</Button>
+          <Button type="submit" variant="gradient" size="sm">
+            Sent OTP
+          </Button>
         </Group>
       )}
     </form>

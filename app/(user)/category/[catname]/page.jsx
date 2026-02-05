@@ -1,7 +1,8 @@
 'use client';
 
 import { getBlogsByCategory } from '@/api/blogs.mjs';
-import { Badge, Container, Flex, Loader, Center, Space, Text, Title } from '@mantine/core';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
+import { Badge, Container, Flex, Space, Text, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import CategoryPageInner from './CategoryPageInner';
@@ -20,27 +21,25 @@ const Category = () => {
 
   if (isLoading) {
     return (
-      <Container size={1300} className="!pt-[50px]">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={1500} className="!pt-[24px]">
+        <BlogGridSkeleton count={6} />
       </Container>
     );
   }
 
   return (
-    <Container size={1300} className="!pt-[50px]">
+    <Container size={1500} className="!pt-[24px]">
       <Flex gap={'sm'}>
         <Text
           component={Title}
           variant="gradient"
-          className="!text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
+          className="!text-center !text-[24px] !leading-[36px] md:!text-[28px]"
         >
           {categoryName}
         </Text>
         <Badge>{`${blogs?.length || 0} article${blogs?.length !== 1 ? 's' : ''}`}</Badge>
       </Flex>
-      <Space h={'xl'} />
+      <Space h={'md'} />
       <CategoryPageInner foundBlogs={blogs || []} />
     </Container>
   );

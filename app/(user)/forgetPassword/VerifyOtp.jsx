@@ -1,6 +1,6 @@
 import { verifyOtp } from '@/api/verifyOtp.mjs';
 import { Button, Group, PinInput } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -34,9 +34,7 @@ const VerifyOtp = ({
       handleChangeMode('updatePassword');
     }
     if (data?.status === 'fail') {
-      notifications.show({
-        title: 'Otp is not valid',
-      });
+      toast('Otp is not valid');
     }
   }, [data?.status]);
 
@@ -49,7 +47,9 @@ const VerifyOtp = ({
           size="md"
           onChange={handleOtpChange}
         />
-        <Button onClick={handleSubmit}>Verify Otp</Button>
+        <Button onClick={handleSubmit} variant="gradient" size="sm">
+          Verify Otp
+        </Button>
       </Group>
     </form>
   );

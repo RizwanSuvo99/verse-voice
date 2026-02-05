@@ -16,7 +16,7 @@ const ForgetPassword = () => {
   };
 
   return (
-    <Container size={1350} className="!pt-[50px]">
+    <Container size={1500} className="!pt-[24px]">
       {mode === 'sendOtp' && (
         <SendOtp
           handleChangeMode={handleChangeMode}

@@ -20,7 +20,7 @@ const CategoryPageInner = ({ foundBlogs }) => {
     <>
       <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>{items}</SimpleGrid>
       <Space h={'xl'} />
-      <Pagination total={data.length} value={activePage} onChange={setPage} />
+      <Pagination total={data.length} value={activePage} onChange={setPage} className="glass-pagination" />
     </>
   );
 };

@@ -2,9 +2,10 @@
 
 import { getFavorites, removeFavorite } from '@/api/favorites.mjs';
 import RequireAuth from '@/components/RequireAuth';
-import { Container, SimpleGrid, Loader, Center, Text, Title } from '@mantine/core';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
+import { Container, SimpleGrid, Center, Text, Title } from '@mantine/core';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import FavouritesSingle from './FavouritesSingle';
 
 const Favourites = () => {
@@ -19,48 +20,46 @@ const Favourites = () => {
     mutationFn: removeFavorite,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['favorites'] });
-      notifications.show({ title: 'Removed from favorites', color: 'blue' });
+      toast.info('Removed from favorites');
     },
   });
 
   if (isLoading) {
     return (
-      <Container size={1350} className="!px-6 !py-4 !pt-[50px]">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={1500} className="!py-4 !pt-[24px]">
+        <BlogGridSkeleton count={4} cols={{ base: 1, sm: 2 }} />
       </Container>
     );
   }
 
   return (
     <RequireAuth>
-    <Container size={1350} className="!px-6 !py-4 !pt-[50px]">
-      <Text
-        component={Title}
-        variant="gradient"
-        className="!mb-6 !text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
-      >
-        My Favourites
-      </Text>
-      {!favorites || favorites.length === 0 ? (
-        <Center py="xl">
-          <Text c="dimmed" size="lg">
-            No favourites yet. Start adding blogs to your favourites!
-          </Text>
-        </Center>
-      ) : (
-        <SimpleGrid cols={{ base: 1, sm: 2 }}>
-          {favorites.map((fav) => (
-            <FavouritesSingle
-              key={fav._id}
-              favorite={fav}
-              onRemove={() => unfavorite(fav.blog?._id)}
-            />
-          ))}
-        </SimpleGrid>
-      )}
-    </Container>
+      <Container size={1500} className="!py-4 !pt-[24px]">
+        <Text
+          component={Title}
+          variant="gradient"
+          className="!mb-4 !text-center !text-[24px] !leading-[36px] md:!text-[28px]"
+        >
+          My Favourites
+        </Text>
+        {!favorites || favorites.length === 0 ? (
+          <Center py="xl">
+            <Text c="dimmed" size="sm">
+              No favourites yet. Start adding blogs to your favourites!
+            </Text>
+          </Center>
+        ) : (
+          <SimpleGrid cols={{ base: 1, sm: 2 }}>
+            {favorites.map((fav) => (
+              <FavouritesSingle
+                key={fav._id}
+                favorite={fav}
+                onRemove={() => unfavorite(fav.blog?._id)}
+              />
+            ))}
+          </SimpleGrid>
+        )}
+      </Container>
     </RequireAuth>
   );
 };

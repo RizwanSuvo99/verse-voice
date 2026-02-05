@@ -1,7 +1,8 @@
 'use client';
 
 import { getSettings } from '@/api/siteSettings.mjs';
-import { Center, Container, Flex, Loader, Space, Text, Title } from '@mantine/core';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
+import { Center, Container, Flex, Space, Text, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import ContactForm from './ContactForm';
 import ContactText from './ContactText';
@@ -14,18 +15,14 @@ const Contact = () => {
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={4} />;
   }
 
   const cp = settings?.contactPage || {};
   const heading = cp.heading || 'Contact Us';
   const description =
     cp.description ||
-    "I'd love to hear from you! Whether you have questions, feedback, or want to share your own writing journey, reach out to me. Your thoughts are important, and together we can inspire creativity and connection. Let's build a vibrant community of young writers!";
+    "I'd love to hear from you! Whether you have questions, feedback, or want to share your own writing journey, reach out to me.";
   const phone1 = cp.phone1 || '+8801675697313';
   const phone2 = cp.phone2 || '+8801912033727';
   const email1 = cp.email1 || 'pintu.eng@gmail.com';
@@ -35,29 +32,33 @@ const Contact = () => {
   const mapEmbedUrl = cp.mapEmbedUrl || '';
   const formHeading = cp.formHeading || 'Drop Us a Message';
   const formDescription =
-    cp.formDescription || 'Your email address will not be published. All the fields are required.';
+    cp.formDescription ||
+    'Your email address will not be published. All the fields are required.';
 
   return (
-    <Container size={1350} className="!px-6 !py-4">
+    <Container size={1500} className="!py-4">
       <Center>
         <Text
           component={Title}
           variant="gradient"
-          className="!mb-[30px] !mt-[50px] text-center !text-[45px] md:!text-[65px]"
+          className="!mb-[12px] !mt-[24px] text-center !text-[24px] md:!text-[32px]"
         >
           {heading}
         </Text>
       </Center>
       <Center>
-        <Text className="!max-w-[780px] !text-center !text-[16px] !text-[#94A9C9] md:!text-[20px]">
+        <Text
+          c="dimmed"
+          className="!max-w-[780px] !text-center !text-[13px] md:!text-[14px]"
+        >
           {description}
         </Text>
       </Center>
-      <Space h={'xl'} />
+      <Space h={'md'} />
       <Center>
         <Flex
           justify={'center'}
-          className="flex-wrap !gap-4 md:!gap-8"
+          className="flex-wrap !gap-3 md:!gap-6"
           position="center"
         >
           <ContactText
@@ -77,20 +78,22 @@ const Contact = () => {
           />
         </Flex>
       </Center>
-      <Space h={'80px'} />
+      <Space h={'32px'} />
       <Map embedUrl={mapEmbedUrl} />
-
       <Center>
         <Text
           component={Title}
           variant="gradient"
-          className="!mb-[10px] !mt-[50px] text-center !text-[30px] md:!text-[45px]"
+          className="!mb-[8px] !mt-[24px] text-center !text-[22px] md:!text-[28px]"
         >
           {formHeading}
         </Text>
       </Center>
       <Center>
-        <Text className="!max-w-[780px] !text-center !text-[16px] !text-[#94A9C9] md:!text-[20px]">
+        <Text
+          c="dimmed"
+          className="!max-w-[780px] !text-center !text-[13px] md:!text-[14px]"
+        >
           {formDescription}
         </Text>
       </Center>

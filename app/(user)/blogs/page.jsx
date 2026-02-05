@@ -1,10 +1,9 @@
 'use client';
 
 import { getBlogs } from '@/api/blogs.mjs';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Container,
-  Loader,
-  Center,
   Pagination,
   SimpleGrid,
   Space,
@@ -25,24 +24,25 @@ const Blogs = () => {
 
   if (isLoading) {
     return (
-      <Container size={1300} className="!pt-[50px]">
-        <Center py="xl">
-          <Loader />
-        </Center>
+      <Container size={1500} className="!pt-[24px]">
+        <BlogGridSkeleton count={6} />
       </Container>
     );
   }
 
   return (
-    <Container size={1300} className="!pt-[50px]">
+    <Container size={1500} className="!pt-[24px]">
       <Text
         component={Title}
         variant="gradient"
-        className="!text-center !text-[40px] !leading-[60px] md:!text-[50px] lg:!text-5xl"
+        className="!text-center !text-[24px] !leading-[36px] md:!text-[28px]"
       >
         All Blogs
       </Text>
-      <Text className="!mb-6 !mt-2 !text-center !text-[16px] md:!text-[20px] lg:!text-2xl">
+      <Text
+        c="dimmed"
+        className="!mb-4 !mt-1 !text-center !text-[13px] md:!text-[14px]"
+      >
         All the latest blogs
       </Text>
       <SimpleGrid cols={{ base: 1, xs: 2, md: 3 }}>
@@ -50,7 +50,7 @@ const Blogs = () => {
           <SingleBlog blog={blog} key={blog._id} />
         ))}
       </SimpleGrid>
-      <Space h={'xl'} />
+      <Space h={'md'} />
       <Pagination
         total={data?.totalPages || 1}
         value={activePage}
