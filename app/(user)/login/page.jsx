@@ -93,7 +93,7 @@ const Login = () => {
       }
     }
     if (data?.status === 'fail') {
-      toast.error('Invalid password or user does not exist');
+      toast.error(data.message || 'Invalid password or user does not exist');
     }
   }, [data?.status]);
 

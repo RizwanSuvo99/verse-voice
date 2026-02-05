@@ -7,6 +7,7 @@ export const loginUser = async (data) => {
   } catch (error) {
     return {
       status: 'fail',
+      message: error?.response?.data?.message,
     };
   }
 };

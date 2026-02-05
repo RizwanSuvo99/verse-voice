@@ -42,10 +42,15 @@ const handleResponseError = (error) => {
   const message = error?.response?.data?.message;
 
   if (status === 401 || status === 403) {
-    localStorage.removeItem('token');
-    localStorage.removeItem('isLoggedIn');
-    toast.error('Session expired. Please log in again.');
-    window.location.href = '/login';
+    const isLoginPage = window.location.pathname === '/login';
+    if (isLoginPage) {
+      toast.error(message || 'Invalid credentials');
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('isLoggedIn');
+      toast.error(message || 'Session expired. Please log in again.');
+      window.location.href = '/login';
+    }
   } else if (status === 429) {
     toast.error('Too many requests. Please slow down.');
   } else if (status >= 500) {
