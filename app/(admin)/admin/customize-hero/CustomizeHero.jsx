@@ -62,6 +62,8 @@ const CustomizeHero = () => {
     },
   });
 
+  const previewUrl = logoFile ? URL.createObjectURL(logoFile) : logoUrl;
+
   const handleSave = () => {
     if (logoFile) {
       const formData = new FormData();
@@ -90,9 +92,9 @@ const CustomizeHero = () => {
       />
       <Space h="md" />
 
-      {logoUrl && (
+      {previewUrl && (
         <Image
-          src={logoUrl}
+          src={previewUrl}
           alt="Site logo preview"
           h={60}
           w={60}
