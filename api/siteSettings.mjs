@@ -11,6 +11,13 @@ export const updateSettings = async (data) => {
   return response.data;
 };
 
+export const uploadAboutImage = async (formData) => {
+  const response = await axiosPrivate.put('/settings/about-image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+};
+
 export const addCategory = async (formData) => {
   const response = await axiosPrivate.post('/settings/categories', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

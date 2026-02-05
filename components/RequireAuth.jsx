@@ -1,6 +1,6 @@
 'use client';
 
-import { Center, Loader, Text } from '@mantine/core';
+import { Center, Loader } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -12,7 +12,9 @@ const RequireAuth = ({ children }) => {
     try {
       const raw = localStorage.getItem('token');
       const token = raw ? JSON.parse(raw) : null;
-      const loggedIn = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+      const loggedIn = JSON.parse(
+        localStorage.getItem('isLoggedIn') || 'false',
+      );
 
       if (token && loggedIn) {
         setStatus('authenticated');

@@ -1,8 +1,8 @@
 import axios from '@/utilities/axios';
 
-export const getBlogs = async ({ page = 1, limit = 10, search = '', sort = 'createdAt', order = 'desc' } = {}) => {
+export const getBlogs = async ({ page = 1, limit = 10, search = '', sort = 'createdAt', order = 'desc', category = '', author = '' } = {}) => {
   const response = await axios.get('/blogs', {
-    params: { page, limit, search, sort, order },
+    params: { page, limit, search, sort, order, category, author },
   });
   return response.data;
 };

@@ -32,3 +32,25 @@ axiosPrivate.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+// Add response interceptor for error handling
+const handleResponseError = (error) => {
+  if (typeof window !== 'undefined') {
+    const status = error?.response?.status;
+    const { toast } = require('sonner');
+
+    if (status === 401 || status === 403) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('isLoggedIn');
+      toast.error('Session expired. Please log in again.');
+      window.location.href = '/login';
+    } else if (status === 429) {
+      toast.error('Too many requests. Please slow down.');
+    } else if (status >= 500) {
+      toast.error('Server error. Please try again later.');
+    }
+  }
+  return Promise.reject(error);
+};
+
+axiosPrivate.interceptors.response.use((res) => res, handleResponseError);

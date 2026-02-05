@@ -27,6 +27,11 @@ export const rejectRequest = async ({ id, adminNote }) => {
   return response.data;
 };
 
+export const updateBlogRequest = async ({ id, data }) => {
+  const response = await axiosPrivate.put(`/blog-requests/${id}`, data);
+  return response.data;
+};
+
 export const deleteRequest = async (id) => {
   const response = await axiosPrivate.delete(`/blog-requests/${id}`);
   return response.data;
