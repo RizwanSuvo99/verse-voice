@@ -11,29 +11,26 @@
 }
 
 .mobileMenu {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 80%;
   z-index: 1000;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateX(-100%);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  align-items: stretch;
+  gap: 0.25rem;
+  background: var(--bg-base);
   color: var(--text-primary);
   border-right: 1px solid var(--border-subtle);
+  overflow-y: auto;
 }
 
 .menuOpened {
-  display: block;
   transform: translateX(0);
 }
 
@@ -43,15 +40,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 900;
 }
 
-.mobileMenu .mantine-Button-root {
+.mobileThemeToggle {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  margin-top: 0.5rem;
 }

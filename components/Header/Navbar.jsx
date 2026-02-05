@@ -6,7 +6,6 @@ import {
   Container,
   Group,
   Overlay,
-  Paper,
 } from '@mantine/core';
 import { useDisclosure, useLocalStorage } from '@mantine/hooks';
 import Link from 'next/link';
@@ -135,10 +134,8 @@ const Navbar = () => {
         )}
 
         {/* Mobile Menu */}
-        <Paper
+        <div
           className={`${classes.mobileMenu} ${opened ? classes.menuOpened : ''}`}
-          withBorder
-          hiddenFrom="md"
         >
           {navLinks.map((link) => (
             <Button
@@ -148,13 +145,52 @@ const Navbar = () => {
               href={link.link}
               onClick={close}
               fullWidth
-              className="!mb-2"
             >
               {link.label}
             </Button>
           ))}
-          <ThemeToggle />
-        </Paper>
+
+          {hydrated && (
+            <>
+              {!loggedIn && (
+                <>
+                  <Button
+                    variant="subtle"
+                    component={Link}
+                    href="/login"
+                    onClick={close}
+                    fullWidth
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    variant="gradient"
+                    component={Link}
+                    href="/register"
+                    onClick={close}
+                    fullWidth
+                  >
+                    Register
+                  </Button>
+                </>
+              )}
+              {loggedIn && (
+                <Button
+                  variant="subtle"
+                  color="red"
+                  onClick={() => { handleLogOut(); close(); }}
+                  fullWidth
+                >
+                  Log out
+                </Button>
+              )}
+            </>
+          )}
+
+          <div className={classes.mobileThemeToggle}>
+            <ThemeToggle />
+          </div>
+        </div>
       </Container>
     </header>
   );
