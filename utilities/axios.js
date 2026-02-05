@@ -3,7 +3,7 @@ import axios from 'axios';
 const NEXT_PUBLIC_API_URL = 'https://verse-voice-backend.vercel.app/api/v1';
 const NEXT_PUBLIC_TEST_API_URL = 'http://localhost:8000/api/v1';
 
-const BASE_URL = NEXT_PUBLIC_TEST_API_URL;
+const BASE_URL = process.env.NODE_ENV === 'production' ? NEXT_PUBLIC_API_URL : NEXT_PUBLIC_TEST_API_URL;
 
 export default axios.create({
   baseURL: BASE_URL,
