@@ -7,9 +7,6 @@ const nextConfig = {
       { protocol: 'https', hostname: '**' },
     ],
   },
-  experimental: {
-    runtime: 'edge',
-  },
 };
 
 export default nextConfig;
