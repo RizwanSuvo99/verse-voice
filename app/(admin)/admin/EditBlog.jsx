@@ -4,19 +4,19 @@ import { updateBlog } from '@/api/adminBlogs.mjs';
 import { getSettings } from '@/api/siteSettings.mjs';
 import {
   Button,
-  Center,
   FileInput,
   Group,
   Select,
   SimpleGrid,
+  Text,
   TextInput,
-  Textarea,
   rem,
 } from '@mantine/core';
+import RichTextEditor from '@/components/Editor/RichTextEditor';
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -26,7 +26,7 @@ const EditBlog = ({ blog, setActiveView }) => {
   const [blogImage, setBlogImage] = useState(null);
   const [authorImage, setAuthorImage] = useState(null);
   const [publishDate, setPublishDate] = useState(
-    blog?.publishDate ? new Date(blog.publishDate) : null
+    blog?.publishDate ? new Date(blog.publishDate) : null,
   );
 
   const { data: settings } = useQuery({
@@ -60,7 +60,7 @@ const EditBlog = ({ blog, setActiveView }) => {
   const { mutate, isPending } = useMutation({
     mutationFn: updateBlog,
     onSuccess: () => {
-      notifications.show({ title: 'Blog updated!', color: 'green' });
+      toast.success('Blog updated!');
       queryClient.invalidateQueries({ queryKey: ['adminBlogs'] });
       queryClient.invalidateQueries({ queryKey: ['blogs'] });
       queryClient.invalidateQueries({ queryKey: ['featuredBlogs'] });
@@ -68,7 +68,7 @@ const EditBlog = ({ blog, setActiveView }) => {
       setActiveView('All Blogs');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to update blog', color: 'red' });
+      toast.error('Failed to update blog');
     },
   });
 
@@ -93,26 +93,17 @@ const EditBlog = ({ blog, setActiveView }) => {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} className="!w-full">
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="xl">
-        <TextInput
-          placeholder="Blog Title"
-          radius={'lg'}
-          {...form.getInputProps('title')}
-          classNames={{ input: '!h-[50px]' }}
-        />
+      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+        <TextInput placeholder="Blog Title" {...form.getInputProps('title')} />
         <Select
           placeholder="Select category"
-          radius={'lg'}
           data={categoryOptions}
           searchable
           {...form.getInputProps('category')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <FileInput
           leftSection={icon}
           placeholder="Blog Image (leave empty to keep current)"
-          radius={'lg'}
-          classNames={{ input: '!h-[50px]' }}
           clearable
           value={blogImage}
           onChange={setBlogImage}
@@ -121,24 +112,18 @@ const EditBlog = ({ blog, setActiveView }) => {
 
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
         <DateInput
-          radius={'lg'}
           value={publishDate}
           onChange={setPublishDate}
           placeholder="Select Publish Date"
-          classNames={{ input: '!h-[50px]' }}
           clearable
         />
         <TextInput
           placeholder="Author name"
-          radius={'lg'}
           {...form.getInputProps('authorName')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <FileInput
           leftSection={icon}
           placeholder="Author Image (leave empty to keep current)"
-          radius={'lg'}
-          classNames={{ input: '!h-[50px]' }}
           clearable
           value={authorImage}
           onChange={setAuthorImage}
@@ -148,40 +133,42 @@ const EditBlog = ({ blog, setActiveView }) => {
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
         <TextInput
           placeholder="Author Details (e.g. Roll: 1234)"
-          radius={'lg'}
           {...form.getInputProps('authorDetails')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <TextInput
           placeholder="Time Read (e.g. 5 mins read)"
-          radius={'lg'}
           {...form.getInputProps('timeRead')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <Select
           placeholder="Featured?"
-          radius={'lg'}
           data={['No', 'Yes']}
           value={form.values.isFeatured ? 'Yes' : 'No'}
-          classNames={{ input: '!h-[50px]' }}
           onChange={(val) => form.setFieldValue('isFeatured', val === 'Yes')}
         />
       </SimpleGrid>
 
-      <Textarea
-        mt="md"
-        placeholder="Blog Content"
-        minRows={5}
-        radius={'lg'}
-        {...form.getInputProps('content')}
-        classNames={{ input: '!h-[350px] !p-6' }}
-      />
+      <div style={{ marginTop: 'var(--mantine-spacing-md)' }}>
+        <RichTextEditor
+          content={form.values.content}
+          onChange={(html) => form.setFieldValue('content', html)}
+          placeholder="Blog Content"
+        />
+        {form.errors.content && (
+          <Text c="red" fz="sm" mt={4}>
+            {form.errors.content}
+          </Text>
+        )}
+      </div>
 
       <Group justify="center" mt="xl" gap="md">
-        <Button variant="default" size={'xl'} onClick={() => setActiveView('All Blogs')}>
+        <Button
+          variant="default"
+          size="md"
+          onClick={() => setActiveView('All Blogs')}
+        >
           Cancel
         </Button>
-        <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
+        <Button variant="gradient" className="glow-btn" size="md" type="submit" loading={isPending}>
           Update Blog
         </Button>
       </Group>

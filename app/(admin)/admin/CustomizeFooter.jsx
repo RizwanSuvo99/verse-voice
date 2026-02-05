@@ -1,18 +1,17 @@
 'use client';
 
 import { getSettings, updateSettings } from '@/api/siteSettings.mjs';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   Button,
-  Center,
   Group,
-  Loader,
   Space,
   Text,
   TextInput,
   Textarea,
   Title,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -41,24 +40,20 @@ const CustomizeFooter = () => {
     mutationFn: updateSettings,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'Footer updated!', color: 'green' });
+      toast.success('Footer updated!');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to update', color: 'red' });
+      toast.error('Failed to update');
     },
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={4} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Customize Footer
       </Text>
 
@@ -67,7 +62,6 @@ const CustomizeFooter = () => {
         value={footerText}
         onChange={(e) => setFooterText(e.target.value)}
         minRows={4}
-        size="lg"
       />
       <Space h="md" />
       <TextInput
@@ -94,7 +88,8 @@ const CustomizeFooter = () => {
       <Group>
         <Button
           variant="gradient"
-          size="lg"
+          className="glow-btn"
+          size="md"
           loading={isPending}
           onClick={() =>
             mutate({

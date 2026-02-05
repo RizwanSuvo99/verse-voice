@@ -1,18 +1,17 @@
 'use client';
 
 import { getSettings, updateSettings } from '@/api/siteSettings.mjs';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   Button,
-  Center,
   Group,
-  Loader,
   SimpleGrid,
   Text,
   TextInput,
   Textarea,
   Title,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -57,10 +56,10 @@ const CustomizeContact = () => {
     mutationFn: updateSettings,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'Contact page updated!', color: 'green' });
+      toast.success('Contact page updated!');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to update', color: 'red' });
+      toast.error('Failed to update');
     },
   });
 
@@ -83,16 +82,12 @@ const CustomizeContact = () => {
   };
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={8} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Customize Contact Page
       </Text>
 
@@ -167,7 +162,13 @@ const CustomizeContact = () => {
       />
 
       <Group justify="center" mt="xl">
-        <Button variant="gradient" size="lg" loading={isPending} onClick={handleSubmit}>
+        <Button
+          variant="gradient"
+          className="glow-btn"
+          size="md"
+          loading={isPending}
+          onClick={handleSubmit}
+        >
           Save Changes
         </Button>
       </Group>

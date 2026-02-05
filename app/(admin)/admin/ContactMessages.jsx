@@ -1,19 +1,18 @@
 'use client';
 
 import { getAllContacts, markAsRead } from '@/api/contact.mjs';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
   Button,
   Card,
-  Center,
   Group,
-  Loader,
   SimpleGrid,
   Space,
   Text,
   Title,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
@@ -29,21 +28,17 @@ const ContactMessages = () => {
     mutationFn: markAsRead,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contacts'] });
-      notifications.show({ title: 'Marked as read', color: 'green' });
+      toast.success('Marked as read');
     },
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Contact Messages
       </Text>
 

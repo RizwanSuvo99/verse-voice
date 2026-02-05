@@ -8,6 +8,7 @@ import CreateBlog from './CreateBlog';
 import AllBlogs from './AllBlogs';
 import EditBlog from './EditBlog';
 import BlogRequests from './BlogRequests';
+import EditBlogRequest from './EditBlogRequest';
 import CustomizeHero from './CustomizeHero';
 import CustomizeFooter from './CustomizeFooter';
 import CustomizeAbout from './CustomizeAbout';
@@ -20,17 +21,32 @@ const AdminDashboard = () => {
   const [opened, { toggle }] = useDisclosure();
   const [activeView, setActiveView] = useState('Create Blog');
   const [editBlog, setEditBlog] = useState(null);
+  const [editRequest, setEditRequest] = useState(null);
 
   const renderView = () => {
     switch (activeView) {
       case 'Create Blog':
         return <CreateBlog />;
       case 'All Blogs':
-        return <AllBlogs setActiveView={setActiveView} setEditBlog={setEditBlog} />;
+        return (
+          <AllBlogs setActiveView={setActiveView} setEditBlog={setEditBlog} />
+        );
       case 'Edit Blog':
         return <EditBlog blog={editBlog} setActiveView={setActiveView} />;
       case 'Blog Requests':
-        return <BlogRequests />;
+        return (
+          <BlogRequests
+            setActiveView={setActiveView}
+            setEditRequest={setEditRequest}
+          />
+        );
+      case 'Edit Blog Request':
+        return (
+          <EditBlogRequest
+            request={editRequest}
+            setActiveView={setActiveView}
+          />
+        );
       case 'Customize Hero':
         return <CustomizeHero />;
       case 'Customize Footer':
@@ -52,15 +68,16 @@ const AdminDashboard = () => {
 
   return (
     <AppShell
+      header={{ height: 60 }}
       navbar={{
-        width: 300,
+        width: 260,
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" px="md" style={{ height: '100%' }} />
       </AppShell.Header>
 
       <AppShell.Navbar p="md">

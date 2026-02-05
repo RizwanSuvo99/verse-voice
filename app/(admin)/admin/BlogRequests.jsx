@@ -1,27 +1,31 @@
 'use client';
 
-import { getAllRequests, approveRequest, rejectRequest, deleteRequest } from '@/api/blogRequests.mjs';
+import {
+  getAllRequests,
+  approveRequest,
+  rejectRequest,
+  deleteRequest,
+} from '@/api/blogRequests.mjs';
+import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
   Button,
   Card,
-  Center,
   Group,
-  Loader,
   SimpleGrid,
   Space,
   Text,
   Textarea,
   Title,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
 const statusColors = { pending: 'yellow', approved: 'green', rejected: 'red' };
 
-const BlogRequests = () => {
+const BlogRequests = ({ setActiveView, setEditRequest }) => {
   const queryClient = useQueryClient();
   const [rejectNote, setRejectNote] = useState({});
 
@@ -34,7 +38,7 @@ const BlogRequests = () => {
     mutationFn: approveRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      notifications.show({ title: 'Request approved & blog published!', color: 'green' });
+      toast.success('Request approved & blog published!');
     },
   });
 
@@ -42,7 +46,7 @@ const BlogRequests = () => {
     mutationFn: rejectRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      notifications.show({ title: 'Request rejected', color: 'red' });
+      toast.error('Request rejected');
     },
   });
 
@@ -50,21 +54,17 @@ const BlogRequests = () => {
     mutationFn: deleteRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['allRequests'] });
-      notifications.show({ title: 'Request deleted', color: 'blue' });
+      toast.info('Request deleted');
     },
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Blog Requests
       </Text>
 
@@ -116,6 +116,16 @@ const BlogRequests = () => {
                       onClick={() => approve(req._id)}
                     >
                       Approve
+                    </Button>
+                    <Button
+                      color="cyan"
+                      size="sm"
+                      onClick={() => {
+                        setEditRequest(req);
+                        setActiveView('Edit Blog Request');
+                      }}
+                    >
+                      Edit &amp; Approve
                     </Button>
                     <Button
                       color="red"

@@ -9,14 +9,15 @@ import {
   Group,
   Select,
   SimpleGrid,
+  Text,
   TextInput,
-  Textarea,
   rem,
 } from '@mantine/core';
+import RichTextEditor from '@/components/Editor/RichTextEditor';
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { IconFileCv } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -58,7 +59,7 @@ const CreateBlog = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: createBlog,
     onSuccess: () => {
-      notifications.show({ title: 'Blog created!', color: 'green' });
+      toast.success('Blog created!');
       form.reset();
       setBlogImage(null);
       setAuthorImage(null);
@@ -68,7 +69,7 @@ const CreateBlog = () => {
       queryClient.invalidateQueries({ queryKey: ['popularBlogs'] });
     },
     onError: () => {
-      notifications.show({ title: 'Failed to create blog', color: 'red' });
+      toast.error('Failed to create blog');
     },
   });
 
@@ -93,26 +94,17 @@ const CreateBlog = () => {
 
   return (
     <form onSubmit={form.onSubmit(handleSubmit)} className="!w-full">
-      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="xl">
-        <TextInput
-          placeholder="Blog Title"
-          radius={'lg'}
-          {...form.getInputProps('title')}
-          classNames={{ input: '!h-[50px]' }}
-        />
+      <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
+        <TextInput placeholder="Blog Title" {...form.getInputProps('title')} />
         <Select
           placeholder="Select category"
-          radius={'lg'}
           data={categoryOptions}
           searchable
           {...form.getInputProps('category')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <FileInput
           leftSection={icon}
           placeholder="Blog Image"
-          radius={'lg'}
-          classNames={{ input: '!h-[50px]' }}
           clearable
           value={blogImage}
           onChange={setBlogImage}
@@ -121,24 +113,18 @@ const CreateBlog = () => {
 
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
         <DateInput
-          radius={'lg'}
           value={publishDate}
           onChange={setPublishDate}
           placeholder="Select Publish Date"
-          classNames={{ input: '!h-[50px]' }}
           clearable
         />
         <TextInput
           placeholder="Author name"
-          radius={'lg'}
           {...form.getInputProps('authorName')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <FileInput
           leftSection={icon}
           placeholder="Author Image"
-          radius={'lg'}
-          classNames={{ input: '!h-[50px]' }}
           clearable
           value={authorImage}
           onChange={setAuthorImage}
@@ -148,37 +134,35 @@ const CreateBlog = () => {
       <SimpleGrid cols={{ base: 1, sm: 3 }} mt="md">
         <TextInput
           placeholder="Author Details (e.g. Roll: 1234)"
-          radius={'lg'}
           {...form.getInputProps('authorDetails')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <TextInput
           placeholder="Time Read (e.g. 5 mins read)"
-          radius={'lg'}
           {...form.getInputProps('timeRead')}
-          classNames={{ input: '!h-[50px]' }}
         />
         <Select
           placeholder="Featured?"
-          radius={'lg'}
           data={['No', 'Yes']}
-          classNames={{ input: '!h-[50px]' }}
           onChange={(val) => form.setFieldValue('isFeatured', val === 'Yes')}
         />
       </SimpleGrid>
 
-      <Textarea
-        mt="md"
-        placeholder="Blog Content"
-        minRows={5}
-        radius={'lg'}
-        {...form.getInputProps('content')}
-        classNames={{ input: '!h-[350px] !p-6' }}
-      />
+      <div style={{ marginTop: 'var(--mantine-spacing-md)' }}>
+        <RichTextEditor
+          content={form.values.content}
+          onChange={(html) => form.setFieldValue('content', html)}
+          placeholder="Blog Content"
+        />
+        {form.errors.content && (
+          <Text c="red" fz="sm" mt={4}>
+            {form.errors.content}
+          </Text>
+        )}
+      </div>
 
       <Group justify="center" mt="xl">
         <Center>
-          <Button variant="gradient" size={'xl'} type="submit" loading={isPending}>
+          <Button variant="gradient" className="glow-btn" size="md" type="submit" loading={isPending}>
             Create New Blog
           </Button>
         </Center>

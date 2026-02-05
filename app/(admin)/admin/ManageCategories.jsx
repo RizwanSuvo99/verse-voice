@@ -6,22 +6,21 @@ import {
   updateCategory,
   deleteCategory,
 } from '@/api/siteSettings.mjs';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   ActionIcon,
   Badge,
   Button,
-  Center,
   FileInput,
   Group,
   Image,
-  Loader,
   Space,
   Text,
   TextInput,
   Title,
   rem,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'sonner';
 import { IconEdit, IconFileCv, IconTrash } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -43,15 +42,12 @@ const ManageCategories = () => {
     mutationFn: addCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'Category added!', color: 'green' });
+      toast.success('Category added!');
       setNewName('');
       setNewImage(null);
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Failed to add',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Failed to add');
     },
   });
 
@@ -59,15 +55,12 @@ const ManageCategories = () => {
     mutationFn: updateCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'Category updated!', color: 'green' });
+      toast.success('Category updated!');
       setEditingCat(null);
       setEditImage(null);
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Failed to update',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Failed to update');
     },
   });
 
@@ -75,23 +68,20 @@ const ManageCategories = () => {
     mutationFn: deleteCategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'Category deleted', color: 'blue' });
+      toast.info('Category deleted');
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Failed to delete',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Failed to delete');
     },
   });
 
   const handleAdd = () => {
     if (!newName.trim()) {
-      notifications.show({ title: 'Category name is required', color: 'red' });
+      toast.error('Category name is required');
       return;
     }
     if (!newImage) {
-      notifications.show({ title: 'Category image is required', color: 'red' });
+      toast.error('Category image is required');
       return;
     }
     const formData = new FormData();
@@ -120,16 +110,12 @@ const ManageCategories = () => {
   );
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={2} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Manage Categories
       </Text>
 
@@ -149,11 +135,7 @@ const ManageCategories = () => {
           onChange={setNewImage}
           accept="image/png,image/jpeg,image/jpg"
         />
-        <Button
-          variant="gradient"
-          loading={isPending}
-          onClick={handleAdd}
-        >
+        <Button variant="gradient" loading={isPending} onClick={handleAdd}>
           Add Category
         </Button>
       </Group>
@@ -179,7 +161,11 @@ const ManageCategories = () => {
               onChange={setEditImage}
               accept="image/png,image/jpeg,image/jpg"
             />
-            <Button variant="gradient" loading={isUpdating} onClick={handleSaveEdit}>
+            <Button
+              variant="filled"
+              loading={isUpdating}
+              onClick={handleSaveEdit}
+            >
               Save
             </Button>
             <Button variant="default" onClick={() => setEditingCat(null)}>

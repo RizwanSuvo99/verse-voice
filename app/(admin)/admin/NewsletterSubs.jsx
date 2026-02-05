@@ -1,13 +1,8 @@
 'use client';
 
 import { getSubscribers } from '@/api/newsletter.mjs';
-import {
-  Center,
-  Loader,
-  Table,
-  Text,
-  Title,
-} from '@mantine/core';
+import TableSkeleton from '@/components/Skeletons/TableSkeleton';
+import { Table, Text, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
@@ -18,16 +13,12 @@ const NewsletterSubs = () => {
   });
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <TableSkeleton rows={5} columns={3} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Newsletter Subscribers
       </Text>
 

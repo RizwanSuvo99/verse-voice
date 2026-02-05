@@ -8,30 +8,56 @@ import {
   Anchor,
   Avatar,
   Badge,
-  Center,
   Group,
-  Loader,
+  Pagination,
   rem,
   Switch,
   Table,
   Text,
   TextInput,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { useDebouncedValue } from '@mantine/hooks';
 import { IconEdit, IconSearch, IconTrash } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import dayjs from 'dayjs';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import TableSkeleton from '@/components/Skeletons/TableSkeleton';
+
+const LIMIT = 10;
 
 const AllBlogs = ({ setActiveView, setEditBlog }) => {
   const queryClient = useQueryClient();
+  const [page, setPage] = useState(1);
   const [searchTitle, setSearchTitle] = useState('');
   const [searchCategory, setSearchCategory] = useState('');
   const [searchAuthor, setSearchAuthor] = useState('');
 
+  const [debouncedTitle] = useDebouncedValue(searchTitle, 300);
+  const [debouncedCategory] = useDebouncedValue(searchCategory, 300);
+  const [debouncedAuthor] = useDebouncedValue(searchAuthor, 300);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedTitle, debouncedCategory, debouncedAuthor]);
+
   const { data, isLoading } = useQuery({
-    queryKey: ['adminBlogs'],
-    queryFn: () => getBlogs({ limit: 100 }),
+    queryKey: [
+      'adminBlogs',
+      page,
+      debouncedTitle,
+      debouncedCategory,
+      debouncedAuthor,
+    ],
+    queryFn: () =>
+      getBlogs({
+        page,
+        limit: LIMIT,
+        search: debouncedTitle,
+        category: debouncedCategory,
+        author: debouncedAuthor,
+      }),
+    placeholderData: (prev) => prev,
   });
 
   const { data: favCounts } = useQuery({
@@ -43,13 +69,10 @@ const AllBlogs = ({ setActiveView, setEditBlog }) => {
     mutationFn: deleteBlog,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminBlogs'] });
-      notifications.show({ title: 'Blog deleted', color: 'green' });
+      toast.success('Blog deleted');
     },
     onError: (err) => {
-      notifications.show({
-        title: err?.response?.data?.message || 'Failed to delete blog',
-        color: 'red',
-      });
+      toast.error(err?.response?.data?.message || 'Failed to delete blog');
     },
   });
 
@@ -60,30 +83,18 @@ const AllBlogs = ({ setActiveView, setEditBlog }) => {
     },
   });
 
-  const filteredBlogs = useMemo(() => {
-    if (!data?.blogs) return [];
-    return data.blogs.filter((item) => {
-      const titleMatch = !searchTitle || item.title.toLowerCase().includes(searchTitle.toLowerCase());
-      const categoryMatch = !searchCategory || item.category.toLowerCase().includes(searchCategory.toLowerCase());
-      const authorMatch = !searchAuthor || (item.createdBy?.name || '').toLowerCase().includes(searchAuthor.toLowerCase());
-      return titleMatch && categoryMatch && authorMatch;
-    });
-  }, [data?.blogs, searchTitle, searchCategory, searchAuthor]);
-
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <TableSkeleton rows={5} columns={7} />;
   }
 
-  const rows = filteredBlogs.map((item) => (
+  const blogs = data?.blogs || [];
+
+  const rows = blogs.map((item) => (
     <Table.Tr key={item._id} className="!text-center">
       <Table.Td>
         <Group gap="sm">
-          <Avatar size={60} src={item.blogPicUrl} radius={'lg'} />
-          <Text fz="md" fw={500} lineClamp={1} className="!max-w-[300px]">
+          <Avatar size={44} src={item.blogPicUrl} radius={'lg'} />
+          <Text fz="sm" fw={500} lineClamp={1} className="!max-w-[300px]">
             {item.title}
           </Text>
         </Group>
@@ -145,6 +156,11 @@ const AllBlogs = ({ setActiveView, setEditBlog }) => {
 
   return (
     <>
+      <Group mb="sm" justify="space-between">
+        <Text fw={500} c="dimmed">
+          {data?.total || 0} blog{data?.total !== 1 ? 's' : ''} total
+        </Text>
+      </Group>
       <Group mb="md" grow>
         <TextInput
           placeholder="Search by title..."
@@ -179,16 +195,29 @@ const AllBlogs = ({ setActiveView, setEditBlog }) => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {rows.length > 0 ? rows : (
+            {rows.length > 0 ? (
+              rows
+            ) : (
               <Table.Tr>
                 <Table.Td colSpan={7}>
-                  <Text ta="center" c="dimmed" py="md">No blogs found</Text>
+                  <Text ta="center" c="dimmed" py="md">
+                    No blogs found
+                  </Text>
                 </Table.Td>
               </Table.Tr>
             )}
           </Table.Tbody>
         </Table>
       </Table.ScrollContainer>
+      {(data?.totalPages || 0) > 1 && (
+        <Pagination
+          className="glass-pagination"
+          total={data.totalPages}
+          value={page}
+          onChange={setPage}
+          mt="md"
+        />
+      )}
     </>
   );
 };

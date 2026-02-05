@@ -1,12 +1,13 @@
 'use client';
 
-import { getSettings, updateSettings } from '@/api/siteSettings.mjs';
+import { getSettings, updateSettings, uploadAboutImage } from '@/api/siteSettings.mjs';
+import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   ActionIcon,
   Button,
-  Center,
+  FileInput,
   Group,
-  Loader,
+  Image,
   SimpleGrid,
   Space,
   Text,
@@ -14,8 +15,8 @@ import {
   Textarea,
   Title,
 } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { toast } from 'sonner';
+import { IconPhoto, IconPlus, IconTrash } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -30,6 +31,7 @@ const CustomizeAbout = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [imageFile, setImageFile] = useState(null);
   const [aboutText, setAboutText] = useState('');
   const [roles, setRoles] = useState([]);
   const [linkedin, setLinkedin] = useState('');
@@ -56,14 +58,34 @@ const CustomizeAbout = () => {
     mutationFn: updateSettings,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
-      notifications.show({ title: 'About page updated!', color: 'green' });
+      toast.success('About page updated!');
     },
     onError: () => {
-      notifications.show({ title: 'Failed to update', color: 'red' });
+      toast.error('Failed to update');
+    },
+  });
+
+  const { mutate: mutateImage, isPending: isUploadingImage } = useMutation({
+    mutationFn: uploadAboutImage,
+    onSuccess: (data) => {
+      setImageUrl(data.imageUrl);
+      setImageFile(null);
+      queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
+      toast.success('Image uploaded!');
+    },
+    onError: () => {
+      toast.error('Failed to upload image');
     },
   });
 
   const handleSubmit = () => {
+    // Upload image first if a new file is selected
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append('aboutImage', imageFile);
+      mutateImage(formData);
+    }
+
     mutate({
       aboutPage: {
         name,
@@ -91,16 +113,12 @@ const CustomizeAbout = () => {
   };
 
   if (isLoading) {
-    return (
-      <Center py="xl">
-        <Loader />
-      </Center>
-    );
+    return <FormSkeleton fields={6} />;
   }
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-6 !text-2xl">
+      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
         Customize About Page
       </Text>
 
@@ -117,11 +135,27 @@ const CustomizeAbout = () => {
         />
       </SimpleGrid>
 
-      <TextInput
-        label="Image URL"
-        value={imageUrl}
-        onChange={(e) => setImageUrl(e.target.value)}
+      {imageUrl && (
+        <Image
+          src={imageUrl}
+          alt="About preview"
+          h={120}
+          w={120}
+          fit="contain"
+          radius="md"
+          mb="sm"
+          fallbackSrc="https://placehold.co/120x120?text=No+Image"
+        />
+      )}
+      <FileInput
+        label="Profile Image"
+        placeholder="Choose image file"
+        accept="image/png,image/jpeg,image/jpg"
+        leftSection={<IconPhoto size={16} />}
+        value={imageFile}
+        onChange={setImageFile}
         mb="md"
+        clearable
       />
 
       <Textarea
@@ -153,7 +187,11 @@ const CustomizeAbout = () => {
             onChange={(e) => updateRole(index, 'organization', e.target.value)}
             style={{ flex: 1 }}
           />
-          <ActionIcon variant="subtle" color="red" onClick={() => removeRole(index)}>
+          <ActionIcon
+            variant="subtle"
+            color="red"
+            onClick={() => removeRole(index)}
+          >
             <IconTrash size={16} />
           </ActionIcon>
         </Group>
@@ -188,7 +226,13 @@ const CustomizeAbout = () => {
       </SimpleGrid>
 
       <Group justify="center" mt="xl">
-        <Button variant="gradient" size="lg" loading={isPending} onClick={handleSubmit}>
+        <Button
+          variant="gradient"
+          className="glow-btn"
+          size="md"
+          loading={isPending}
+          onClick={handleSubmit}
+        >
           Save Changes
         </Button>
       </Group>

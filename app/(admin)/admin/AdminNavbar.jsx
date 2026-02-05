@@ -15,7 +15,9 @@ import {
 } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useLocalStorage } from '@mantine/hooks';
+import { useComputedColorScheme } from '@mantine/core';
 import classes from './NavbarSimpleColored.module.css';
+import ThemeToggle from '@/components/Header/ThemeToggle';
 
 const data = [
   { label: 'Create Blog', icon: IconPencilPlus },
@@ -32,6 +34,7 @@ const data = [
 
 const AdminNavbar = ({ activeView, setActiveView }) => {
   const router = useRouter();
+  const colorScheme = useComputedColorScheme('dark');
   const [, setToken] = useLocalStorage({ key: 'token', defaultValue: null });
   const [, setIsLoggedIn] = useLocalStorage({
     key: 'isLoggedIn',
@@ -67,10 +70,10 @@ const AdminNavbar = ({ activeView, setActiveView }) => {
           <Group className={classes.header} justify="space-between">
             <Image
               alt="classRoomWriters-logo"
-              src="/assets/logo-white.svg"
-              h={60}
+              src={colorScheme === 'dark' ? '/assets/logo-white.svg' : '/assets/logo.svg'}
+              h={36}
             />
-            <Text fw={600} c={'white'}>
+            <Text fw={600} c="var(--text-primary)">
               Admin Panel
             </Text>
           </Group>
@@ -78,6 +81,9 @@ const AdminNavbar = ({ activeView, setActiveView }) => {
         </div>
 
         <div className={classes.footer}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+            <ThemeToggle />
+          </div>
           <a
             href="#"
             className={classes.link}
