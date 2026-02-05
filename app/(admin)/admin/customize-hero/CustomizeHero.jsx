@@ -1,6 +1,7 @@
 'use client';
 
 import { getSettings, updateSettings, uploadSiteLogo } from '@/api/siteSettings.mjs';
+import { compressImage } from '@/utils/compressImage';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   Button,
@@ -64,10 +65,15 @@ const CustomizeHero = () => {
 
   const previewUrl = logoFile ? URL.createObjectURL(logoFile) : logoUrl;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (logoFile) {
       const formData = new FormData();
-      formData.append('siteLogo', logoFile);
+      try {
+        const compressed = await compressImage(logoFile, { maxSizeMB: 0.5 });
+        formData.append('siteLogo', compressed);
+      } catch {
+        formData.append('siteLogo', logoFile);
+      }
       mutateLogo(formData);
     }
     mutate({ siteTitle, heroTitle, heroSubtitle });

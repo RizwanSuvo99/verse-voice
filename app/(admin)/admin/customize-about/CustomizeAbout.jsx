@@ -1,6 +1,7 @@
 'use client';
 
 import { getSettings, updateSettings, uploadAboutImage } from '@/api/siteSettings.mjs';
+import { compressImage } from '@/utils/compressImage';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import {
   ActionIcon,
@@ -74,11 +75,16 @@ const CustomizeAbout = () => {
     onError: () => {},
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Upload image first if a new file is selected
     if (imageFile) {
       const formData = new FormData();
-      formData.append('aboutImage', imageFile);
+      try {
+        const compressed = await compressImage(imageFile, { maxSizeMB: 1 });
+        formData.append('aboutImage', compressed);
+      } catch {
+        formData.append('aboutImage', imageFile);
+      }
       mutateImage(formData);
     }
 

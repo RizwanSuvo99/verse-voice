@@ -2,6 +2,7 @@
 
 import { createBlog } from '@/api/adminBlogs.mjs';
 import { getSettings } from '@/api/siteSettings.mjs';
+import { compressImage } from '@/utils/compressImage';
 import {
   Button,
   Center,
@@ -79,7 +80,7 @@ const CreateBlog = () => {
     onError: () => {},
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('category', values.category);
@@ -88,8 +89,25 @@ const CreateBlog = () => {
     formData.append('authorDetails', values.authorDetails);
     formData.append('timeRead', values.timeRead || '3 mins read');
     if (publishDate) formData.append('publishDate', publishDate.toISOString());
-    if (blogImage) formData.append('blogImage', blogImage);
-    if (authorImage) formData.append('authorImage', authorImage);
+
+    // Compress images before upload
+    if (blogImage) {
+      try {
+        const compressed = await compressImage(blogImage, { maxSizeMB: 1 });
+        formData.append('blogImage', compressed);
+      } catch {
+        formData.append('blogImage', blogImage);
+      }
+    }
+    if (authorImage) {
+      try {
+        const compressed = await compressImage(authorImage, { maxSizeMB: 0.5 });
+        formData.append('authorImage', compressed);
+      } catch {
+        formData.append('authorImage', authorImage);
+      }
+    }
+
     mutate(formData);
   };
 

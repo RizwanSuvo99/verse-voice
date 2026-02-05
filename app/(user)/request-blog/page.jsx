@@ -2,6 +2,7 @@
 
 import { submitBlogRequest } from '@/api/blogRequests.mjs';
 import { getSettings } from '@/api/siteSettings.mjs';
+import { compressImage } from '@/utils/compressImage';
 import RequireAuth from '@/components/RequireAuth';
 import {
   Button,
@@ -75,15 +76,32 @@ const RequestBlog = () => {
     onError: () => {},
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('category', values.category);
     formData.append('authorName', values.authorName);
     formData.append('authorDetails', values.authorDetails);
     formData.append('content', values.content);
-    if (blogImage) formData.append('blogImage', blogImage);
-    if (authorImage) formData.append('authorImage', authorImage);
+
+    // Compress images before upload
+    if (blogImage) {
+      try {
+        const compressed = await compressImage(blogImage, { maxSizeMB: 1 });
+        formData.append('blogImage', compressed);
+      } catch {
+        formData.append('blogImage', blogImage);
+      }
+    }
+    if (authorImage) {
+      try {
+        const compressed = await compressImage(authorImage, { maxSizeMB: 0.5 });
+        formData.append('authorImage', compressed);
+      } catch {
+        formData.append('authorImage', authorImage);
+      }
+    }
+
     mutate(formData);
   };
 

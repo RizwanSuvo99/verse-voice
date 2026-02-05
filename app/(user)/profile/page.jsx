@@ -2,6 +2,7 @@
 
 import { getCurrentUser } from '@/api/users.mjs';
 import { useUpdateProfile } from '@/hooks/mutations';
+import { compressImage } from '@/utils/compressImage';
 import RequireAuth from '@/components/RequireAuth';
 import ProfileSkeleton from '@/components/Skeletons/ProfileSkeleton';
 import { OptimizedAvatar } from '@/components/ui';
@@ -43,7 +44,7 @@ const Profile = () => {
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim()) {
       toast.error('Name is required');
@@ -51,9 +52,17 @@ const Profile = () => {
     }
     const formData = new FormData();
     formData.append('fullName', name);
+
+    // Compress avatar before upload
     if (avatarFile) {
-      formData.append('avatar', avatarFile);
+      try {
+        const compressed = await compressImage(avatarFile, { maxSizeMB: 0.5 });
+        formData.append('avatar', compressed);
+      } catch {
+        formData.append('avatar', avatarFile);
+      }
     }
+
     mutate(formData);
   };
 

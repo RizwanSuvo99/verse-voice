@@ -2,6 +2,7 @@
 
 import { getSettings } from '@/api/siteSettings.mjs';
 import { useAddCategory, useUpdateCategory, useDeleteCategory } from '@/hooks/mutations';
+import { compressImage } from '@/utils/compressImage';
 import FormSkeleton from '@/components/Skeletons/FormSkeleton';
 import { OptimizedImage } from '@/components/ui';
 import {
@@ -51,7 +52,7 @@ const ManageCategories = () => {
 
   const { mutate: deleteMutate } = useDeleteCategory();
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!newName.trim()) {
       toast.error('Category name is required');
       return;
@@ -62,7 +63,12 @@ const ManageCategories = () => {
     }
     const formData = new FormData();
     formData.append('name', newName);
-    formData.append('categoryImage', newImage);
+    try {
+      const compressed = await compressImage(newImage, { maxSizeMB: 0.5 });
+      formData.append('categoryImage', compressed);
+    } catch {
+      formData.append('categoryImage', newImage);
+    }
     addMutate(formData);
   };
 
@@ -72,11 +78,16 @@ const ManageCategories = () => {
     setEditImage(null);
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async () => {
     const formData = new FormData();
     formData.append('name', editName);
     if (editImage) {
-      formData.append('categoryImage', editImage);
+      try {
+        const compressed = await compressImage(editImage, { maxSizeMB: 0.5 });
+        formData.append('categoryImage', compressed);
+      } catch {
+        formData.append('categoryImage', editImage);
+      }
     }
     updateMutate({ oldName: editingCat, formData });
   };
