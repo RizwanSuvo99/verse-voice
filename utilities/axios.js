@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const NEXT_PUBLIC_API_URL = 'https://verse-voice-backend.vercel.app/api/v1';
+const NEXT_PUBLIC_API_URL = 'https://backend-five-beta-ey61zod81u.vercel.app/api/v1';
 const NEXT_PUBLIC_TEST_API_URL = 'http://localhost:8000/api/v1';
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? NEXT_PUBLIC_API_URL : NEXT_PUBLIC_TEST_API_URL;
