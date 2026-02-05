@@ -47,7 +47,8 @@ export const useToggleFavorite = (blogId, isFavorited) => {
     },
 
     onSuccess: () => {
-      toast.success(isFavorited ? 'Removed from favorites' : 'Added to favorites');
+      const current = queryClient.getQueryData(['favoriteCheck', blogId]);
+      toast.success(current?.isFavorited ? 'Added to favorites' : 'Removed from favorites');
     },
 
     onSettled: () => {
