@@ -18,6 +18,7 @@ import NotificationBell from './NotificationBell';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { logOut } from '@/api/logOut.mjs';
 import { getMe } from '@/api/user.mjs';
+import { getSettings } from '@/api/siteSettings.mjs';
 import { IconSettings } from '@tabler/icons-react';
 
 const Navbar = () => {
@@ -49,6 +50,11 @@ const Navbar = () => {
   });
 
   const isAdmin = currentUser?.isSuperUser === true;
+
+  const { data: siteSettings } = useQuery({
+    queryKey: ['siteSettings'],
+    queryFn: getSettings,
+  });
 
   const defaultLinks = [
     { link: '/', label: 'Home' },
@@ -82,7 +88,7 @@ const Navbar = () => {
   return (
     <header className={`${classes.header} glass-navbar`}>
       <Container size={1500} className={classes.inner}>
-        <Logo />
+        <Logo siteTitle={siteSettings?.siteTitle} siteLogo={siteSettings?.siteLogo} />
 
         {/* Desktop Navigation */}
         <Group gap={2} visibleFrom="sm">

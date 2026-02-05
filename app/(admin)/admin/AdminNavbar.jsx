@@ -19,6 +19,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLocalStorage } from '@mantine/hooks';
 import { useComputedColorScheme } from '@mantine/core';
+import { useQuery } from '@tanstack/react-query';
+import { getSettings } from '@/api/siteSettings.mjs';
 import classes from './NavbarSimpleColored.module.css';
 import ThemeToggle from '@/components/Header/ThemeToggle';
 
@@ -40,6 +42,10 @@ const AdminNavbar = ({ onNavClick }) => {
   const router = useRouter();
   const pathname = usePathname();
   const colorScheme = useComputedColorScheme('dark');
+  const { data: siteSettings } = useQuery({
+    queryKey: ['siteSettings'],
+    queryFn: getSettings,
+  });
   const [, setToken] = useLocalStorage({ key: 'token', defaultValue: null });
   const [, setIsLoggedIn] = useLocalStorage({
     key: 'isLoggedIn',
@@ -76,8 +82,8 @@ const AdminNavbar = ({ onNavClick }) => {
         <div className={classes.navbarMain}>
           <Group className={classes.header} justify="space-between">
             <Image
-              alt="classRoomWriters-logo"
-              src={colorScheme === 'dark' ? '/assets/logo-white.svg' : '/assets/logo.svg'}
+              alt="site-logo"
+              src={siteSettings?.siteLogo || (colorScheme === 'dark' ? '/assets/logo-white.svg' : '/assets/logo.svg')}
               h={36}
             />
             <Text fw={600} c="var(--text-primary)">
