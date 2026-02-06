@@ -13,7 +13,7 @@ export const useBlogs = (params = {}, options = {}) => {
   const { page = 1, limit = 10, search = '', sort = 'createdAt', order = 'desc', category = '', author = '' } = params;
 
   return useQuery({
-    queryKey: queryKeys.blogs.list(page),
+    queryKey: queryKeys.blogs.list({ page, search, sort, order, category }),
     queryFn: () => getBlogs({ page, limit, search, sort, order, category, author }),
     ...queryConfigs.blogList,
     ...options,
