@@ -15,6 +15,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
+import { modals } from '@mantine/modals';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -123,7 +124,15 @@ const BlogRequests = () => {
                       color="gray"
                       size="sm"
                       variant="outline"
-                      onClick={() => deleteMutate(req._id)}
+                      onClick={() =>
+                        modals.openConfirmModal({
+                          title: 'Delete Request',
+                          children: 'Are you sure you want to delete this request? This action cannot be undone.',
+                          labels: { confirm: 'Delete', cancel: 'Cancel' },
+                          confirmProps: { color: 'red' },
+                          onConfirm: () => deleteMutate(req._id),
+                        })
+                      }
                     >
                       Delete
                     </Button>

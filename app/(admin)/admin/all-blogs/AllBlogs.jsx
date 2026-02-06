@@ -17,6 +17,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
+import { modals } from '@mantine/modals';
 import { IconEdit, IconSearch, IconTrash } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -132,7 +133,15 @@ const AllBlogs = () => {
           <ActionIcon
             variant="subtle"
             color="red"
-            onClick={() => deleteMutate(item._id)}
+            onClick={() =>
+              modals.openConfirmModal({
+                title: 'Delete Blog',
+                children: 'Are you sure you want to delete this blog? This action cannot be undone.',
+                labels: { confirm: 'Delete', cancel: 'Cancel' },
+                confirmProps: { color: 'red' },
+                onConfirm: () => deleteMutate(item._id),
+              })
+            }
           >
             <IconTrash
               style={{ width: rem(16), height: rem(16) }}

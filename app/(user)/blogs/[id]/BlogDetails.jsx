@@ -21,6 +21,7 @@ import {
   Tooltip,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { modals } from '@mantine/modals';
 import { IconCornerDownRight, IconFlag, IconTrash } from '@tabler/icons-react';
 import { toast } from 'sonner';
 import { useQuery } from '@tanstack/react-query';
@@ -105,11 +106,15 @@ const CommentItem = memo(function CommentItem({
                       variant="subtle"
                       size="sm"
                       color="red"
-                      onClick={() => {
-                        if (confirm('Delete this comment?')) {
-                          deleteCommentMutate(comment._id);
-                        }
-                      }}
+                      onClick={() =>
+                        modals.openConfirmModal({
+                          title: 'Delete Comment',
+                          children: 'Are you sure you want to delete this comment? This action cannot be undone.',
+                          labels: { confirm: 'Delete', cancel: 'Cancel' },
+                          confirmProps: { color: 'red' },
+                          onConfirm: () => deleteCommentMutate(comment._id),
+                        })
+                      }
                     >
                       <IconTrash size={14} />
                     </ActionIcon>

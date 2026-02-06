@@ -17,6 +17,7 @@ import {
   rem,
 } from '@mantine/core';
 import { toast } from 'sonner';
+import { modals } from '@mantine/modals';
 import { IconEdit, IconFileCv, IconTrash } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -185,7 +186,15 @@ const ManageCategories = () => {
                   variant="subtle"
                   color="red"
                   size="sm"
-                  onClick={() => deleteMutate(cat.name)}
+                  onClick={() =>
+                    modals.openConfirmModal({
+                      title: 'Delete Category',
+                      children: 'Are you sure you want to delete this category? This action cannot be undone.',
+                      labels: { confirm: 'Delete', cancel: 'Cancel' },
+                      confirmProps: { color: 'red' },
+                      onConfirm: () => deleteMutate(cat.name),
+                    })
+                  }
                 >
                   <IconTrash size={14} />
                 </ActionIcon>

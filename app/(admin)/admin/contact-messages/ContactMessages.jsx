@@ -14,6 +14,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
+import { modals } from '@mantine/modals';
 import dayjs from 'dayjs';
 
 const ContactMessages = () => {
@@ -71,11 +72,15 @@ const ContactMessages = () => {
                   size="xs"
                   variant="light"
                   color="red"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this message?')) {
-                      deleteMutate(msg._id);
-                    }
-                  }}
+                  onClick={() =>
+                    modals.openConfirmModal({
+                      title: 'Delete Message',
+                      children: 'Are you sure you want to delete this message? This action cannot be undone.',
+                      labels: { confirm: 'Delete', cancel: 'Cancel' },
+                      confirmProps: { color: 'red' },
+                      onConfirm: () => deleteMutate(msg._id),
+                    })
+                  }
                 >
                   Delete
                 </Button>

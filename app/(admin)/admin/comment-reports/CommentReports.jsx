@@ -13,6 +13,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
+import { modals } from '@mantine/modals';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 
@@ -126,11 +127,15 @@ const CommentReports = () => {
                   <Button
                     size="xs"
                     color="red"
-                    onClick={() => {
-                      if (confirm('Delete this comment? This will remove the comment and all its reports.')) {
-                        deleteCommentMutate(report._id);
-                      }
-                    }}
+                    onClick={() =>
+                      modals.openConfirmModal({
+                        title: 'Delete Comment',
+                        children: 'Delete this comment? This will remove the comment and all its reports.',
+                        labels: { confirm: 'Delete', cancel: 'Cancel' },
+                        confirmProps: { color: 'red' },
+                        onConfirm: () => deleteCommentMutate(report._id),
+                      })
+                    }
                   >
                     Delete Comment
                   </Button>
@@ -138,7 +143,15 @@ const CommentReports = () => {
                     size="xs"
                     color="gray"
                     variant="outline"
-                    onClick={() => deleteReportMutate(report._id)}
+                    onClick={() =>
+                      modals.openConfirmModal({
+                        title: 'Dismiss Report',
+                        children: 'Are you sure you want to dismiss this report?',
+                        labels: { confirm: 'Dismiss', cancel: 'Cancel' },
+                        confirmProps: { color: 'gray' },
+                        onConfirm: () => deleteReportMutate(report._id),
+                      })
+                    }
                   >
                     Dismiss Report
                   </Button>
@@ -151,7 +164,15 @@ const CommentReports = () => {
                   color="gray"
                   variant="outline"
                   mt="md"
-                  onClick={() => deleteReportMutate(report._id)}
+                  onClick={() =>
+                    modals.openConfirmModal({
+                      title: 'Remove Report',
+                      children: 'Are you sure you want to remove this report?',
+                      labels: { confirm: 'Remove', cancel: 'Cancel' },
+                      confirmProps: { color: 'gray' },
+                      onConfirm: () => deleteReportMutate(report._id),
+                    })
+                  }
                 >
                   Remove Report
                 </Button>
