@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'sonner';
 
 const NEXT_PUBLIC_API_URL = 'https://backend-five-beta-ey61zod81u.vercel.app/api/v1';
 const NEXT_PUBLIC_TEST_API_URL = 'http://localhost:8000/api/v1';
@@ -35,24 +36,26 @@ axiosPrivate.interceptors.request.use(
 
 // Add response interceptor for error handling
 const handleResponseError = (error) => {
-  if (typeof window !== 'undefined') {
-    const status = error?.response?.status;
-    const { toast } = require('sonner');
+  if (typeof window === 'undefined') return Promise.reject(error);
 
-    if (status === 401 || status === 403) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('isLoggedIn');
-      toast.error('Session expired. Please log in again.');
-      window.location.href = '/login';
-    } else if (status === 429) {
-      toast.error('Too many requests. Please slow down.');
-    } else if (status >= 500) {
-      toast.error('Server error. Please try again later.');
-    } else if (status >= 400) {
-      const message = error?.response?.data?.message;
-      if (message) toast.error(message);
-    }
+  const status = error?.response?.status;
+  const message = error?.response?.data?.message;
+
+  if (status === 401 || status === 403) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('isLoggedIn');
+    toast.error('Session expired. Please log in again.');
+    window.location.href = '/login';
+  } else if (status === 429) {
+    toast.error('Too many requests. Please slow down.');
+  } else if (status >= 500) {
+    toast.error(message || 'Server error. Please try again later.');
+  } else if (status >= 400) {
+    toast.error(message || 'Something went wrong.');
+  } else {
+    toast.error('Network error. Please check your connection.');
   }
+
   return Promise.reject(error);
 };
 
