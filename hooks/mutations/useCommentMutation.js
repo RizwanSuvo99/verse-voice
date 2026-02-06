@@ -78,7 +78,6 @@ export const useAddComment = (blogId, currentUser, callbacks = {}) => {
       if (context?.previousBlog) {
         queryClient.setQueryData(['blog', blogId], context.previousBlog);
       }
-      toast.error(err?.response?.data?.message || 'Failed to add comment');
     },
 
     onSuccess: () => {
@@ -159,7 +158,6 @@ export const useDeleteComment = (blogId) => {
       if (context?.previousBlog) {
         queryClient.setQueryData(['blog', blogId], context.previousBlog);
       }
-      toast.error(err?.response?.data?.message || 'Failed to delete comment');
     },
 
     onSuccess: () => {
@@ -191,9 +189,7 @@ export const useReportComment = (callbacks = {}) => {
   return useMutation({
     mutationFn: reportComment,
 
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Failed to report comment');
-    },
+    onError: () => {},
 
     onSuccess: () => {
       toast.success('Comment reported. Admin will review it.');

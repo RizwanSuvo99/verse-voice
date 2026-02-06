@@ -41,7 +41,6 @@ export const useDeleteBlog = (queryParams = {}) => {
       if (context?.previousData) {
         queryClient.setQueryData(adminBlogsKey, context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to delete blog');
     },
 
     onSuccess: () => {

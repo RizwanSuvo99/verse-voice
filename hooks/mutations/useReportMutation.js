@@ -31,7 +31,6 @@ export const useUpdateReportStatus = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['commentReports'], context.previousData);
       }
-      toast.error('Failed to update status');
     },
 
     onSuccess: () => {
@@ -71,7 +70,6 @@ export const useDeleteReport = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['commentReports'], context.previousData);
       }
-      toast.error('Failed to delete report');
     },
 
     onSuccess: () => {
@@ -126,7 +124,6 @@ export const useDeleteReportedComment = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['commentReports'], context.previousData);
       }
-      toast.error('Failed to delete comment');
     },
 
     onSuccess: () => {

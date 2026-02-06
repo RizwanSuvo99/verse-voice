@@ -78,9 +78,7 @@ const EditBlog = ({ blog, onSuccess }) => {
       queryClient.invalidateQueries({ queryKey: ['popularBlogs'] });
       if (onSuccess) onSuccess();
     },
-    onError: () => {
-      toast.error('Failed to update blog');
-    },
+    onError: () => {},
   });
 
   const handleSubmit = (values) => {

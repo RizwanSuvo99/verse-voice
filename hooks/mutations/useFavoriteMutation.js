@@ -44,7 +44,6 @@ export const useToggleFavorite = (blogId, isFavorited) => {
       if (context?.previousCount !== undefined) {
         queryClient.setQueryData(['favoriteCount', blogId], context.previousCount);
       }
-      toast.error(err?.response?.data?.message || 'Failed to update favorite');
     },
 
     onSuccess: () => {

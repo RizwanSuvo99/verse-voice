@@ -50,9 +50,7 @@ const Footer = () => {
       setNewsletterName('');
       setNewsletterEmail('');
     },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message || 'Subscription failed');
-    },
+    onError: () => {},
   });
 
   const handleSubscribe = () => {

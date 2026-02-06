@@ -5,7 +5,7 @@ const NEXT_PUBLIC_TEST_API_URL = 'http://localhost:8000/api/v1';
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? NEXT_PUBLIC_API_URL : NEXT_PUBLIC_TEST_API_URL;
 
-export default axios.create({
+const publicAxios = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -48,9 +48,15 @@ const handleResponseError = (error) => {
       toast.error('Too many requests. Please slow down.');
     } else if (status >= 500) {
       toast.error('Server error. Please try again later.');
+    } else if (status >= 400) {
+      const message = error?.response?.data?.message;
+      if (message) toast.error(message);
     }
   }
   return Promise.reject(error);
 };
 
+publicAxios.interceptors.response.use((res) => res, handleResponseError);
 axiosPrivate.interceptors.response.use((res) => res, handleResponseError);
+
+export default publicAxios;

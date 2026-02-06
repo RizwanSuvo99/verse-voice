@@ -38,9 +38,7 @@ const CustomizeHero = () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
       toast.success('Hero updated!');
     },
-    onError: () => {
-      toast.error('Failed to update');
-    },
+    onError: () => {},
   });
 
   if (isLoading) {

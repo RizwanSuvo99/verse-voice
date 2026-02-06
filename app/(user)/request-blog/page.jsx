@@ -72,9 +72,7 @@ const RequestBlog = () => {
       setBlogImage(null);
       setAuthorImage(null);
     },
-    onError: () => {
-      toast.error('Failed to submit request');
-    },
+    onError: () => {},
   });
 
   const handleSubmit = (values) => {

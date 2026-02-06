@@ -142,7 +142,6 @@ export const useDeleteNotification = () => {
       if (context?.previousUnreadCount) {
         queryClient.setQueryData(['unreadCount'], context.previousUnreadCount);
       }
-      toast.error('Failed to delete notification');
     },
 
     onSuccess: () => {

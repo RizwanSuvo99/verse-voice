@@ -76,9 +76,7 @@ const CreateBlog = () => {
       queryClient.invalidateQueries({ queryKey: ['featuredBlogs'] });
       queryClient.invalidateQueries({ queryKey: ['popularBlogs'] });
     },
-    onError: () => {
-      toast.error('Failed to create blog');
-    },
+    onError: () => {},
   });
 
   const handleSubmit = (values) => {

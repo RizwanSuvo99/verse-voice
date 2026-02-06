@@ -55,7 +55,6 @@ export const useUpdateProfile = (callbacks = {}) => {
       if (context?.previousData) {
         queryClient.setQueryData(['currentUser'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to update profile');
     },
 
     onSuccess: () => {

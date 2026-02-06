@@ -70,7 +70,6 @@ export const useDeleteContact = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['contacts'], context.previousData);
       }
-      toast.error('Failed to delete message');
     },
 
     onSuccess: () => {

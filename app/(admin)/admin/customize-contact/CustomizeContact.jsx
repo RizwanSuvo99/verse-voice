@@ -58,9 +58,7 @@ const CustomizeContact = () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
       toast.success('Contact page updated!');
     },
-    onError: () => {
-      toast.error('Failed to update');
-    },
+    onError: () => {},
   });
 
   const handleSubmit = () => {

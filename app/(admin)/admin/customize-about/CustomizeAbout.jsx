@@ -60,9 +60,7 @@ const CustomizeAbout = () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
       toast.success('About page updated!');
     },
-    onError: () => {
-      toast.error('Failed to update');
-    },
+    onError: () => {},
   });
 
   const { mutate: mutateImage, isPending: isUploadingImage } = useMutation({
@@ -73,9 +71,7 @@ const CustomizeAbout = () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
       toast.success('Image uploaded!');
     },
-    onError: () => {
-      toast.error('Failed to upload image');
-    },
+    onError: () => {},
   });
 
   const handleSubmit = () => {

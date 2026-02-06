@@ -42,9 +42,7 @@ const CustomizeFooter = () => {
       queryClient.invalidateQueries({ queryKey: ['siteSettings'] });
       toast.success('Footer updated!');
     },
-    onError: () => {
-      toast.error('Failed to update');
-    },
+    onError: () => {},
   });
 
   if (isLoading) {

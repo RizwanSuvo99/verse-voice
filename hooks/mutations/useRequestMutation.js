@@ -31,7 +31,6 @@ export const useApproveRequest = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['allRequests'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to approve request');
     },
 
     onSuccess: () => {
@@ -75,7 +74,6 @@ export const useRejectRequest = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['allRequests'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to reject request');
     },
 
     onSuccess: () => {
@@ -115,7 +113,6 @@ export const useDeleteRequest = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['allRequests'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to delete request');
     },
 
     onSuccess: () => {
@@ -151,7 +148,6 @@ export const useClearAllRequests = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['allRequests'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to clear requests');
     },
 
     onSuccess: () => {

@@ -63,9 +63,7 @@ const EditBlogRequest = ({ request }) => {
       toast.success('Request updated and approved! Blog published.');
       router.push('/admin/blog-requests');
     },
-    onError: () => {
-      toast.error('Failed to approve request');
-    },
+    onError: () => {},
   });
 
   const handleSaveAndApprove = (values) => {
@@ -75,9 +73,7 @@ const EditBlogRequest = ({ request }) => {
         onSuccess: () => {
           approveMutate(request._id);
         },
-        onError: () => {
-          toast.error('Failed to update request');
-        },
+        onError: () => {},
       },
     );
   };
@@ -91,9 +87,7 @@ const EditBlogRequest = ({ request }) => {
           toast.success('Request updated');
           router.push('/admin/blog-requests');
         },
-        onError: () => {
-          toast.error('Failed to update request');
-        },
+        onError: () => {},
       },
     );
   };

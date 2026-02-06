@@ -28,7 +28,6 @@ export const useDeleteSubscriber = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['subscribers'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to delete subscriber');
     },
 
     onSuccess: () => {

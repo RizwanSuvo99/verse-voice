@@ -45,7 +45,6 @@ export const useAddCategory = (callbacks = {}) => {
       if (context?.previousData) {
         queryClient.setQueryData(['siteSettings'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to add category');
     },
 
     onSuccess: () => {
@@ -95,7 +94,6 @@ export const useUpdateCategory = (callbacks = {}) => {
       if (context?.previousData) {
         queryClient.setQueryData(['siteSettings'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to update category');
     },
 
     onSuccess: () => {
@@ -139,7 +137,6 @@ export const useDeleteCategory = () => {
       if (context?.previousData) {
         queryClient.setQueryData(['siteSettings'], context.previousData);
       }
-      toast.error(err?.response?.data?.message || 'Failed to delete category');
     },
 
     onSuccess: () => {
