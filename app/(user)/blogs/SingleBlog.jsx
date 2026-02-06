@@ -3,7 +3,6 @@ import FavoriteButton from '@/components/FavoriteButton';
 import { stripHtml } from '@/utils/stripHtml';
 import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
-  AspectRatio,
   Badge,
   Button,
   Card,
@@ -30,21 +29,17 @@ const SingleBlog = ({ blog }) => {
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
-      <Flex direction="column" className="!min-h-[380px] !gap-2">
-        <div className="!flex-1">
-          <AspectRatio ratio={1}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <OptimizedImage
-                src={blogPicUrl}
-                alt={title}
-                fill
-                sizes="(max-width: 768px) 100vw, 33vw"
-                style={{ borderRadius: 'var(--mantine-radius-md)' }}
-              />
-            </div>
-          </AspectRatio>
+      <Flex direction="column" className="!gap-2">
+        <div style={{ height: '200px', position: 'relative', borderRadius: 'var(--mantine-radius-md)', overflow: 'hidden' }}>
+          <OptimizedImage
+            src={blogPicUrl}
+            alt={title}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            style={{ objectFit: 'cover' }}
+          />
         </div>
-        <div className="!flex-1">
+        <div>
           <Group justify="space-between">
             <Badge>{category}</Badge>
             <Group className="!gap-2">

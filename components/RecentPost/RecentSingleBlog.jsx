@@ -3,7 +3,6 @@ import FavoriteButton from '@/components/FavoriteButton';
 import { stripHtml } from '@/utils/stripHtml';
 import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
-  AspectRatio,
   Badge,
   Button,
   Flex,
@@ -29,21 +28,25 @@ const RecentSingleBlog = memo(({ blog }) => {
 
   return (
     <Flex
-      className="!min-h-[220px] !gap-3"
+      className="!gap-3"
       direction={{ base: 'column', sm: 'row' }}
     >
-      <div className="!flex-1">
-        <AspectRatio ratio={1}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <OptimizedImage
-              src={blogPicUrl}
-              alt={title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              style={{ borderRadius: 'var(--mantine-radius-md)' }}
-            />
-          </div>
-        </AspectRatio>
+      <div style={{
+        width: '100%',
+        maxWidth: '280px',
+        height: '180px',
+        position: 'relative',
+        borderRadius: 'var(--mantine-radius-md)',
+        overflow: 'hidden',
+        flexShrink: 0
+      }}>
+        <OptimizedImage
+          src={blogPicUrl}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, 280px"
+          style={{ objectFit: 'cover' }}
+        />
       </div>
       <div className="!flex-1">
         <Group justify="space-between">

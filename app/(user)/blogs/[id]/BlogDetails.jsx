@@ -6,7 +6,6 @@ import { useAddComment, useDeleteComment, useReportComment } from '@/hooks/mutat
 import { OptimizedImage, OptimizedAvatar } from '@/components/ui';
 import {
   ActionIcon,
-  AspectRatio,
   Avatar,
   Button,
   Card,
@@ -264,18 +263,23 @@ const BlogDetails = ({ blog, currentUser }) => {
 
   return (
     <>
-      <AspectRatio ratio={1}>
-        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-          <OptimizedImage
-            src={blog.blogPicUrl}
-            alt={blog.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
-            style={{ borderRadius: 'var(--mantine-radius-md)' }}
-          />
-        </div>
-      </AspectRatio>
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: '400px',
+        maxHeight: '50vh',
+        borderRadius: 'var(--mantine-radius-md)',
+        overflow: 'hidden'
+      }}>
+        <OptimizedImage
+          src={blog.blogPicUrl}
+          alt={blog.title}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          priority
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
       <Space h="xs" />
       <FavoriteButton blogId={blog._id} size={22} />
 
