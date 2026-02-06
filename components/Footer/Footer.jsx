@@ -78,7 +78,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer ref={footerRef} id="footer" className="glass-footer">
+    <footer ref={footerRef} id="footer" className="glass-footer mt-10">
       <Container size={1500} className="!mt-[32px] !py-3">
         <Paper
           className="px-4 py-6 md:px-8 lg:px-24 lg:py-8"
@@ -90,7 +90,7 @@ const Footer = () => {
               <div className={`fade-on-scroll ${isVisible ? 'visible' : ''}`}>
                 <Logo />
                 <Space h={'md'} />
-                <Text c="dimmed" className="!text-sm sm:!text-base">{footerText}</Text>
+                <Text className="!text-sm sm:!text-base !text-[#555870]">{footerText}</Text>
               </div>
             </Grid.Col>
 
