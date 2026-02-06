@@ -41,3 +41,8 @@ export const deleteRequest = async (id) => {
   const response = await axiosPrivate.delete(`/blog-requests/${id}`);
   return response.data;
 };
+
+export const clearAllRequests = async () => {
+  const response = await axiosPrivate.delete('/blog-requests/clear-all');
+  return response.data;
+};

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { approveRequest, rejectRequest, deleteRequest } from '@/api/blogRequests.mjs';
+import { approveRequest, rejectRequest, deleteRequest, clearAllRequests } from '@/api/blogRequests.mjs';
 import { toast } from 'sonner';
 
 /**
@@ -120,6 +120,42 @@ export const useDeleteRequest = () => {
 
     onSuccess: () => {
       toast.success('Request deleted');
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['allRequests'] });
+    },
+  });
+};
+
+/**
+ * Hook for clearing all blog requests with optimistic updates
+ */
+export const useClearAllRequests = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: clearAllRequests,
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['allRequests'] });
+
+      const previousData = queryClient.getQueryData(['allRequests']);
+
+      queryClient.setQueryData(['allRequests'], []);
+
+      return { previousData };
+    },
+
+    onError: (err, variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['allRequests'], context.previousData);
+      }
+      toast.error(err?.response?.data?.message || 'Failed to clear requests');
+    },
+
+    onSuccess: () => {
+      toast.success('All requests cleared');
     },
 
     onSettled: () => {

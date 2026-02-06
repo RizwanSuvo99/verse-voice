@@ -1,7 +1,7 @@
 'use client';
 
 import { getAllRequests } from '@/api/blogRequests.mjs';
-import { useApproveRequest, useRejectRequest, useDeleteRequest } from '@/hooks/mutations';
+import { useApproveRequest, useRejectRequest, useDeleteRequest, useClearAllRequests } from '@/hooks/mutations';
 import BlogGridSkeleton from '@/components/Skeletons/BlogGridSkeleton';
 import {
   Badge,
@@ -35,6 +35,7 @@ const BlogRequests = () => {
   const { mutate: approve } = useApproveRequest();
   const { mutate: reject } = useRejectRequest();
   const { mutate: deleteMutate } = useDeleteRequest();
+  const { mutate: clearAll } = useClearAllRequests();
 
   if (isLoading) {
     return <BlogGridSkeleton count={4} cols={{ base: 1, md: 2 }} />;
@@ -42,9 +43,29 @@ const BlogRequests = () => {
 
   return (
     <div>
-      <Text component={Title} variant="gradient" className="!mb-4 !text-lg">
-        Blog Requests
-      </Text>
+      <Group justify="space-between" className="!mb-4">
+        <Text component={Title} variant="gradient" className="!text-lg">
+          Blog Requests
+        </Text>
+        {requests && requests.length > 0 && (
+          <Button
+            color="red"
+            variant="light"
+            size="xs"
+            onClick={() =>
+              modals.openConfirmModal({
+                title: 'Clear All Requests',
+                children: 'Are you sure you want to delete all blog requests? This action cannot be undone.',
+                labels: { confirm: 'Clear All', cancel: 'Cancel' },
+                confirmProps: { color: 'red' },
+                onConfirm: () => clearAll(),
+              })
+            }
+          >
+            Clear All
+          </Button>
+        )}
+      </Group>
 
       {!requests || requests.length === 0 ? (
         <Text c="dimmed">No blog requests</Text>
