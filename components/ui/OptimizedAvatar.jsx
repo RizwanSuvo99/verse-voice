@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { optimizeAvatarUrl } from '@/utils/optimizeCloudinaryUrl';
 
 const SIZE_MAP = { xs: 24, sm: 32, md: 40, lg: 56, xl: 80 };
 
@@ -17,6 +18,7 @@ const OptimizedAvatar = ({
   const [hasError, setHasError] = useState(false);
 
   const actualSize = preset ? SIZE_MAP[preset] : size;
+  const optimizedSrc = optimizeAvatarUrl(src, actualSize);
   const initials = name ? name.charAt(0).toUpperCase() : '?';
   const showFallback = !src || hasError;
 
@@ -46,7 +48,7 @@ const OptimizedAvatar = ({
   return (
     <div style={containerStyle} className={className}>
       <Image
-        src={src}
+        src={optimizedSrc}
         alt={alt}
         width={actualSize}
         height={actualSize}

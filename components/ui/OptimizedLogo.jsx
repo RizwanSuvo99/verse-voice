@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { optimizeCloudinaryUrl } from '@/utils/optimizeCloudinaryUrl';
 
 const OptimizedLogo = ({
   src,
@@ -17,10 +18,11 @@ const OptimizedLogo = ({
 
   const validSrc = imgSrc && imgSrc.trim() !== '' ? imgSrc : fallbackSrc;
   const isSvg = validSrc.toLowerCase().endsWith('.svg');
+  const optimizedSrc = isSvg ? validSrc : optimizeCloudinaryUrl(validSrc, { width: width * 2, quality: 90 });
 
   return (
     <Image
-      src={validSrc}
+      src={optimizedSrc}
       alt={alt}
       width={width}
       height={height}

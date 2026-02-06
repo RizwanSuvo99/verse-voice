@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { optimizeCloudinaryUrl } from '@/utils/optimizeCloudinaryUrl';
 
 const OptimizedImage = ({
   src,
@@ -15,7 +16,8 @@ const OptimizedImage = ({
   style = {},
   fallbackSrc = 'https://placehold.co/400x300?text=Image',
 }) => {
-  const [imgSrc, setImgSrc] = useState(src);
+  const optimizedSrc = optimizeCloudinaryUrl(src);
+  const [imgSrc, setImgSrc] = useState(optimizedSrc);
   const [hasError, setHasError] = useState(false);
 
   const handleError = () => {
